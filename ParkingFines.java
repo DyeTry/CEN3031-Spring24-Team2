@@ -4,7 +4,7 @@ public class ParkingFines {
 
     ParkingFines(double newFineAmount, String newReasonForFine) {
         fineAmount = newFineAmount;
-        reasonForFine = newReasonForFine;
+        reasonForFine = new String(newReasonForFine);
     }
 
     public double getFineAmount() {
