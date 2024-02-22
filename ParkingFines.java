@@ -3,12 +3,20 @@ public class ParkingFines {
     String reasonForFine;
 
     ParkingFines(double newFineAmount, String newReasonForFine) {
-        fineAmount = newFineAmount;
-        reasonForFine = new String(newReasonForFine);
+        setFineAmount(newFineAmount);
+        setReasonForFine(newReasonForFine);
+    }
+
+    public void setFineAmount(double fineAmount) {
+        this.fineAmount = fineAmount;
     }
 
     public double getFineAmount() {
         return fineAmount;
+    }
+
+    public void setReasonForFine(String reasonForFine) {
+        this.reasonForFine = reasonForFine;
     }
 
     public String getReasonForFine() {
