@@ -23,3 +23,13 @@ public class ParkingPasses {
 
     public String getId() { return id; }
 }
+
+/**
+ * Available Parking Passes
+ *
+ * Reserved/Administrative - $363.00 yearly
+ * Faculty and Staff - $145.00 yearly
+ * Resident - $145.00 yearly
+ * Commuter - $114.00 yearly
+ * Motorcycle - $73.00 yearly
+ */

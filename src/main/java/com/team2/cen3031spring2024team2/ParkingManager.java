@@ -1,4 +1,9 @@
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 
 public class Parking_Manager {
 
@@ -16,7 +21,28 @@ public class Parking_Manager {
         /**
          * Assuming the database is a .csv file
          * Implement the file IO here - Implement a way to read file IO and save it in ArrayList
+         *
+         * NOTE: Modify after database creation
          */
+
+        FileInputStream fileByteStream = null;
+        Scanner inFS = null;
+
+        try {
+            fileByteStream = new FileInputStream("input.csv");
+            iNFS = new Scanner(fileByteStream);
+        }
+
+        catch (FileNotFoundException e) {
+            System.out.println(e.toString());
+        }
+
+        while (inFS.hasNext()) {
+            /**
+             * Implement file reading here
+             */
+            break; //Prevents forever loop
+        }
     }
 
     public void login() {
@@ -49,7 +75,11 @@ public class Parking_Manager {
     public void registerVehicle(String make, String model, String color, String licensePlate) {
         /**
          * Implement a way to first identify who is registering the vehicle and then create the Vehicle object
+         *
+         * In progress
          */
+
+        Vehicle info = new Vehicle(make, model, color, licensePlate);
     }
 
     public void updateVehicle(String make, String model, String color, String licensePlate) {
@@ -79,6 +109,13 @@ public class Parking_Manager {
     public void buyParkingPass() {
         /**
          * Implement a way to buy a parking pass
+         * User will have an account with available money
+         * The pass will subtract the cost from the balance
+         * The user will then receive the parking pass - A ramdonly generated parking code
+         *
+         * IDEA: Make a picture to mimic real parking passes
+         *
+         * Current method is assuming .csv file IO
          */
     }
 
