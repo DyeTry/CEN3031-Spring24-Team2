@@ -1,15 +1,10 @@
 package com.team2.cen3031spring2024team2;
-
 public class Employee {
 
-    Vehicle vehicle;
-
     private String name;
-
     private String password;
-
     private int id;
-
+    Vehicle vehicle;
     private Parking_Pass pass;
 
     public Employee(String name, String password, int id) {
@@ -18,11 +13,11 @@ public class Employee {
         this.id = id;
     }
 
-    public Employee(Vehicle vehicle, String name, String password, int id, Parking_Pass pass) {
-        this.vehicle = vehicle;
+    public Employee(String name, String password, int id, Vehicle vehicle, Parking_Pass pass) {
         this.name = name;
         this.password = password;
         this.id = id;
+        this.vehicle = vehicle;
         this.pass = pass;
     }
 

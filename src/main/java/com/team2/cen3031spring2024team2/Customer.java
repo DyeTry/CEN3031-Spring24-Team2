@@ -22,11 +22,11 @@ public class Customer {
         this.id = id;
     }
 
-    public Customer(Vehicle vehicle, String name, String password, int id, Parking_Pass pass) {
-        this.vehicle = vehicle;
+    public Customer(String name, String password, int id, Vehicle vehicle, Parking_Pass pass) {
         this.name = name;
         this.password = password;
         this.id = id;
+        this.vehicle = vehicle;
         this.pass = pass;
     }
 

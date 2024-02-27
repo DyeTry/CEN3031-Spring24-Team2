@@ -23,11 +23,11 @@ public class Parking_Manager {
         loadParkingPass();
     }
 
-    public void createCustomerAccount(String name, String passwordString) {
+    private void createCustomerAccount(String name, String passwordString) {
         customerList.add(new Customer(name, passwordString, 1000 + customerList.size()));
     }
 
-    public void createEmployeeAccount(String name, String passwordString) {
+    private void createEmployeeAccount(String name, String passwordString) {
         employeeList.add(new Employee(name, passwordString, 1000 + employeeList.size()));
     }
 
@@ -53,26 +53,6 @@ public class Parking_Manager {
          * Implement a way to update vehicle information
          * Might just use registerVehicle() again
          */
-    }
-
-    /**
-     * PENDING TESTING
-     *
-     * A method to find Customer info based on their ID
-     *
-     * @param id The Customer's ID
-     * @return Returns Customer info
-     */
-    private Customer findCustomer(int id) {
-
-        for (Customer info : customerList) {
-
-            if (info.getId() == id) {
-                return info;
-            }
-        }
-
-        return null;
     }
 
     /**
@@ -144,6 +124,32 @@ public class Parking_Manager {
 
         Customer customer = findCustomer(id);
         customer.resetPass();
+    }
+
+    public void save() {
+        /**
+         * Implement a method to save data to the desired databases
+         */
+    }
+
+    /**
+     * PENDING TESTING
+     *
+     * A method to find Customer info based on their ID
+     *
+     * @param id The Customer's ID
+     * @return Returns Customer info
+     */
+    private Customer findCustomer(int id) {
+
+        for (Customer info : customerList) {
+
+            if (info.getId() == id) {
+                return info;
+            }
+        }
+
+        return null;
     }
 
     /**
