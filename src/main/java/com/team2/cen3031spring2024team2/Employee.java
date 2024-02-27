@@ -1,4 +1,5 @@
 package com.team2.cen3031spring2024team2;
+
 public class Employee {
 
     private String name;
@@ -6,6 +7,8 @@ public class Employee {
     private int id;
     Vehicle vehicle;
     private Parking_Pass pass;
+
+    private double balance;
 
     public Employee(String name, String password, int id) {
         this.name = name;
@@ -43,5 +46,13 @@ public class Employee {
 
     public Parking_Pass getPass() {
         return pass;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public String toString() {
+        return getName() + "," + getPassword() + "," + getId() + "," + getVehicle() + "," + getPass() + "," + getBalance() + ",";
     }
 }

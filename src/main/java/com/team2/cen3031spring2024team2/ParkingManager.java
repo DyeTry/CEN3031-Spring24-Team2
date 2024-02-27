@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
@@ -126,10 +127,15 @@ public class Parking_Manager {
         customer.resetPass();
     }
 
+    /**
+     * PENDING TESTING
+     *
+     * A public method to save informtion to the desired databases
+     */
     public void save() {
-        /**
-         * Implement a method to save data to the desired databases
-         */
+
+        saveCustomerDatabase();
+        saveEmployeeDatabase();
     }
 
     /**
@@ -268,5 +274,58 @@ public class Parking_Manager {
         catch (IOException exception) {
             System.out.println(exception.toString());
         }
+    }
+
+    /**
+     * PENDING TESTING
+     *
+     * A method to save and append Customer information to the Customer database
+     */
+    private void saveCustomerDatabase() {
+
+        String path = "src\\main\\java\\home\\csv files\\customer.csv";
+        FileOutputStream fileStream = null;
+        PrintWriter outFS = null;
+
+        try {
+            fileStream = new FileOutputStream(path, true);
+            outFS = new PrintWriter(fileStream);
+        }
+
+        catch (FileNotFoundException exception) {
+            System.out.println(exception.toString());
+        }
+
+        for (Customer info : customerList) {
+            outFS.println(info.toString());
+        }
+
+        outFS.close();
+    }
+
+    /**PENDING TESTING
+     *
+     * A method to save and append Employee information to the Employee database
+     */
+    private void saveEmployeeDatabase() {
+
+        String path = "src\\main\\java\\home\\csv files\\employee.csv";
+        FileOutputStream fileStream = null;
+        PrintWriter outFS = null;
+
+        try {
+            fileStream = new FileOutputStream(path, true);
+            outFS = new PrintWriter(fileStream);
+        }
+
+        catch (FileNotFoundException exception) {
+            System.out.println(exception.toString());
+        }
+
+        for (Employee info : employeeList) {
+            outFS.println(info.toString());
+        }
+
+        outFS.close();
     }
 }

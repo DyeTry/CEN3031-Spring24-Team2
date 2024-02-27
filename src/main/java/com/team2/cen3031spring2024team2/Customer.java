@@ -42,10 +42,6 @@ public class Customer {
         this.pass = new Parking_Pass();
     }
 
-    public Vehicle getVehicle() {
-        return vehicle;
-    }
-
     public String getName() {
         return name;
     }
@@ -58,11 +54,19 @@ public class Customer {
         return id;
     }
 
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
     public Parking_Pass getPass() {
         return pass;
     }
 
     public double getBalance() {
         return balance;
+    }
+
+    public String toString() {
+        return getName() + "," + getPassword() + "," + getId() + "," + getVehicle() + "," + getPass() + "," + getBalance() + ",";
     }
 }
