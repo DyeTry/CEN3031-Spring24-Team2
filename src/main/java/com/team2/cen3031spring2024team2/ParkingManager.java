@@ -1,3 +1,6 @@
+package com.team2.cen3031spring2024team2;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.FileInputStream;
@@ -8,78 +11,41 @@ import java.io.FileNotFoundException;
 public class Parking_Manager {
 
     private ArrayList<Customer> customerList = new ArrayList<Customer>();
-
     private ArrayList<Employee> employeeList = new ArrayList<Employee>();
-
     private ArrayList<Parking_Fines> finesList = new ArrayList<Parking_Fines>();
-
     private ArrayList<Parking_Pass> passList = new ArrayList<Parking_Pass>();
-
     private ArrayList<Parking_Area> areaList = new ArrayList<Parking_Area>();
 
     public Parking_Manager() {
-        /**
-         * Assuming the database is a .csv file
-         * Implement the file IO here - Implement a way to read file IO and save it in ArrayList
-         *
-         * NOTE: Modify after database creation
-         */
 
-        FileInputStream fileByteStream = null;
-        Scanner inFS = null;
-
-        try {
-            fileByteStream = new FileInputStream("input.csv");
-            iNFS = new Scanner(fileByteStream);
-        }
-
-        catch (FileNotFoundException e) {
-            System.out.println(e.toString());
-        }
-
-        while (inFS.hasNext()) {
-            /**
-             * Implement file reading here
-             */
-            break; //Prevents forever loop
-        }
+        loadCustomerDatabase();
+        loadEmployeeDatabase();
+        loadParkingPass();
     }
 
-    public void login() {
-        /**
-         * Implement a way to login to the Parking Manager
-         * Will use users login credentials
-         */
-    }
-
-    /**
-     * Creates a Customer and adds object to customerList
-     *
-     * @param name The name of the Customer
-     * @param passwordString The Customer's password
-     */
     public void createCustomerAccount(String name, String passwordString) {
-        customerList.add(new Customer(name, passwordString, customerList.size()));
+        customerList.add(new Customer(name, passwordString, 1000 + customerList.size()));
+    }
+
+    public void createEmployeeAccount(String name, String passwordString) {
+        employeeList.add(new Employee(name, passwordString, 1000 + employeeList.size()));
     }
 
     /**
-     * Creates an Employee and adds object to employeeList
+     * PENDING TESTING
      *
-     * @param name The name of the Employee
-     * @param passwordString The Employee's password
+     * A method to register Vehicle objects to Customers
+     *
+     * @param id The Customer's ID
+     * @param make The make of the vehicle
+     * @param model The model of the vehicle
+     * @param color The color of the vehicle
+     * @param licensePlate The license plate of the vehicle
      */
-    public void createEmployeeAccount(String name, String passwordString) {
-        employeeList.add(new Employee(name, passwordString, employeeList.size()));
-    }
+    public void registerVehicle(int id, String make, String model, String color, String licensePlate) {
 
-    public void registerVehicle(String make, String model, String color, String licensePlate) {
-        /**
-         * Implement a way to first identify who is registering the vehicle and then create the Vehicle object
-         *
-         * In progress
-         */
-
-        Vehicle info = new Vehicle(make, model, color, licensePlate);
+        Customer customer = findCustomer(id);
+        customer.setVehicle(make, model, color, licensePlate);
     }
 
     public void updateVehicle(String make, String model, String color, String licensePlate) {
@@ -90,53 +56,211 @@ public class Parking_Manager {
     }
 
     /**
-     * A method to find Customer information
-     * @param id The Customer's ID number
-     * @return Returns the Customer's Information
+     * PENDING TESTING
+     *
+     * A method to find Customer info based on their ID
+     *
+     * @param id The Customer's ID
+     * @return Returns Customer info
      */
-    public boolean findCustomer(int id) {
+    private Customer findCustomer(int id) {
 
         for (Customer info : customerList) {
 
-            if (info.getID() == id) {
+            if (info.getId() == id) {
                 return info;
             }
         }
 
-        return false;
+        return null;
     }
 
-    public void buyParkingPass() {
-        /**
-         * Implement a way to buy a parking pass
-         * User will have an account with available money
-         * The pass will subtract the cost from the balance
-         * The user will then receive the parking pass - A ramdonly generated parking code
-         *
-         * IDEA: Make a picture to mimic real parking passes
-         *
-         * Current method is assuming .csv file IO
-         */
+    /**
+     * PENDING TESTING
+     *
+     * A method to buy a Parking Pass for Customers
+     *
+     * @param id The Customer's ID
+     * @param name The Parking Pass' name
+     */
+    public void buyParkingPass(int id, String name) {
+
+        Customer customer = findCustomer(id);
+
+        for (Parking_Pass pass : passList) {
+
+            if (name.equals(pass.getName())) {
+                customer.setPass(pass.getName(), pass.getPrice(), pass.getDescription(), LocalDate.now().plusYears(1));
+            }
+        }
     }
 
-    public void updateParkingPass() {
-        /**
-         * Implement a way to update/modify the user's parking pass
-         * This method will be used if the user wants to upgrade or downgrade their pass
-         */
+    /**
+     * PENDING TESTING
+     *
+     * A method to update the Customer's Parking Pass
+     *
+     * @param id The Customer's ID
+     * @param name The Parking Pass' name
+     */
+    public void updateParkingPass(int id, String name) {
+
+        Customer customer = findCustomer(id);
+
+        if (customer.getPass() != null) {
+
+            for (Parking_Pass pass : passList) {
+
+                if (name.equals(pass.getName())) {
+                    customer.setPass(pass.getName(), pass.getPrice(), pass.getDescription(), LocalDate.now().plusYears(1));
+                }
+            }
+        }
     }
 
-    public void renewParkingPass() {
-        /**
-         * Implement a way to check the parking passes expiration date and allow the customer to increase the timer
-         * Most likely use java.time to check expiration date
-         */
+    /**
+     * PENDING TESTING
+     *
+     * A method to renew the Customer's parking pass
+     *
+     * @param id The Customer's ID
+     */
+    public void renewParkingPass(int id) {
+
+        Customer customer = findCustomer(id);
+
+        if (customer.getBalance() >= customer.getPass().getPrice()) {
+            customer.getPass().getExpirationDate().plusYears(1);
+        }
     }
 
-    public void cancelParkingPass() {
-        /**
-         * Thought Experiment:
-         * Implement a way to allow the customer to cancel their parking pass coverage
-         */
+    /**
+     * PENDING TESTING
+     * A method that cancels the Customer's parking pass
+     *
+     * @param id The Customer's ID
+     */
+    public void cancelParkingPass(int id) {
+
+        Customer customer = findCustomer(id);
+        customer.resetPass();
+    }
+
+    /**
+     * A method to read Parking Pass information in data.csv
+     */
+    private void loadParkingPass() {
+
+        String path = "src\\main\\java\\home\\csv files\\pass.csv";
+        FileInputStream fileByteStream = null;
+        Scanner inFS = null;
+
+        try {
+            System.out.println("Reading Parking Pass info...");
+            fileByteStream = new FileInputStream(path);
+            inFS = new Scanner(fileByteStream);
+        }
+
+        catch (FileNotFoundException exception) {
+            System.out.println(exception.toString());
+        }
+
+        inFS.useDelimiter(",");
+
+        while(inFS.hasNext()) {
+
+            String name = inFS.next();
+            double price = inFS.nextDouble();
+            String description = inFS.next();
+
+            passList.add(new Parking_Pass(name, price, description));
+        }
+
+        try {
+            System.out.println("Successfully read Parking Pass info.");
+            fileByteStream.close();
+        }
+
+        catch (IOException exception) {
+            System.out.println(exception.toString());
+        }
+    }
+
+    /**
+     * A method to load Customer data
+     */
+    private void loadCustomerDatabase() {
+
+        String path = "src\\main\\java\\home\\csv files\\customer.csv";
+        FileInputStream fileByteStream = null;
+        Scanner inFS = null;
+
+        try {
+            System.out.println("Loading Customer info...");
+            fileByteStream = new FileInputStream(path);
+            inFS = new Scanner(fileByteStream);
+        }
+
+        catch (FileNotFoundException exception) {
+            System.out.println(exception.toString());
+        }
+
+        inFS.useDelimiter(",");
+
+        while (inFS.hasNext()) {
+
+            String name = inFS.next();
+            String password = inFS.next();
+
+            createCustomerAccount(name, password);
+        }
+
+        try {
+            System.out.println("Successfully read Customer info.");
+            fileByteStream.close();
+        }
+
+        catch (IOException exception) {
+            System.out.println(exception.toString());
+        }
+    }
+
+    /**
+     * A method to load Employee data
+     */
+    private void loadEmployeeDatabase() {
+
+        String path = "src\\main\\java\\home\\csv files\\employee.csv";
+        FileInputStream fileByteStream = null;
+        Scanner inFS = null;
+
+        try {
+            System.out.println("Reading Employee info...");
+            fileByteStream = new FileInputStream(path);
+            inFS = new Scanner(fileByteStream);
+        }
+
+        catch (FileNotFoundException exception) {
+            System.out.println(exception.toString());
+        }
+
+        inFS.useDelimiter(",");
+
+        while (inFS.hasNext()) {
+
+            String name = inFS.next();
+            String password = inFS.next();
+
+            createEmployeeAccount(name, password);
+        }
+
+        try {
+            System.out.println("Successfully read Employee info.");
+            fileByteStream.close();
+        }
+
+        catch (IOException exception) {
+            System.out.println(exception.toString());
+        }
     }
 }

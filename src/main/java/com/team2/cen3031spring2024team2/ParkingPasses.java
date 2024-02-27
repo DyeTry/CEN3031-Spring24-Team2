@@ -1,35 +1,40 @@
-public class ParkingPasses {
+package com.team2.cen3031spring2024team2;
+
+import java.time.LocalDate;
+
+public class Parking_Pass {
 
     private String name;
+    private double price;
     private String description;
-    private int price;
-    private String id;
 
-    public ParkingPasses() {};
+    private LocalDate expirationDate;
 
-    public ParkingPasses(String name, String description, int price, String id) {
+    public Parking_Pass() {}
+
+    public Parking_Pass(String name, double price, String description, LocalDate expirationDate) {
 
         this.name = name;
-        this.description = description;
         this.price = price;
-        this.id = id;
+        this.description = description;
+        this.expirationDate = expirationDate;
+    }
+
+    public Parking_Pass(String name, double price, String description) {
+
+        this.name = name;
+        this.price = price;
+        this.description = description;
     }
 
     public String getName() { return name; }
 
+    public double getPrice() { return price; }
+
     public String getDescription() { return description; }
 
-    public int getPrice() { return price; }
+    public LocalDate getExpirationDate() {
+        return expirationDate;
+    }
 
-    public String getId() { return id; }
 }
-
-/**
- * Available Parking Passes
- *
- * Reserved/Administrative - $363.00 yearly
- * Faculty and Staff - $145.00 yearly
- * Resident - $145.00 yearly
- * Commuter - $114.00 yearly
- * Motorcycle - $73.00 yearly
- */
