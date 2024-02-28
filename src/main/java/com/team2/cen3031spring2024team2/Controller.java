@@ -110,4 +110,14 @@ public class Controller {
         //Redirect to search results page
         switchToUserSearchResultPane(event);
     }
+
+    public void onViewFine(ActionEvent actionEvent) throws IOException {
+        switchToBasePane(actionEvent);
+    }
+
+    public void onResetPassword(ActionEvent actionEvent) {
+    }
+
+    public void onEditCar(ActionEvent actionEvent) {
+    }
 }
