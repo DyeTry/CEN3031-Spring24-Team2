@@ -13,7 +13,6 @@ import java.io.IOException;
 
 public class Controller {
     @FXML
-    private Label welcomeText;
     private Stage stage;
     private Scene scene;
     private Parent root;
