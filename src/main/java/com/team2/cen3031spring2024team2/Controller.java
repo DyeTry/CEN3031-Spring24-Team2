@@ -87,6 +87,14 @@ public class Controller {
         stage.show();
     }
 
+    public void switchToUserFineView(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("userFineView.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void onPlateAssignment(ActionEvent event) throws IOException {
         //Throw success/failure message
     }
@@ -125,7 +133,7 @@ public class Controller {
     }
 
     public void onViewFine(ActionEvent actionEvent) throws IOException {
-        switchToBasePane(actionEvent);
+        switchToUserFineView(actionEvent);
     }
 
     public void onResetPassword(ActionEvent actionEvent) {
