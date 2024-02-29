@@ -8,10 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
+import javafx.scene.layout.StackPane;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
-
 import java.io.IOException;
+import java.net.URL;
 
 public class Controller {
     @FXML
@@ -20,10 +23,13 @@ public class Controller {
     private Parent root;
     @FXML
     private MenuButton searchTypeMenu;
-
+    @FXML
+    private WebView webUwfMap;
+    private WebEngine engine;
     private String searchTitle;
 
     private String searchEntry;
+
 
 
     public void switchToBasePane(ActionEvent event) throws IOException {
@@ -40,6 +46,13 @@ public class Controller {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        if (webUwfMap != null) {
+            engine = webUwfMap.getEngine();
+            engine.load("https://www.google.com");
+            engine.setJavaScriptEnabled(true);
+        } else {
+            System.err.println("webUwfMap is null");
+        }
     }
 
     public void switchToUserPane(ActionEvent event) throws IOException {
