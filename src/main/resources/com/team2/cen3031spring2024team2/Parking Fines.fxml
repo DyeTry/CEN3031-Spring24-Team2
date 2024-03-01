@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team2.cen3031spring2024team2.ParkingFines">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team2.cen3031spring2024team2.Controller">
    <children>
       <Text fill="#004c97" layoutX="110.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Parking Fines" wrappingWidth="401.33673095703125">
          <font>
