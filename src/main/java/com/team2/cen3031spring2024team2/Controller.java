@@ -35,6 +35,14 @@ public class Controller {
         stage.show();
     }
 
+    public void switchToPasses(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("CustomerPasses.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 
 
 }
