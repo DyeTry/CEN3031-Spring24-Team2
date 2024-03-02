@@ -49,7 +49,7 @@ public class CustInfo {
         return licensePlate;
     }
 
-    public void setLicensePlate(String licencePlate) {
+    public void setLicensePlate(String licensePlate) {
         this.licensePlate = licensePlate;
     }
 
@@ -101,9 +101,9 @@ public class CustInfo {
                 "\nCar Color: " + carColor +
                 "\nLicense Plate: " + licensePlate +
                 "\nPass Expiration Date: " + passExpirationDate +
+                "\nPassType: " + passType +
                 "\nUsername: " + username +
                 "\nPassword: " + password +
-                "\nEmployee ID: " + employeeID +
-                "\nPassType: " + passType;
+                "\nEmployee ID: " + employeeID ;
     }
 }
