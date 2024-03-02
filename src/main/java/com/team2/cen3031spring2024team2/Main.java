@@ -17,6 +17,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        Parking_Manager manager = new Parking_Manager();
+        //launch();
     }
 }

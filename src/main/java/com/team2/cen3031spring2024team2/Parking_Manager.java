@@ -11,16 +11,15 @@ import java.io.FileNotFoundException;
 
 public class Parking_Manager {
 
-    private ArrayList<Customer> customerList = new ArrayList<Customer>();
-    private ArrayList<Employee> employeeList = new ArrayList<Employee>();
-    private ArrayList<Parking_Fines> finesList = new ArrayList<Parking_Fines>();
-    private ArrayList<Parking_Pass> passList = new ArrayList<Parking_Pass>();
-    private ArrayList<Parking_Area> areaList = new ArrayList<Parking_Area>();
+    private final ArrayList<Customer> customerList = new ArrayList<>();
+    private final ArrayList<Employee> employeeList = new ArrayList<>();
+    private final ArrayList<Parking_Fines> finesList = new ArrayList<>();
+    private final ArrayList<Parking_Pass> passList = new ArrayList<>();
+    private final ArrayList<Parking_Area> areaList = new ArrayList<>();
 
     public Parking_Manager() {
-
-        loadCustomerDatabase();
-        loadEmployeeDatabase();
+        //loadCustomerDatabase();
+        //loadEmployeeDatabase();
         loadParkingPass();
     }
 
@@ -37,15 +36,15 @@ public class Parking_Manager {
      *
      * A method to register Vehicle objects to Customers
      *
-     * @param id The Customer's ID
+     * @param username The Customer's username
      * @param make The make of the vehicle
      * @param model The model of the vehicle
      * @param color The color of the vehicle
      * @param licensePlate The license plate of the vehicle
      */
-    public void registerVehicle(int id, String make, String model, String color, String licensePlate) {
+    public void registerVehicle(String username, String make, String model, String color, String licensePlate) {
 
-        Customer customer = findCustomer(id);
+        Customer customer = findCustomer(username);
         customer.setVehicle(make, model, color, licensePlate);
     }
 
@@ -61,12 +60,12 @@ public class Parking_Manager {
      *
      * A method to buy a Parking Pass for Customers
      *
-     * @param id The Customer's ID
+     * @param username The Customer's username
      * @param name The Parking Pass' name
      */
-    public void buyParkingPass(int id, String name) {
+    public void buyParkingPass(String username, String name) {
 
-        Customer customer = findCustomer(id);
+        Customer customer = findCustomer(username);
 
         for (Parking_Pass pass : passList) {
 
@@ -81,12 +80,12 @@ public class Parking_Manager {
      *
      * A method to update the Customer's Parking Pass
      *
-     * @param id The Customer's ID
+     * @param username The Customer's username
      * @param name The Parking Pass' name
      */
-    public void updateParkingPass(int id, String name) {
+    public void updateParkingPass(String username, String name) {
 
-        Customer customer = findCustomer(id);
+        Customer customer = findCustomer(username);
 
         if (customer.getPass() != null) {
 
@@ -104,11 +103,11 @@ public class Parking_Manager {
      *
      * A method to renew the Customer's parking pass
      *
-     * @param id The Customer's ID
+     * @param username The Customer's username
      */
-    public void renewParkingPass(int id) {
+    public void renewParkingPass(String username) {
 
-        Customer customer = findCustomer(id);
+        Customer customer = findCustomer(username);
 
         if (customer.getBalance() >= customer.getPass().getPrice()) {
             customer.getPass().getExpirationDate().plusYears(1);
@@ -119,11 +118,11 @@ public class Parking_Manager {
      * PENDING TESTING
      * A method that cancels the Customer's parking pass
      *
-     * @param id The Customer's ID
+     * @param username The Customer's username
      */
-    public void cancelParkingPass(int id) {
+    public void cancelParkingPass(String username) {
 
-        Customer customer = findCustomer(id);
+        Customer customer = findCustomer(username);
         customer.resetPass();
     }
 
@@ -141,16 +140,16 @@ public class Parking_Manager {
     /**
      * PENDING TESTING
      *
-     * A method to find Customer info based on their ID
+     * A method to find Customer info based on their username
      *
-     * @param id The Customer's ID
+     * @param username The Customer's username
      * @return Returns Customer info
      */
-    private Customer findCustomer(int id) {
+    private Customer findCustomer(String username) {
 
         for (Customer info : customerList) {
 
-            if (info.getId() == id) {
+            if (info.getUsername().equals(username)) {
                 return info;
             }
         }
@@ -163,7 +162,8 @@ public class Parking_Manager {
      */
     private void loadParkingPass() {
 
-        String path = "src\\main\\java\\home\\csv files\\pass.csv";
+        String path = "\\src\\main\\java\\com\\team2\\cen3031spring2024team2\\csv files\\pass.csv";
+        System.out.println("Attempting to Read...");
         FileInputStream fileByteStream = null;
         Scanner inFS = null;
 
@@ -174,6 +174,7 @@ public class Parking_Manager {
         }
 
         catch (FileNotFoundException exception) {
+            System.out.println("Error in initialization");
             System.out.println(exception.toString());
         }
 

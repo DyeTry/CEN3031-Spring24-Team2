@@ -8,6 +8,8 @@ public class Customer {
 
     private String name;
 
+    private String username;
+
     private String password;
 
     private int id;
@@ -44,6 +46,10 @@ public class Customer {
 
     public String getName() {
         return name;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public String getPassword() {
