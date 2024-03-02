@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuButton;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
@@ -22,11 +23,8 @@ public class Controller {
     private Scene scene;
     private Parent root;
     @FXML
-    private MenuButton searchTypeMenu;
-    @FXML
-    private WebView webUwfMap;
-    private String searchTitle;
-
+    private MenuButton passTypeMenu;
+    private String passTitle;
     private String searchEntry;
 
     public void switchToBasePane(ActionEvent event) throws IOException {
@@ -43,16 +41,6 @@ public class Controller {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-    }
-
-    public void onLoadMap(ActionEvent event) throws IOException {
-        if (webUwfMap != null) {
-            WebEngine engine = webUwfMap.getEngine();
-            engine.load("https://www.google.com");
-            engine.setJavaScriptEnabled(true);
-        } else {
-            System.err.println("webUwfMap is null");
-        }
     }
 
     public void switchToUserPane(ActionEvent event) throws IOException {
@@ -99,30 +87,6 @@ public class Controller {
         //Throw success/failure message
     }
 
-    public void chooseIdSearch(ActionEvent event) throws IOException {
-        //Change redirect of Submit button and rename "Choose Search Type" appropriately
-        searchTitle = "Search by ID";
-        searchTypeMenu.setText(searchTitle);
-    }
-
-    public void choosePlateSearch(ActionEvent event) throws IOException {
-        //Change redirect of Submit button and rename "Choose Search Type" appropriately
-        searchTitle = "Search by Plate";
-        searchTypeMenu.setText(searchTitle);
-    }
-
-    public void choosePassSearch(ActionEvent event) throws IOException {
-        //Change redirect of Submit button and rename "Choose Search Type" appropriately
-        searchTitle = "Search by Pass";
-        searchTypeMenu.setText(searchTitle);
-    }
-
-    public void chooseFineSearch(ActionEvent event) throws IOException {
-        //Change redirect of Submit button and rename "Choose Search Type" appropriately
-        searchTitle = "Search by Fine";
-        searchTypeMenu.setText(searchTitle);
-    }
-
     public void onSearchEntry(ActionEvent event) throws IOException {
         //Set searchEntry equal to entered search value
     }
@@ -140,5 +104,20 @@ public class Controller {
     }
 
     public void onEditCar(ActionEvent actionEvent) {
+    }
+
+    public void onResidentSelection(ActionEvent event) {
+        passTitle = "Resident";
+        passTypeMenu.setText(passTitle);
+    }
+
+    public void onCommuterSelection(ActionEvent event) {
+        passTitle = "Commuter";
+        passTypeMenu.setText(passTitle);
+    }
+
+    public void onStaffSelection(ActionEvent event) {
+        passTitle = "Staff";
+        passTypeMenu.setText(passTitle);
     }
 }

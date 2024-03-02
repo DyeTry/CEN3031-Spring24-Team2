@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -35,15 +33,7 @@
                   <Image url="@uwfLogo.png" />
                </image>
             </ImageView>
-            <TextField fx:id="userSearch" alignment="CENTER" layoutX="176.0" layoutY="203.0" onAction="#onSearchEntry" promptText="Search" />
-            <MenuButton fx:id="searchTypeMenu" layoutX="181.0" layoutY="172.0" mnemonicParsing="false" text="Choose Search Type" textAlignment="CENTER">
-              <items>
-                <MenuItem fx:id="idSearch" mnemonicParsing="false" onAction="#chooseIdSearch" text="Search by ID" />
-                <MenuItem fx:id="plateSearch" mnemonicParsing="false" onAction="#choosePlateSearch" text="Search by Plate" />
-                  <MenuItem fx:id="passSearch" mnemonicParsing="false" onAction="#choosePassSearch" text="Search by Pass" />
-                  <MenuItem fx:id="fineSearch" mnemonicParsing="false" onAction="#chooseFineSearch" text="Search by Fine" />
-              </items>
-            </MenuButton>
+            <TextField fx:id="userSearch" alignment="CENTER" layoutX="178.0" layoutY="188.0" onAction="#onSearchEntry" promptText="Search by Username" />
             <Button fx:id="searchSubmit" layoutX="225.0" layoutY="241.0" mnemonicParsing="false" onAction="#onUserSearch" style="-fx-background-color: #009CDE;" text="Submit" textFill="WHITE" />
          </children></AnchorPane>
     </center>
