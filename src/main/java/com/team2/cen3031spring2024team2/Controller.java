@@ -6,16 +6,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
+import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 import java.net.URL;
+import javafx.scene.control.Alert.AlertType;
 
 public class Controller {
     @FXML
@@ -23,23 +23,16 @@ public class Controller {
     private Scene scene;
     private Parent root;
     @FXML
-    private MenuButton searchTypeMenu;
-    @FXML
-    private WebView webUwfMap;
-    private WebEngine engine;
-    private String searchTitle;
-
+    private MenuButton passTypeMenu;
+    private String passTitle;
     private String searchEntry;
-
     @FXML
-    private MenuButton searchPassTypeMenu;
-
+    TextField userSearch;
     @FXML
-    private TextField usernameField;
-
-    private String username;
-
-    private final Parking_Manager manager = new Parking_Manager();
+    Label userName;
+    @FXML
+    Label fineUserName;
+    private Alert alert = new Alert(AlertType.NONE);
 
     public void switchToBasePane(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("employeeBasePane.fxml"));
@@ -55,13 +48,6 @@ public class Controller {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        if (webUwfMap != null) {
-            engine = webUwfMap.getEngine();
-            engine.load("https://www.google.com");
-            engine.setJavaScriptEnabled(true);
-        } else {
-            System.err.println("webUwfMap is null");
-        }
     }
 
     public void switchToUserPane(ActionEvent event) throws IOException {
@@ -89,54 +75,69 @@ public class Controller {
     }
 
     public void switchToUserSearchResultPane(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("userSearchResultPane.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userSearchResultPane.fxml"));
+            loader.setController(this);
+            Parent root = loader.load();
+
+            userName.setText(searchEntry);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void switchToUserFineView(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("userFineView.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userFineView.fxml"));
+            loader.setController(this);
+            Parent root = loader.load();
+
+            fineUserName.setText(searchEntry);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void onPlateAssignment(ActionEvent event) throws IOException {
-        //Throw success/failure message
-    }
-
-    public void chooseIdSearch(ActionEvent event) throws IOException {
-        //Change redirect of Submit button and rename "Choose Search Type" appropriately
-        searchTitle = "Search by ID";
-        searchTypeMenu.setText(searchTitle);
-    }
-
-    public void choosePlateSearch(ActionEvent event) throws IOException {
-        //Change redirect of Submit button and rename "Choose Search Type" appropriately
-        searchTitle = "Search by Plate";
-        searchTypeMenu.setText(searchTitle);
-    }
-
-    public void choosePassSearch(ActionEvent event) throws IOException {
-        //Change redirect of Submit button and rename "Choose Search Type" appropriately
-        searchTitle = "Search by Pass";
-        searchTypeMenu.setText(searchTitle);
-    }
-
-    public void chooseFineSearch(ActionEvent event) throws IOException {
-        //Change redirect of Submit button and rename "Choose Search Type" appropriately
-        searchTitle = "Search by Fine";
-        searchTypeMenu.setText(searchTitle);
+    public void onPassAssignment(ActionEvent event) throws IOException {
+        //if(username is found) {
+        alert.setAlertType(AlertType.CONFIRMATION);
+        alert.setContentText("Pass Assignment Successful\n"/*<username> has been assigned the <pass type> pass type*/);
+        alert.show();
+        //Set username's pass type to chosen pass type
+        //Set pass expiration
+        /*}else {
+            alert.setAlertType(AlertType.ERROR);
+            alert.setContentText("ERROR: Username does not exist");
+            alert.show();
+        }
+        */
     }
 
     public void onSearchEntry(ActionEvent event) throws IOException {
+        //if(username found) {
         //Set searchEntry equal to entered search value
+        searchEntry = userSearch.getText();
+        System.out.println(searchEntry);
+        /*} else {
+            alert.setAlertType(AlertType.ERROR);
+            alert.setContentText("ERROR: Username does not exist");
+            alert.show();
+        }
+        * */
     }
 
     public void onUserSearch(ActionEvent event) throws IOException {
+        //if(username found) {
         //Redirect to search results page
         switchToUserSearchResultPane(event);
     }
@@ -151,56 +152,18 @@ public class Controller {
     public void onEditCar(ActionEvent actionEvent) {
     }
 
-    /**
-     * A method to select the Faulty and Staff parking pass
-     *
-     * @param actionEvent
-     */
-    public void onPass1(ActionEvent actionEvent) {
-        searchTitle = "Faulty and Staff";
-        searchPassTypeMenu.setText(searchTitle);
-        //System.out.println("Username = " + username);
-        manager.buyParkingPass(username, searchTitle);
+    public void onResidentSelection(ActionEvent event) {
+        passTitle = "Resident";
+        passTypeMenu.setText(passTitle);
     }
 
-    /**
-     * A method to select the Resident parking pass
-     *
-     * @param actionEvent
-     */
-    public void onPass2(ActionEvent actionEvent) {
-        searchTitle = "Resident";
-        searchPassTypeMenu.setText(searchTitle);
-        //System.out.println("Username = " + username);
-        manager.buyParkingPass(username, searchTitle);
+    public void onCommuterSelection(ActionEvent event) {
+        passTitle = "Commuter";
+        passTypeMenu.setText(passTitle);
     }
 
-    /**
-     * A method to select the Commuter parking pass
-     *
-     * @param actionEvent
-     */
-    public void onPass3(ActionEvent actionEvent) {
-        searchTitle = "Commuter";
-        searchPassTypeMenu.setText(searchTitle);
-        //System.out.println("Username = " + username);
-        manager.buyParkingPass(username, searchTitle);
-    }
-
-    /**
-     * A method to select the Handicap parking pass
-     *
-     * @param actionEvent
-     */
-    public void onPass4(ActionEvent actionEvent) {
-        searchTitle = "Handicap";
-        searchPassTypeMenu.setText(searchTitle);
-        //System.out.println("Username = " + username);
-        manager.buyParkingPass(username, searchTitle);
-    }
-
-    public void onUsernameSearch(ActionEvent actionEvent) {
-        username = usernameField.getText();
-       //System.out.println("onUsernameSearch = " + username);
+    public void onStaffSelection(ActionEvent event) {
+        passTitle = "Staff";
+        passTypeMenu.setText(passTitle);
     }
 }
