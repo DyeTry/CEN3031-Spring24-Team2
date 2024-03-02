@@ -1,22 +1,23 @@
 package com.team2.cen3031spring2024team2;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import java.io.IOException;
+import java.util.List;
 
-public class Main extends Application {
-    @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("employeeMapPane.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Employee Menu");
-        stage.setScene(scene);
-        stage.show();
-    }
-
+public class Main {
     public static void main(String[] args) {
-        launch();
+        Database database = new Database();
+        database.loadDatabaseFromCSV("C:\\Users\\oscar\\IdeaProjects\\CEN3031-Spring24-Team2\\src\\main\\java\\com\\team2\\cen3031spring2024team2\\Admin_database.csv");
+
+        List<CustInfo> employees = database.getEmployeeInfos();
+        List<CustInfo> customers = database.getCustInfos();
+
+        System.out.println("Employee Information:");
+        for (CustInfo employee : employees) {
+            System.out.println(employee.toString());
+        }
+
+        System.out.println("\nCustomer Information:");
+        for (CustInfo customer : customers) {
+            System.out.println(customer.toString());
+        }
     }
 }

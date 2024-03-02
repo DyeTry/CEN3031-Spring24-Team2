@@ -1,13 +1,17 @@
+package com.team2.cen3031spring2024team2;
+
 public class CustInfo {
     private String name;
     private String carMake;
     private String carModel;
     private String carColor;
-    private String licencePlate;
+    private String licensePlate;
     private String passExpirationDate;
     private String username;
     private String password;
+    private String passType;
     private int employeeID;
+
 
     public String getName() {
         return name;
@@ -41,12 +45,12 @@ public class CustInfo {
         this.carMake = carMake;
     }
 
-    public String getLicencePlate() {
-        return licencePlate;
+    public String getLicensePlate() {
+        return licensePlate;
     }
 
-    public void setLicencePlate(String licencePlate) {
-        this.licencePlate = licencePlate;
+    public void setLicensePlate(String licencePlate) {
+        this.licensePlate = licensePlate;
     }
 
     public String getPassExpirationDate() {
@@ -79,5 +83,27 @@ public class CustInfo {
 
     public void setEmployeeID(int employeeID) {
         this.employeeID = employeeID;
+    }
+
+    public String getPassType() {
+        return passType;
+    }
+
+    public void setPassType(String passType) {
+        this.passType = passType;
+    }
+
+    @Override
+    public String toString() {
+        return "Name: " + name +
+                "\nCar Make: " + carMake +
+                "\nCar Model: " + carModel +
+                "\nCar Color: " + carColor +
+                "\nLicense Plate: " + licensePlate +
+                "\nPass Expiration Date: " + passExpirationDate +
+                "\nPassType: " + passType +
+                "\nUsername: " + username +
+                "\nPassword: " + password +
+                "\nEmployee ID: " + employeeID ;
     }
 }
