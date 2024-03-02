@@ -25,12 +25,9 @@ public class Controller {
     private MenuButton searchTypeMenu;
     @FXML
     private WebView webUwfMap;
-    private WebEngine engine;
     private String searchTitle;
 
     private String searchEntry;
-
-
 
     public void switchToBasePane(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("employeeBasePane.fxml"));
@@ -46,8 +43,11 @@ public class Controller {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void onLoadMap(ActionEvent event) throws IOException {
         if (webUwfMap != null) {
-            engine = webUwfMap.getEngine();
+            WebEngine engine = webUwfMap.getEngine();
             engine.load("https://www.google.com");
             engine.setJavaScriptEnabled(true);
         } else {
