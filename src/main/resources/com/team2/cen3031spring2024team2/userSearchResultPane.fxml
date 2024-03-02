@@ -42,7 +42,7 @@
             <Text layoutX="60.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Color:" />
             <Text fx:id="carColor" layoutX="132.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Color&gt;" />
             <Text layoutX="60.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Plate #:" />
-            <Text fx:id="plateNum" layoutX="132.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Plate #&gt;" />
+            <Text fx:id="plateExpiration" layoutX="132.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Plate #&gt;" />
             <Text layoutX="291.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" />
             <Text layoutX="291.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Type:" />
             <Hyperlink fx:id="fineInfo" layoutX="189.0" layoutY="317.0" onAction="#onViewFine" text="View Fine Information" underline="true" />
@@ -51,11 +51,11 @@
             <Text layoutX="60.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Make:" />
             <Text layoutX="60.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Model:" />
             <Text layoutX="291.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pass Type:" />
-            <Text layoutX="291.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pass #:" />
+            <Text layoutX="291.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pass Expiration:" />
             <Text fx:id="emailVal" layoutX="385.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Email&gt;" />
             <Text fx:id="userType" layoutX="385.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;User Type&gt;" />
             <Text fx:id="passType" layoutX="385.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Pass Type&gt;" />
-            <Text fx:id="passNum" layoutX="385.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Pass #&gt;" />
+            <Text fx:id="passExpiration" layoutX="385.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Pass #&gt;" />
             <Label fx:id="userName" layoutX="172.0" layoutY="31.0" text="User Name">
                <font>
                   <Font name="System Bold" size="24.0" />

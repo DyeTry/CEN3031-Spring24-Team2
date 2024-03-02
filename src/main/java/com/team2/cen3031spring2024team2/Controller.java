@@ -14,6 +14,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import java.io.IOException;
+import java.lang.annotation.Target;
 import java.net.URL;
 import javafx.scene.control.Alert.AlertType;
 
@@ -32,7 +33,25 @@ public class Controller {
     Label userName;
     @FXML
     Label fineUserName;
+    @FXML
+    Text carMake;
+    @FXML
+    Text carModel;
+    @FXML
+    Text carColor;
+    @FXML
+    Text plateNum;
+    @FXML
+    Text emailVal;
+    @FXML
+    Text userType;
+    @FXML
+    Text passType;
+    @FXML
+    Text passExpiration;
+
     private Alert alert = new Alert(AlertType.NONE);
+    CustInfo custInfo = new CustInfo();
 
     public void switchToBasePane(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("employeeBasePane.fxml"));
@@ -81,6 +100,16 @@ public class Controller {
             Parent root = loader.load();
 
             userName.setText(searchEntry);
+            carMake.setText(custInfo.getCarMake());
+            carModel.setText(custInfo.getCarModel());
+            carColor.setText(custInfo.getCarColor());
+            passType.setText(custInfo.getPassType());
+            passExpiration.setText(custInfo.getPassExpirationDate());
+            if(custInfo.getEmployeeID() == 0) {
+                userType.setText("Customer");
+            } else {
+                userType.setText("Employee");
+            }
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -110,11 +139,14 @@ public class Controller {
 
     public void onPassAssignment(ActionEvent event) throws IOException {
         //if(username is found) {
+        //Set username's pass type to chosen pass type
+        custInfo.setPassType(passTitle);
+
+        //Set pass expiration
         alert.setAlertType(AlertType.CONFIRMATION);
         alert.setContentText("Pass Assignment Successful\n"/*<username> has been assigned the <pass type> pass type*/);
         alert.show();
-        //Set username's pass type to chosen pass type
-        //Set pass expiration
+
         /*}else {
             alert.setAlertType(AlertType.ERROR);
             alert.setContentText("ERROR: Username does not exist");
@@ -133,7 +165,7 @@ public class Controller {
             alert.setContentText("ERROR: Username does not exist");
             alert.show();
         }
-        * */
+        */
     }
 
     public void onUserSearch(ActionEvent event) throws IOException {
