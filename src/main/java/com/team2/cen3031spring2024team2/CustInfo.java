@@ -49,7 +49,7 @@ public class CustInfo {
         return licensePlate;
     }
 
-    public void setLicensePlate(String licencePlate) {
+    public void setLicensePlate(String licensePlate) {
         this.licensePlate = licensePlate;
     }
 

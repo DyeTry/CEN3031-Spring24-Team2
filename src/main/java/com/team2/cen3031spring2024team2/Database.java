@@ -26,7 +26,9 @@ public class Database {
                     custInfo.setCarMake(data[2].trim());
                     custInfo.setCarModel(data[3].trim());
                     custInfo.setCarColor(data[4].trim());
-                    custInfo.setLicensePlate(data[5].trim());
+                    if (!data[5].trim().isEmpty()) {
+                        custInfo.setLicensePlate(data[5].trim());
+                    }
                     custInfo.setPassExpirationDate(data[6].trim());
                     custInfo.setPassType(data[7].trim());
                     custInfo.setUsername(data[8].trim());
