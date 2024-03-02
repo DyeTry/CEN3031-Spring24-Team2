@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -30,7 +31,15 @@ public class Controller {
 
     private String searchEntry;
 
+    @FXML
+    private MenuButton searchPassTypeMenu;
 
+    @FXML
+    private TextField usernameField;
+
+    private String username;
+
+    private final Parking_Manager manager = new Parking_Manager();
 
     public void switchToBasePane(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("employeeBasePane.fxml"));
@@ -140,5 +149,58 @@ public class Controller {
     }
 
     public void onEditCar(ActionEvent actionEvent) {
+    }
+
+    /**
+     * A method to select the Faulty and Staff parking pass
+     *
+     * @param actionEvent
+     */
+    public void onPass1(ActionEvent actionEvent) {
+        searchTitle = "Faulty and Staff";
+        searchPassTypeMenu.setText(searchTitle);
+        //System.out.println("Username = " + username);
+        manager.buyParkingPass(username, searchTitle);
+    }
+
+    /**
+     * A method to select the Resident parking pass
+     *
+     * @param actionEvent
+     */
+    public void onPass2(ActionEvent actionEvent) {
+        searchTitle = "Resident";
+        searchPassTypeMenu.setText(searchTitle);
+        //System.out.println("Username = " + username);
+        manager.buyParkingPass(username, searchTitle);
+    }
+
+    /**
+     * A method to select the Commuter parking pass
+     *
+     * @param actionEvent
+     */
+    public void onPass3(ActionEvent actionEvent) {
+        searchTitle = "Commuter";
+        searchPassTypeMenu.setText(searchTitle);
+        //System.out.println("Username = " + username);
+        manager.buyParkingPass(username, searchTitle);
+    }
+
+    /**
+     * A method to select the Handicap parking pass
+     *
+     * @param actionEvent
+     */
+    public void onPass4(ActionEvent actionEvent) {
+        searchTitle = "Handicap";
+        searchPassTypeMenu.setText(searchTitle);
+        //System.out.println("Username = " + username);
+        manager.buyParkingPass(username, searchTitle);
+    }
+
+    public void onUsernameSearch(ActionEvent actionEvent) {
+        username = usernameField.getText();
+       //System.out.println("onUsernameSearch = " + username);
     }
 }

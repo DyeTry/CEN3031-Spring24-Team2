@@ -2,6 +2,7 @@ package com.team2.cen3031spring2024team2;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,6 +14,7 @@ public class Parking_Manager {
 
     private final ArrayList<Customer> customerList = new ArrayList<>();
     private final ArrayList<Employee> employeeList = new ArrayList<>();
+    private final ArrayList<User> userList = new ArrayList<>();
     private final ArrayList<Parking_Fines> finesList = new ArrayList<>();
     private final ArrayList<Parking_Pass> passList = new ArrayList<>();
     private final ArrayList<Parking_Area> areaList = new ArrayList<>();
@@ -20,6 +22,7 @@ public class Parking_Manager {
     public Parking_Manager() {
         //loadCustomerDatabase();
         //loadEmployeeDatabase();
+        loadUserDatabase();
         loadParkingPass();
     }
 
@@ -29,6 +32,10 @@ public class Parking_Manager {
 
     private void createEmployeeAccount(String name, String passwordString) {
         employeeList.add(new Employee(name, passwordString, 1000 + employeeList.size()));
+    }
+
+    private void createUserAccount(int id, String name, String make, String model, String color, String licensePlate, String passType, String passExpirationData, int balance, String username, String password) {
+        userList.add(new User(id, name, username, password,  new Vehicle(make, model, color, licensePlate), new Parking_Pass(), balance));
     }
 
     /**
@@ -65,12 +72,20 @@ public class Parking_Manager {
      */
     public void buyParkingPass(String username, String name) {
 
-        Customer customer = findCustomer(username);
+        User user = findUser(username);
 
         for (Parking_Pass pass : passList) {
 
             if (name.equals(pass.getName())) {
-                customer.setPass(pass.getName(), pass.getPrice(), pass.getDescription(), LocalDate.now().plusYears(1));
+
+                try {
+                    user.setPass(pass.getName(), pass.getPrice(), pass.getDescription(), LocalDate.now().plusYears(1));
+                    System.out.println("Successfully Set Pass");
+                }
+
+                catch (NullPointerException exception) {
+                    System.out.println(exception.toString());
+                }
             }
         }
     }
@@ -149,7 +164,31 @@ public class Parking_Manager {
 
         for (Customer info : customerList) {
 
-            if (info.getUsername().equals(username)) {
+            if (Objects.equals(info.getUsername(), username)) {
+                System.out.println(info.getName());
+                return info;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * A method to find User info based on their username
+     *
+     * @param username The User's username
+     * @return Returns User info
+     */
+    private User findUser(String username) {
+
+        for (User info : userList) {
+
+            //System.out.println("Username  = " + info.getUsername());
+
+            if (Objects.equals(info.getUsername(), username)) {
+
+                //System.out.println("Name = " + info.getName());
+
                 return info;
             }
         }
@@ -162,8 +201,7 @@ public class Parking_Manager {
      */
     private void loadParkingPass() {
 
-        String path = "\\src\\main\\java\\com\\team2\\cen3031spring2024team2\\csv files\\pass.csv";
-        System.out.println("Attempting to Read...");
+        String path = "src\\main\\resources\\com\\team2\\cen3031spring2024team2\\csv files\\pass.csv";
         FileInputStream fileByteStream = null;
         Scanner inFS = null;
 
@@ -174,7 +212,6 @@ public class Parking_Manager {
         }
 
         catch (FileNotFoundException exception) {
-            System.out.println("Error in initialization");
             System.out.println(exception.toString());
         }
 
@@ -204,7 +241,7 @@ public class Parking_Manager {
      */
     private void loadCustomerDatabase() {
 
-        String path = "src\\main\\java\\home\\csv files\\customer.csv";
+        String path = "src\\main\\resources\\com\\team2\\cen3031spring2024team2\\csv files\\customer.csv";
         FileInputStream fileByteStream = null;
         Scanner inFS = null;
 
@@ -243,7 +280,7 @@ public class Parking_Manager {
      */
     private void loadEmployeeDatabase() {
 
-        String path = "src\\main\\java\\home\\csv files\\employee.csv";
+        String path = "src\\main\\resources\\com\\team2\\cen3031spring2024team2\\csv files\\employee.csv";
         FileInputStream fileByteStream = null;
         Scanner inFS = null;
 
@@ -269,6 +306,77 @@ public class Parking_Manager {
 
         try {
             System.out.println("Successfully read Employee info.");
+            fileByteStream.close();
+        }
+
+        catch (IOException exception) {
+            System.out.println(exception.toString());
+        }
+    }
+
+    /**
+     * A method to load All User data
+     */
+    private void loadUserDatabase() {
+
+        String path = "src\\main\\resources\\com\\team2\\cen3031spring2024team2\\csv files\\user.csv";
+        FileInputStream fileByteStream = null;
+        Scanner inFS = null;
+
+        try {
+            System.out.println("Reading Employee info...");
+            fileByteStream = new FileInputStream(path);
+            inFS = new Scanner(fileByteStream);
+        }
+
+        catch (FileNotFoundException exception) {
+            System.out.println(exception.toString());
+        }
+
+        inFS.useDelimiter(",");
+
+        while (inFS.hasNext()) {
+
+            int id = inFS.nextInt();
+            System.out.println(id);
+
+            String name = inFS.next();
+            System.out.println(name);
+
+            String make = inFS.next();
+            System.out.println(make);
+
+            String model = inFS.next();
+            System.out.println(model);
+
+            String color = inFS.next();
+            System.out.println(color);
+
+            String licensePlate = inFS.next();
+            System.out.println(licensePlate);
+
+            String passType = inFS.next();
+            System.out.println(passType);
+
+            String passExpirationDate = inFS.next();
+            System.out.println(passExpirationDate);
+
+            int balance = inFS.nextInt();
+            System.out.println(balance);
+
+            String username = inFS.next();
+            System.out.println(username);
+
+            String password = inFS.next();
+            System.out.println(password);
+
+            createUserAccount(id, name, make, model, color, licensePlate, passType, passExpirationDate, balance, username, password);
+
+            inFS.nextLine();
+        }
+
+        try {
+            System.out.println("Successfully read User info.");
             fileByteStream.close();
         }
 
