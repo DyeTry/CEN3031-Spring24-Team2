@@ -6,16 +6,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuButton;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
+import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 import java.net.URL;
+import javafx.scene.control.Alert.AlertType;
 
 public class Controller {
     @FXML
@@ -26,6 +26,13 @@ public class Controller {
     private MenuButton passTypeMenu;
     private String passTitle;
     private String searchEntry;
+    @FXML
+    TextField userSearch;
+    @FXML
+    Label userName;
+    @FXML
+    Label fineUserName;
+    private Alert alert = new Alert(AlertType.NONE);
 
     public void switchToBasePane(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("employeeBasePane.fxml"));
@@ -68,30 +75,69 @@ public class Controller {
     }
 
     public void switchToUserSearchResultPane(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("userSearchResultPane.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userSearchResultPane.fxml"));
+            loader.setController(this);
+            Parent root = loader.load();
+
+            userName.setText(searchEntry);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void switchToUserFineView(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("userFineView.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userFineView.fxml"));
+            loader.setController(this);
+            Parent root = loader.load();
+
+            fineUserName.setText(searchEntry);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void onPlateAssignment(ActionEvent event) throws IOException {
-        //Throw success/failure message
+    public void onPassAssignment(ActionEvent event) throws IOException {
+        //if(username is found) {
+        alert.setAlertType(AlertType.CONFIRMATION);
+        alert.setContentText("Pass Assignment Successful\n"/*<username> has been assigned the <pass type> pass type*/);
+        alert.show();
+        //Set username's pass type to chosen pass type
+        //Set pass expiration
+        /*}else {
+            alert.setAlertType(AlertType.ERROR);
+            alert.setContentText("ERROR: Username does not exist");
+            alert.show();
+        }
+        */
     }
 
     public void onSearchEntry(ActionEvent event) throws IOException {
+        //if(username found) {
         //Set searchEntry equal to entered search value
+        searchEntry = userSearch.getText();
+        System.out.println(searchEntry);
+        /*} else {
+            alert.setAlertType(AlertType.ERROR);
+            alert.setContentText("ERROR: Username does not exist");
+            alert.show();
+        }
+        * */
     }
 
     public void onUserSearch(ActionEvent event) throws IOException {
+        //if(username found) {
         //Redirect to search results page
         switchToUserSearchResultPane(event);
     }
