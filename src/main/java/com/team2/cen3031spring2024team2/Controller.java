@@ -43,6 +43,22 @@ public class Controller {
         stage.show();
     }
 
+    public void switchToIssuePane(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("CustomerIssues.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToMapPane(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("CustomerMap.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 
 
 }
