@@ -42,7 +42,7 @@
             <Text layoutX="60.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Color:" />
             <Text fx:id="carColor" layoutX="132.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Color&gt;" />
             <Text layoutX="60.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Plate #:" />
-            <Text fx:id="plateExpiration" layoutX="132.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Plate #&gt;" />
+            <Text fx:id="plateNum" layoutX="132.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Plate #&gt;" />
             <Text layoutX="291.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" />
             <Text layoutX="291.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Type:" />
             <Hyperlink fx:id="fineInfo" layoutX="189.0" layoutY="317.0" onAction="#onViewFine" text="View Fine Information" underline="true" />

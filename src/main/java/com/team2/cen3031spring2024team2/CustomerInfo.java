@@ -1,8 +1,6 @@
 package com.team2.cen3031spring2024team2;
 
-import javafx.scene.chart.PieChart;
-
-public class CustInfo {
+public class CustomerInfo {
     private String name;
     private String carMake;
     private String carModel;
@@ -93,16 +91,6 @@ public class CustInfo {
 
     public void setPassType(String passType) {
         this.passType = passType;
-    }
-
-    public void searchForUser(String username) {
-        Database database = new Database();
-
-        boolean userFound = false;
-        int searchCount = 0;
-        do {
-
-        }while(userFound == false && searchCount < database.userCount);
     }
 
     @Override

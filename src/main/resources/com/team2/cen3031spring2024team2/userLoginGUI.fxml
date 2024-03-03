@@ -22,8 +22,8 @@
             </Text>
             <Label layoutX="16.0" layoutY="213.0" text="Username" textFill="#faf6f6" />
             <Label layoutX="18.0" layoutY="274.0" text="Password" textFill="#fffdfd" />
-            <PasswordField fx:id="passwordEntry" layoutX="15.0" layoutY="298.0" onAction="#onPasswordEntry" promptText="Password" />
-            <TextField fx:id="usernameEntry" layoutX="15.0" layoutY="242.0" onAction="#onUsernameEntry" promptText="Username" />
+            <PasswordField fx:id="passwordEntry" layoutX="15.0" layoutY="298.0" promptText="Password" />
+            <TextField fx:id="usernameEntry" layoutX="15.0" layoutY="242.0" promptText="Username" />
             <Button fx:id="login" layoutX="63.0" layoutY="335.0" mnemonicParsing="false" onAction="#onLogin" style="-fx-background-color: #009CDE;" text="Login" />
             <Button fx:id="forgotPassword" layoutX="52.0" layoutY="372.0" mnemonicParsing="false" onAction="#onForgotPassword" prefHeight="0.0" prefWidth="69.0" style="-fx-background-color: #004C97;" text="Forgot password" textFill="WHITE">
                <font>

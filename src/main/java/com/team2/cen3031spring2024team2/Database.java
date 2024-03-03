@@ -7,10 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
-    private List<CustInfo> employeeInfos = new ArrayList<>();
-    private List<CustInfo> custInfos = new ArrayList<>();
+    private List<CustomerInfo> employeeInfos = new ArrayList<>();
+    private List<CustomerInfo> customerInfos = new ArrayList<>();
     public int userCount = 0;
-
 
     public void loadDatabaseFromCSV(String filename) {
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
@@ -23,18 +22,18 @@ public class Database {
                 }
                 String[] data = line.split(",");
                 if (data.length == 10) {
-                    CustInfo custInfo = new CustInfo();
-                    custInfo.setName(data[1].trim());
-                    custInfo.setCarMake(data[2].trim());
-                    custInfo.setCarModel(data[3].trim());
-                    custInfo.setCarColor(data[4].trim());
+                    CustomerInfo customerInfo = new CustomerInfo();
+                    customerInfo.setName(data[1].trim());
+                    customerInfo.setCarMake(data[2].trim());
+                    customerInfo.setCarModel(data[3].trim());
+                    customerInfo.setCarColor(data[4].trim());
                     if (!data[5].trim().isEmpty()) {
-                        custInfo.setLicensePlate(data[5].trim());
+                        customerInfo.setLicensePlate(data[5].trim());
                     }
-                    custInfo.setPassExpirationDate(data[6].trim());
-                    custInfo.setPassType(data[7].trim());
-                    custInfo.setUsername(data[8].trim());
-                    custInfo.setPassword(data[9].trim());
+                    customerInfo.setPassExpirationDate(data[6].trim());
+                    customerInfo.setPassType(data[7].trim());
+                    customerInfo.setUsername(data[8].trim());
+                    customerInfo.setPassword(data[9].trim());
 
                     int employeeID = 0;
                     try {
@@ -44,10 +43,10 @@ public class Database {
                     }
 
                     if (employeeID != 0) {
-                        custInfo.setEmployeeID(employeeID);
-                        employeeInfos.add(custInfo);
+                        customerInfo.setEmployeeID(employeeID);
+                        employeeInfos.add(customerInfo);
                     } else {
-                        custInfos.add(custInfo);
+                        customerInfos.add(customerInfo);
                     }
                 }
                 userCount++;
@@ -57,12 +56,23 @@ public class Database {
         }
     }
 
-    public List<CustInfo> getEmployeeInfos() {
+    public List<CustomerInfo> getEmployeeInfos() {
         return employeeInfos;
     }
 
-    public List<CustInfo> getCustInfos() {
-        return custInfos;
+    public List<CustomerInfo> getCustomerInfos() {
+        return customerInfos;
     }
 
+    public CustomerInfo getUser(String username) {
+        for(CustomerInfo c : customerInfos) {
+            if(c.getUsername().equals(username))
+                return c;
+        }
+        for(CustomerInfo c : employeeInfos) {
+            if(c.getUsername().equals(username))
+                return c;
+        }
+        return null;
+    }
 }

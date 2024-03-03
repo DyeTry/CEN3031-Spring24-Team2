@@ -7,15 +7,11 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
+
 import java.io.IOException;
-import java.lang.annotation.Target;
-import java.net.URL;
+
 import javafx.scene.control.Alert.AlertType;
 
 public class Controller {
@@ -57,7 +53,8 @@ public class Controller {
     private String usernameVal;
 
     private Alert alert = new Alert(AlertType.NONE);
-    CustInfo custInfo = new CustInfo();
+    CustomerInfo customerInfo = new CustomerInfo();
+    private final Database database = Main.database;
 
     public void switchToCustomerParkingFines(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Parking Fines.fxml"));
@@ -132,18 +129,31 @@ public class Controller {
     }
 
     public void switchToUserSearchResultPane(ActionEvent event) throws IOException {
+        String user = userSearch.getText();
+
+        CustomerInfo c = database.getUser(user);
+
+        if(c == null) {
+            alert.setAlertType(AlertType.ERROR);
+            alert.setContentText("ERROR: Username does not exist");
+            alert.show();
+            return;
+        }
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("userSearchResultPane.fxml"));
             loader.setController(this);
             Parent root = loader.load();
 
             userName.setText(searchEntry);
-            carMake.setText(custInfo.getCarMake());
-            carModel.setText(custInfo.getCarModel());
-            carColor.setText(custInfo.getCarColor());
-            passType.setText(custInfo.getPassType());
-            passExpiration.setText(custInfo.getPassExpirationDate());
-            if(custInfo.getEmployeeID() == 0) {
+            carMake.setText(c.getCarMake());
+            carModel.setText(c.getCarModel());
+            carColor.setText(c.getCarColor());
+            passType.setText(c.getPassType());
+            passExpiration.setText(c.getPassExpirationDate());
+            plateNum.setText(c.getLicensePlate());
+            emailVal.setText(c.getUsername());
+            if(customerInfo.getEmployeeID() == 0) {
                 userType.setText("Customer");
             } else {
                 userType.setText("Employee");
@@ -178,7 +188,7 @@ public class Controller {
     public void onPassAssignment(ActionEvent event) throws IOException {
         //if(username is found) {
         //Set username's pass type to chosen pass type
-        custInfo.setPassType(passTitle);
+        customerInfo.setPassType(passTitle);
 
         //Set pass expiration
         alert.setAlertType(AlertType.CONFIRMATION);
@@ -186,18 +196,6 @@ public class Controller {
         alert.show();
 
         /*}else {
-            alert.setAlertType(AlertType.ERROR);
-            alert.setContentText("ERROR: Username does not exist");
-            alert.show();
-        }
-        */
-    }
-
-    public void onSearchEntry(ActionEvent event) throws IOException {
-        //if(username found) {
-        //Set searchEntry equal to entered search value
-        searchEntry = userSearch.getText();
-        /*} else {
             alert.setAlertType(AlertType.ERROR);
             alert.setContentText("ERROR: Username does not exist");
             alert.show();
@@ -236,27 +234,23 @@ public class Controller {
         passTypeMenu.setText(passTitle);
     }
 
-    public void onPasswordEntry(ActionEvent event) {
-        passwordVal = passwordEntry.getText();
-    }
-
-    public void onUsernameEntry(ActionEvent event) {
-        usernameVal = usernameEntry.getText();
-    }
-
     public void onLogin(ActionEvent event) throws IOException {
-        custInfo.setEmployeeID(1234);
-        if(custInfo.getEmployeeID() == 0) {
-            //if(/*username and password match a user in the database*/) {
-                switchToCustomerMapPane(event);
-                stage.setTitle("Customer Menu");
-            //}
+        String username = usernameEntry.getText();
+        String pass = passwordEntry.getText();
 
+        customerInfo = database.getUser(username);
+        if(customerInfo == null || !customerInfo.getPassword().equals(pass)) {
+            alert.setAlertType(AlertType.ERROR);
+            alert.setContentText("ERROR: Username does not exist");
+            alert.show();
+        }
+
+        if(customerInfo.getEmployeeID() == 0) {
+            switchToCustomerMapPane(event);
+            stage.setTitle("Customer Menu");
         } else {
-            //if(/*username and password match a user in the database*/) {
             switchToMapPane(event);
             stage.setTitle("Management Menu");
-            //}
         }
     }
 
