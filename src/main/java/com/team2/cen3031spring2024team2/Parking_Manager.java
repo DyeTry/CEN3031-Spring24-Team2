@@ -338,37 +338,37 @@ public class Parking_Manager {
         while (inFS.hasNext()) {
 
             int id = inFS.nextInt();
-            System.out.println(id);
+            System.out.println("id = " + id);
 
             String name = inFS.next();
-            System.out.println(name);
+            System.out.println("name = " + name);
 
             String make = inFS.next();
-            System.out.println(make);
+            System.out.println("make = " + make);
 
             String model = inFS.next();
-            System.out.println(model);
+            System.out.println("model = " + model);
 
             String color = inFS.next();
-            System.out.println(color);
+            System.out.println("color = " + color);
 
             String licensePlate = inFS.next();
-            System.out.println(licensePlate);
+            System.out.println("LP = " + licensePlate);
 
             String passType = inFS.next();
-            System.out.println(passType);
+            System.out.println("pass type = " + passType);
 
             String passExpirationDate = inFS.next();
-            System.out.println(passExpirationDate);
+            System.out.println("date = " + passExpirationDate);
 
             int balance = inFS.nextInt();
-            System.out.println(balance);
+            System.out.println("balance = " + balance);
 
             String username = inFS.next();
-            System.out.println(username);
+            System.out.println("username = " + username);
 
             String password = inFS.next();
-            System.out.println(password);
+            System.out.println("password" + password);
 
             createUserAccount(id, name, make, model, color, licensePlate, passType, passExpirationDate, balance, username, password);
 

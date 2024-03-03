@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -39,7 +41,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="usernameField" layoutX="46.0" layoutY="210.0" prefHeight="25.0" prefWidth="105.0" />
+            <TextField fx:id="usernameField" layoutX="46.0" layoutY="210.0" onAction="#onUsernameSearch" prefHeight="25.0" prefWidth="105.0" />
             <Text fill="WHITE" layoutX="70.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
                <font>
                   <Font name="System Bold" size="12.0" />
@@ -51,14 +53,16 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Text>
-            <TextField fx:id="passField" layoutX="350.0" layoutY="210.0" prefHeight="25.0" prefWidth="105.0" />
-            <Text fill="WHITE" layoutX="375.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pass Type">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Text>
             <Button fx:id="submitPlate" layoutX="225.0" layoutY="275.0" mnemonicParsing="false" onAction="#onPlateAssignment" style="-fx-background-color: #009CDE;" text="Submit" textFill="WHITE" />
+            <MenuButton fx:id="searchPassTypeMenu" layoutX="350.0" layoutY="210.0" mnemonicParsing="false" text="Pass Type">
+               <items>
+                  <MenuItem fx:id="choicePass1" mnemonicParsing="false" onAction="#onPass1" text="Faulty and Staff" />
+                  <MenuItem fx:id="choicePass2" mnemonicParsing="false" onAction="#onPass2" text="Resident" />
+                  <MenuItem fx:id="choicePass3" mnemonicParsing="false" onAction="#onPass3" text="Commuter" />
+                  <MenuItem fx:id="choicePass4" mnemonicParsing="false" onAction="#onPass4" text="Handicap" />
+               </items>
+            </MenuButton>
          </children>
-   </AnchorPane>
+      </AnchorPane>
    </center>
 </BorderPane>
