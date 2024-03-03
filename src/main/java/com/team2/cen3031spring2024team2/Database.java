@@ -9,6 +9,8 @@ import java.util.List;
 public class Database {
     private List<CustInfo> employeeInfos = new ArrayList<>();
     private List<CustInfo> custInfos = new ArrayList<>();
+    public int userCount = 0;
+
 
     public void loadDatabaseFromCSV(String filename) {
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
@@ -48,6 +50,7 @@ public class Database {
                         custInfos.add(custInfo);
                     }
                 }
+                userCount++;
             }
         } catch (IOException e) {
             e.printStackTrace();

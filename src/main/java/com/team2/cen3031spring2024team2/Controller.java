@@ -28,30 +28,68 @@ public class Controller {
     private String passTitle;
     private String searchEntry;
     @FXML
-    TextField userSearch;
+    private TextField userSearch;
     @FXML
-    Label userName;
+    private Label userName;
     @FXML
-    Label fineUserName;
+    private Label fineUserName;
     @FXML
-    Text carMake;
+    private Text carMake;
     @FXML
-    Text carModel;
+    private Text carModel;
     @FXML
-    Text carColor;
+    private Text carColor;
     @FXML
-    Text plateNum;
+    private Text plateNum;
     @FXML
-    Text emailVal;
+    private Text emailVal;
     @FXML
-    Text userType;
+    private Text userType;
     @FXML
-    Text passType;
+    private Text passType;
     @FXML
-    Text passExpiration;
+    private Text passExpiration;
+    @FXML
+    private PasswordField passwordEntry;
+    private String passwordVal;
+    @FXML
+    private TextField usernameEntry;
+    private String usernameVal;
 
     private Alert alert = new Alert(AlertType.NONE);
     CustInfo custInfo = new CustInfo();
+
+    public void switchToCustomerParkingFines(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("Parking Fines.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToCustomerPasses(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("CustomerPasses.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToCustomerIssuePane(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("CustomerIssues.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToCustomerMapPane(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("CustomerMap.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     public void switchToBasePane(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("employeeBasePane.fxml"));
@@ -159,7 +197,6 @@ public class Controller {
         //if(username found) {
         //Set searchEntry equal to entered search value
         searchEntry = userSearch.getText();
-        System.out.println(searchEntry);
         /*} else {
             alert.setAlertType(AlertType.ERROR);
             alert.setContentText("ERROR: Username does not exist");
@@ -197,5 +234,33 @@ public class Controller {
     public void onStaffSelection(ActionEvent event) {
         passTitle = "Staff";
         passTypeMenu.setText(passTitle);
+    }
+
+    public void onPasswordEntry(ActionEvent event) {
+        passwordVal = passwordEntry.getText();
+    }
+
+    public void onUsernameEntry(ActionEvent event) {
+        usernameVal = usernameEntry.getText();
+    }
+
+    public void onLogin(ActionEvent event) throws IOException {
+        custInfo.setEmployeeID(1234);
+        if(custInfo.getEmployeeID() == 0) {
+            //if(/*username and password match a user in the database*/) {
+                switchToCustomerMapPane(event);
+                stage.setTitle("Customer Menu");
+            //}
+
+        } else {
+            //if(/*username and password match a user in the database*/) {
+            switchToMapPane(event);
+            stage.setTitle("Management Menu");
+            //}
+        }
+    }
+
+    public void onForgotPassword(ActionEvent event) {
+        //enter new password and possibly verify your identity
     }
 }
