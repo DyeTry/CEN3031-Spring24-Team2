@@ -7,4 +7,6 @@ module com.team2.cen3031spring2024team2 {
 
     opens com.team2.cen3031spring2024team2 to javafx.fxml;
     exports com.team2.cen3031spring2024team2;
+    exports depreciated_files;
+    opens depreciated_files to javafx.fxml;
 }

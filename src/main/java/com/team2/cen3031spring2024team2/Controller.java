@@ -50,6 +50,10 @@ public class Controller {
     private String passwordVal;
     @FXML
     private TextField usernameEntry;
+
+    /**
+     * An object to store the User's username
+     */
     private String usernameVal;
 
     private Alert alert = new Alert(AlertType.NONE);
@@ -185,24 +189,6 @@ public class Controller {
         }
     }
 
-    public void onPassAssignment(ActionEvent event) throws IOException {
-        //if(username is found) {
-        //Set username's pass type to chosen pass type
-        customerInfo.setPassType(passTitle);
-
-        //Set pass expiration
-        alert.setAlertType(AlertType.CONFIRMATION);
-        alert.setContentText("Pass Assignment Successful\n"/*<username> has been assigned the <pass type> pass type*/);
-        alert.show();
-
-        /*}else {
-            alert.setAlertType(AlertType.ERROR);
-            alert.setContentText("ERROR: Username does not exist");
-            alert.show();
-        }
-        */
-    }
-
     public void onUserSearch(ActionEvent event) throws IOException {
         //if(username found) {
         //Redirect to search results page
@@ -219,21 +205,6 @@ public class Controller {
     public void onEditCar(ActionEvent actionEvent) {
     }
 
-    public void onResidentSelection(ActionEvent event) {
-        passTitle = "Resident";
-        passTypeMenu.setText(passTitle);
-    }
-
-    public void onCommuterSelection(ActionEvent event) {
-        passTitle = "Commuter";
-        passTypeMenu.setText(passTitle);
-    }
-
-    public void onStaffSelection(ActionEvent event) {
-        passTitle = "Staff";
-        passTypeMenu.setText(passTitle);
-    }
-
     public void onLogin(ActionEvent event) throws IOException {
         String username = usernameEntry.getText();
         String pass = passwordEntry.getText();
@@ -243,6 +214,7 @@ public class Controller {
             alert.setAlertType(AlertType.ERROR);
             alert.setContentText("ERROR: Username does not exist");
             alert.show();
+            return;
         }
 
         if(customerInfo.getEmployeeID() == 0) {
@@ -256,5 +228,99 @@ public class Controller {
 
     public void onForgotPassword(ActionEvent event) {
         //enter new password and possibly verify your identity
+    }
+
+    @FXML
+    private TextField usernameField;
+
+    /**
+     * A method to search for a given Username in the Parking Pass Assignment Pane
+     *
+     * @param actionEvent
+     */
+    public void onUsernameSearch(ActionEvent actionEvent) {
+        usernameVal = usernameField.getText();
+        System.out.println("onUsernameSearch = " + usernameVal);
+    }
+
+    /**
+     * A method to search for a given Parking Pass in the Parking Pass Assignment Pane
+     *
+     * @param event
+     */
+    public void onStaffSelection(ActionEvent event) {
+        passTitle = "Staff";
+        passTypeMenu.setText(passTitle);
+        System.out.println("Pass Title = " + passTitle);
+    }
+
+    /**
+     * A method to search for a given Parking Pass in the Parking Pass Assignment Pane
+     *
+     * @param event
+     */
+    public void onCommuterSelection(ActionEvent event) {
+        passTitle = "Commuter";
+        passTypeMenu.setText(passTitle);
+        System.out.println("Pass Title = " + passTitle);
+    }
+
+    /**
+     * A method to search for a given Parking Pass in the Parking Pass Assignment Pane
+     *
+     * @param event
+     */
+    public void onResidentSelection(ActionEvent event) {
+        passTitle = "Resident";
+        passTypeMenu.setText(passTitle);
+        System.out.println("Pass Title = " + passTitle);
+    }
+
+    /**
+     * A method to search for a given Parking Pass in the Parking Pass Assignement Pane
+     * @param actionEvent
+     */
+    public void onHandicapSelection(ActionEvent actionEvent) {
+        passTitle = "Handicap";
+        passTypeMenu.setText(passTitle);
+        System.out.println("Pass Title = " + passTitle);
+    }
+
+    /**
+     * A method to assign a given Parking Pass Type to a given Username in the Parking Assignment Pane
+     *
+     * @param event
+     * @throws IOException
+     */
+    public void onPassAssignment(ActionEvent event) throws IOException {
+
+        /**
+         * Edit onPassAssignment method
+         */
+
+        try {
+            database.getUser(usernameVal);
+            System.out.println("Username = " + usernameVal);
+        }
+
+        catch (NullPointerException exception) {
+            System.out.println("First Try");
+            System.out.println(exception.toString());
+        }
+
+        try {
+            database.getUser(usernameVal).setPassType(passTitle);
+            System.out.println("Pass Type = " + database.getUser(usernameVal).getPassType());
+        }
+
+        catch (NullPointerException exception) {
+            System.out.println("Second Try");
+            System.out.println(exception.toString());
+        }
+
+        //Set pass expiration
+        alert.setAlertType(AlertType.CONFIRMATION);
+        alert.setContentText("Pass Assignment Successful\n" + database.getUser(usernameVal).getName() + " has been assigned the " + database.getUser(usernameVal).getPassType() + " parking pass.");
+        alert.show();
     }
 }

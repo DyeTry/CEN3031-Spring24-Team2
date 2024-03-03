@@ -41,13 +41,14 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="usernameField" layoutX="156.0" layoutY="222.0" prefHeight="25.0" prefWidth="105.0" promptText="Username" />
+            <TextField fx:id="usernameField" layoutX="156.0" layoutY="222.0" onAction="#onUsernameSearch" prefHeight="25.0" prefWidth="105.0" promptText="Username" />
             <Button fx:id="submitPass" layoutX="223.0" layoutY="307.0" mnemonicParsing="false" onAction="#onPassAssignment" style="-fx-background-color: #009CDE;" text="Submit" textFill="WHITE" />
             <MenuButton fx:id="passTypeMenu" layoutX="261.0" layoutY="222.0" mnemonicParsing="false" text="Pass Type" textAlignment="CENTER">
               <items>
-                <MenuItem fx:id="residentChoice" mnemonicParsing="false" onAction="#onResidentSelection" text="Resident" />
-                <MenuItem fx:id="commuterChoice" mnemonicParsing="false" onAction="#onCommuterSelection" text="Commuter" />
                   <MenuItem fx:id="staffChoice" mnemonicParsing="false" onAction="#onStaffSelection" text="Staff" />
+                <MenuItem fx:id="commuterChoice" mnemonicParsing="false" onAction="#onCommuterSelection" text="Commuter" />
+                <MenuItem fx:id="residentChoice" mnemonicParsing="false" onAction="#onResidentSelection" text="Resident" />
+                  <MenuItem fx:id="handicapChoice" mnemonicParsing="false" onAction="#onHandicapSelection" text="Handicap" />
               </items>
             </MenuButton>
          </children>
