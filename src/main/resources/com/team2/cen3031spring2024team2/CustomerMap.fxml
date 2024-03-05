@@ -26,12 +26,17 @@
     </left>
     <center>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #007A33;" BorderPane.alignment="CENTER">
-            <children>
-                <ImageView fitHeight="400.0" fitWidth="513.0" layoutX="1.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@map.jpg" />
-                    </image>
-                </ImageView>
-            </children></AnchorPane>
+         <children>
+            <ImageView fitHeight="421.0" fitWidth="500.0" layoutX="1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@BestMap.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="459.0" fitWidth="116.0" layoutX="385.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@BlankLegend.jpg" />
+               </image>
+            </ImageView>
+         </children></AnchorPane>
     </center>
 </BorderPane>

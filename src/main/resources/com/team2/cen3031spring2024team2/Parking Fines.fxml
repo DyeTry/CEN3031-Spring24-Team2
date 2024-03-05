@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -41,6 +42,7 @@
                         <ListView prefHeight="225.0" prefWidth="441.0" />
                      </content>
                   </ScrollPane>
+                  <TextArea fx:id="textArea" prefHeight="222.0" prefWidth="438.0" text="Citation number: #1&#10;Issue date: Feb-20&#10;Fine ammount: $200.00&#10;" />
                </children>
             </AnchorPane>
          </children></AnchorPane>

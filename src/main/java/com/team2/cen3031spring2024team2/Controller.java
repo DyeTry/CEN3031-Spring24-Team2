@@ -26,7 +26,6 @@ public class Controller {
     private String searchEntry;
 
 
-
     public void switchToParkingFines(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Parking Fines.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
