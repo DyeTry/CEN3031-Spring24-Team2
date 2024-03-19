@@ -30,8 +30,8 @@ public class Database {
                     if (!data[5].trim().isEmpty()) {
                         customerInfo.setLicensePlate(data[5].trim());
                     }
-                    customerInfo.setPassExpirationDate(data[6].trim());
-                    customerInfo.setPassType(data[7].trim());
+                    customerInfo.setPassType(data[6].trim());
+                    customerInfo.setPassExpirationDate(data[7].trim());
                     customerInfo.setUsername(data[8].trim());
                     customerInfo.setPassword(data[9].trim());
 
@@ -74,5 +74,9 @@ public class Database {
                 return c;
         }
         return null;
+    }
+
+    public void createCustomerProfile(String name, String username, String password, String make, String model, String color, String licensePlate) {
+        customerInfos.add(new CustomerInfo(name, username, password, make, model, color, licensePlate));
     }
 }

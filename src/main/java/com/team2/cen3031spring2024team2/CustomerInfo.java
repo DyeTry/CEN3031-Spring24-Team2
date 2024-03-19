@@ -13,6 +13,17 @@ public class CustomerInfo {
     private int employeeID;
     public String searchedUser;
 
+    public CustomerInfo() {}
+    public CustomerInfo(String name, String username, String password, String make, String model, String color, String licensePlate) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.carMake = make;
+        this.carModel = model;
+        this.carColor = color;
+        this.licensePlate = licensePlate;
+    }
+
     public String getName() {
         return name;
     }
@@ -104,6 +115,6 @@ public class CustomerInfo {
                 "\nPassType: " + passType +
                 "\nUsername: " + username +
                 "\nPassword: " + password +
-                "\nEmployee ID: " + employeeID ;
+                "\nEmployee ID: " + employeeID;
     }
 }

@@ -22,10 +22,10 @@
             </Text>
             <Label layoutX="16.0" layoutY="213.0" text="Username" textFill="#faf6f6" />
             <Label layoutX="18.0" layoutY="274.0" text="Password" textFill="#fffdfd" />
-            <PasswordField fx:id="passwordEntry" layoutX="15.0" layoutY="298.0" promptText="Password" />
-            <TextField fx:id="usernameEntry" layoutX="15.0" layoutY="242.0" promptText="Username" />
+            <PasswordField fx:id="passwordEntry" layoutX="8.0" layoutY="298.0" promptText="Password" />
+            <TextField fx:id="usernameEntry" layoutX="8.0" layoutY="241.0" promptText="Username" />
             <Button fx:id="login" layoutX="63.0" layoutY="335.0" mnemonicParsing="false" onAction="#onLogin" style="-fx-background-color: #009CDE;" text="Login" />
-            <Button fx:id="forgotPassword" layoutX="52.0" layoutY="372.0" mnemonicParsing="false" onAction="#onForgotPassword" prefHeight="0.0" prefWidth="69.0" style="-fx-background-color: #004C97;" text="Forgot password" textFill="WHITE">
+            <Button fx:id="forgotPassword" layoutX="9.0" layoutY="375.0" mnemonicParsing="false" onAction="#onForgotPassword" prefHeight="0.0" prefWidth="69.0" style="-fx-background-color: #004C97;" text="Forgot password" textFill="WHITE">
                <font>
                   <Font size="6.0" />
                </font>
@@ -35,6 +35,11 @@
                <image>
                   <Image url="@uwflogo.png" />
                </image></ImageView>
+            <Button fx:id="createAccount" layoutX="84.0" layoutY="375.0" mnemonicParsing="false" onAction="#onCreateAccount" prefHeight="0.0" prefWidth="69.0" style="-fx-background-color: #004C97;" text="Create account" textFill="WHITE">
+               <font>
+                  <Font size="6.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </left>

@@ -10,6 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.TextArea?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team2.cen3031spring2024team2.Controller">
    <left>
       <AnchorPane prefHeight="400.0" prefWidth="99.0" style="-fx-background-color: #004C97;" BorderPane.alignment="CENTER">
@@ -41,6 +42,7 @@
                         <ListView prefHeight="225.0" prefWidth="441.0" />
                      </content>
                   </ScrollPane>
+                  <TextArea fx:id="textArea" prefHeight="222.0" prefWidth="438.0" text="Citation number: #1&#10;Issue date: Feb-20&#10;Fine amount: $200.00&#10;" />
                </children>
             </AnchorPane>
          </children></AnchorPane>
