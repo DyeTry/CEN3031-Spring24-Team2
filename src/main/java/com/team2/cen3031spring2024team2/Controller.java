@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 import javafx.scene.control.Alert.AlertType;
+import src.main.java.com.team2.cen3031spring2024team2.ParkingFines;
 
 public class Controller {
     @FXML
@@ -76,6 +77,15 @@ public class Controller {
     @FXML
     private TextField createPlate;
     String userEmailVal;
+
+    @FXML
+    private TextField fineAmountVar;
+
+    @FXML
+    private TextField issueDateVar;
+
+    @FXML
+    private Button addFineButton;
 
     //used for showing alerts such as success/fail messages to users
     private Alert alert = new Alert(AlertType.NONE);
@@ -254,6 +264,25 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void addNewCitation(ActionEvent event) throws IOException{
+
+        try {
+
+            finePrice = fineAmountVar.getText();
+            fineDate = issueDateVar.getText();
+            ParkingFine newFine = new ParkingFines(finePrice, fineDate);
+            if(finePrice != null || fineDate != null) {
+                alert.setAlertType(AlertType.SUCCESS);
+                alert.setContentText("Successfully added fine");
+                alert.show();
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     //method called when a user is assigned a pass
