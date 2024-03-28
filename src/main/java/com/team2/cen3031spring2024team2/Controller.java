@@ -256,23 +256,32 @@ public class Controller {
         }
     }
 
+    @FXML
+    private TextField usernameField;
+
     //method called when a user is assigned a pass
     public void onPassAssignment(ActionEvent event) throws IOException {
-        //if(username is found) {
-        //Set username's pass type to chosen pass type
-        customerInfo.setPassType(passTitle);
 
-        //Set pass expiration
-        alert.setAlertType(AlertType.CONFIRMATION);
-        alert.setContentText("Pass Assignment Successful\n"/*<username> has been assigned the <pass type> pass type*/);
-        alert.show();
+        String user = usernameField.getText();
+        CustomerInfo c = database.getUser(user);
 
-        /*}else {
+        if (c == database.getUser(user)) {
+            //Set username's pass type to chosen pass type
+            c.setPassType(passTitle);
+            database.saveDatabase();
+
+            //Set pass expiration
+            alert.setAlertType(AlertType.CONFIRMATION);
+            alert.setContentText("Pass Assignment Successful\n" + c.toString()/*<username> has been assigned the <pass type> pass type*/);
+            alert.show();
+        } else {
+            /**
+             * Troubleshoot invalid user
+             */
             alert.setAlertType(AlertType.ERROR);
             alert.setContentText("ERROR: Username does not exist");
             alert.show();
         }
-        */
     }
 
     //method called when searching for a user as an employee
@@ -341,8 +350,13 @@ public class Controller {
     }
 
     //Placeholder method for forgot password functionality
-    public void onForgotPassword(ActionEvent event) {
+    public void onForgotPassword(ActionEvent event) throws IOException {
         //enter new password and possibly verify your identity
+        root = FXMLLoader.load(getClass().getResource("forgotPasswordPane.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     //Method called when creating an account to load the Create Account pane
@@ -381,5 +395,35 @@ public class Controller {
 
         //toString for testing
         customerInfo.toString();
+    }
+
+    @FXML
+    TextField forgotPasswordUsername;
+
+    @FXML
+    TextField forgotPasswordNewPassword;
+
+    public void onForgotPasswordSubmit(ActionEvent event) {
+        String user = forgotPasswordUsername.getText();
+        String password = forgotPasswordNewPassword.getText();
+        CustomerInfo c = database.getUser(user);
+
+        if (c == database.getUser(user)) {
+            //Set username's pass type to chosen pass type
+            c.setPassword(password);
+            database.saveDatabase();
+
+            //Set pass expiration
+            alert.setAlertType(AlertType.CONFIRMATION);
+            alert.setContentText("Password Changed Successfully\n" + c.toString()/*<username> has been assigned the <pass type> pass type*/);
+            alert.show();
+        } else {
+            /**
+             * Troubleshoot invalid user
+             */
+            alert.setAlertType(AlertType.ERROR);
+            alert.setContentText("ERROR: Username does not exist");
+            alert.show();
+        }
     }
 }

@@ -1,17 +1,29 @@
 package com.team2.cen3031spring2024team2;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.text.spi.DateFormatProvider;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
     private List<CustomerInfo> employeeInfos = new ArrayList<>();
     private List<CustomerInfo> customerInfos = new ArrayList<>();
+    private String file;
     public int userCount = 0;
 
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
+    }
+
     public void loadDatabaseFromCSV(String filename) {
+        setFile(filename);
+
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             boolean firstLine = true;  // Flag to skip the first line
@@ -78,5 +90,38 @@ public class Database {
 
     public void createCustomerProfile(String name, String username, String password, String make, String model, String color, String licensePlate) {
         customerInfos.add(new CustomerInfo(name, username, password, make, model, color, licensePlate));
+    }
+
+    /**
+     * A method to save to the database
+     */
+    public void saveDatabase() {
+
+        File newFile = new File("src\\main\\resources\\com\\team2\\cen3031spring2024team2\\Admin_database.csv");
+        FileWriter saveToDatabase = null;
+
+        try {
+            //Initizes the file
+            saveToDatabase = new FileWriter(newFile);
+
+            //Writes the first line
+            saveToDatabase.write("EID,Name,Car make,Car model,Car color,License plate,Pass Type,Pass expiration date,Username,Password,\n");
+
+            //Writes the Employee Information
+            for (int i = 0; i < employeeInfos.size(); i++) {
+                saveToDatabase.write(employeeInfos.get(i).saveToFile());
+            }
+
+            //Writes the Customer Information
+            for (int i = 0; i < customerInfos.size(); i++) {
+                saveToDatabase.write(customerInfos.get(i).saveToFile());
+            }
+
+            saveToDatabase.close();
+
+            //Catches an IO exception
+        } catch (IOException e) {
+            System.out.println(e.toString());
+        }
     }
 }

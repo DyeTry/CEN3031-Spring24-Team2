@@ -1,5 +1,8 @@
 package com.team2.cen3031spring2024team2;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class CustomerInfo {
     private String name;
     private String carMake;
@@ -11,7 +14,6 @@ public class CustomerInfo {
     private String password;
     private String passType;
     private int employeeID;
-    public String searchedUser;
 
     public CustomerInfo() {}
     public CustomerInfo(String name, String username, String password, String make, String model, String color, String licensePlate) {
@@ -104,6 +106,18 @@ public class CustomerInfo {
         this.passType = passType;
     }
 
+    public boolean hasExpired() {
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+        LocalDate formattedDate = LocalDate.parse(passExpirationDate, formatter);
+
+        if (formattedDate.isAfter(currentDate)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @Override
     public String toString() {
         return "Name: " + name +
@@ -116,5 +130,18 @@ public class CustomerInfo {
                 "\nUsername: " + username +
                 "\nPassword: " + password +
                 "\nEmployee ID: " + employeeID;
+    }
+
+    public String saveToFile() {
+        return employeeID + "," +
+                name + "," +
+                carMake + "," +
+                carModel + "," +
+                carColor + "," +
+                licensePlate + "," +
+                passType + "," +
+                passExpirationDate + "," +
+                username + "," +
+                password + ",\n";
     }
 }
