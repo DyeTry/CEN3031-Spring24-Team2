@@ -22,7 +22,8 @@ public class Main extends Application {
         stage.show();
 
         //loads the current database from the CSV
-        database.loadDatabaseFromCSV(System.getenv("APPDATA") + "\\ParkingManagerApplication\\Admin_database.csv");
+        database.loadDatabaseFromCSV("C:\\Users\\oscar\\IdeaProjects\\CEN3031-Spring24-Team2\\src\\main\\resources\\com\\team2\\cen3031spring2024team2\\Admin_database.csv");
+        database.loadFinesFromCSV("C:\\Users\\oscar\\IdeaProjects\\CEN3031-Spring24-Team2\\src\\main\\resources\\com\\team2\\cen3031spring2024team2\\FinesDatabase.csv");
     }
 
     public static void main(String[] args) {

@@ -65,12 +65,12 @@ public class Database {
     }
 
     public CustomerInfo getUser(String username) {
-        for(CustomerInfo c : customerInfos) {
-            if(c.getUsername().equals(username))
+        for (CustomerInfo c : customerInfos) {
+            if (c.getUsername().equals(username))
                 return c;
         }
-        for(CustomerInfo c : employeeInfos) {
-            if(c.getUsername().equals(username))
+        for (CustomerInfo c : employeeInfos) {
+            if (c.getUsername().equals(username))
                 return c;
         }
         return null;
@@ -78,5 +78,33 @@ public class Database {
 
     public void createCustomerProfile(String name, String username, String password, String make, String model, String color, String licensePlate) {
         customerInfos.add(new CustomerInfo(name, username, password, make, model, color, licensePlate));
+    }
+
+    public void loadFinesFromCSV(String filename) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String line;
+            boolean firstLine = true;  // Flag to skip the first line
+            while ((line = br.readLine()) != null) {
+                if (firstLine) {
+                    firstLine = false;
+                    continue;  // Skip the first line
+                }
+                String[] data = line.split(",");
+                if (data.length == 8) {
+                    Parking_Fine parking_fine = new Parking_Fine();
+                    parking_fine.setCitationNumber(data[1].trim());
+                    parking_fine.setDate(data[2].trim());
+                    parking_fine.setTime(data[3].trim());
+                    parking_fine.setPermitNumber(data[4].trim());
+                    parking_fine.setUsername(data[5].trim());
+                    int fineAmount = Integer.parseInt(data[6].trim());
+                    parking_fine.setFineAmount(fineAmount);
+                    parking_fine.setReasonForFine(data[7].trim());
+                }
+                System.out.println("Fine loaded: ");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
