@@ -14,9 +14,10 @@ public class CustomerInfo {
     private String password;
     private String passType;
     private int employeeID;
+    private int balance;
 
     public CustomerInfo() {}
-    public CustomerInfo(String name, String username, String password, String make, String model, String color, String licensePlate) {
+    public CustomerInfo(String name, String username, String password, String make, String model, String color, String licensePlate, int balance) {
         this.name = name;
         this.username = username;
         this.password = password;
@@ -24,6 +25,7 @@ public class CustomerInfo {
         this.carModel = model;
         this.carColor = color;
         this.licensePlate = licensePlate;
+        this.balance = balance;
     }
 
     public String getName() {
@@ -106,6 +108,14 @@ public class CustomerInfo {
         this.passType = passType;
     }
 
+    public int getBalance() {
+        return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
+
     public boolean hasExpired() {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
@@ -129,7 +139,8 @@ public class CustomerInfo {
                 "\nPassType: " + passType +
                 "\nUsername: " + username +
                 "\nPassword: " + password +
-                "\nEmployee ID: " + employeeID;
+                "\nEmployee ID: " + employeeID +
+                "\nBalance: " + balance;
     }
 
     public String saveToFile() {
@@ -142,6 +153,7 @@ public class CustomerInfo {
                 passType + "," +
                 passExpirationDate + "," +
                 username + "," +
-                password + ",\n";
+                password + "," +
+                balance + ",\n";
     }
 }

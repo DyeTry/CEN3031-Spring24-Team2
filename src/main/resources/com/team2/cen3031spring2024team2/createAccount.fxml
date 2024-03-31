@@ -28,7 +28,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="98.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+            <Text fill="WHITE" layoutX="98.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -44,13 +44,13 @@
                </font>
             </Text>
             <TextField fx:id="createUsername" alignment="CENTER" layoutX="50.0" layoutY="155.0" promptText="First and last name" />
-            <TextField fx:id="createPassword" alignment="CENTER" layoutX="50.0" layoutY="306.0" promptText="Password" />
-            <Text fill="WHITE" layoutX="108.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
+            <TextField fx:id="createPassword" alignment="CENTER" layoutX="50.0" layoutY="258.0" promptText="Password" />
+            <Text fill="WHITE" layoutX="109.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Text>
-            <TextField fx:id="createEmail" alignment="CENTER" layoutX="50.0" layoutY="229.0" promptText="Email account" />
+            <TextField fx:id="createEmail" alignment="CENTER" layoutX="50.0" layoutY="208.0" promptText="Email account" />
             <TextField fx:id="createMake" alignment="CENTER" layoutX="400.0" layoutY="155.0" promptText="Make of car" />
             <TextField fx:id="createModel" alignment="CENTER" layoutX="400.0" layoutY="208.0" promptText="Make of car" />
             <TextField fx:id="createPlate" alignment="CENTER" layoutX="400.0" layoutY="306.0" promptText="License plate" />
@@ -71,6 +71,12 @@
                </font>
             </Text>
             <TextField fx:id="createColor" alignment="CENTER" layoutX="400.0" layoutY="258.0" promptText="Color of car" />
+            <Text fill="WHITE" layoutX="99.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Balance">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Text>
+            <TextField fx:id="createBalance" alignment="CENTER" layoutX="50.0" layoutY="306.0" promptText="Balance" />
          </children></AnchorPane>
    </center>
 </BorderPane>

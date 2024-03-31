@@ -75,6 +75,8 @@ public class Controller {
     private TextField createColor;
     @FXML
     private TextField createPlate;
+    @FXML
+    private TextField createBalance;
     String userEmailVal;
 
     //used for showing alerts such as success/fail messages to users
@@ -237,6 +239,17 @@ public class Controller {
         }
     }
 
+    @FXML
+    private Text userBalance;
+    @FXML
+    private Text userCitationNum;
+    @FXML
+    private TextField createReasonForFine;
+    @FXML
+    private TextField createFineAmount;
+    @FXML
+    private TextField createIssueDate;
+
     //method called when switching to the fine view of a searched user as an employee (does not yet load the fine database)
     public void switchToUserFineView(ActionEvent event) throws IOException {
         try {
@@ -244,8 +257,10 @@ public class Controller {
             loader.setController(this);
             Parent root = loader.load();
 
-            //sets the user's name as the header (does not currently work)
-            fineUserName.setText(searchEntry);
+            //Fills in selected user's information
+            fineUserName.setText(permanentCustomer.getName());
+            userBalance.setText("$" + Integer.toString(permanentCustomer.getBalance()));
+            userCitationNum.setText(Integer.toString(database.getFineCount(permanentCustomer.getUsername())));
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -288,6 +303,10 @@ public class Controller {
     public void onUserSearch(ActionEvent event) throws IOException {
         //if(username found) {
         //Redirect to search results page
+        String username = userSearch.getText();
+        CustomerInfo c = database.getUser(username);
+        initUser(c);
+
         switchToUserSearchResultPane(event);
     }
 
@@ -384,17 +403,17 @@ public class Controller {
         String color = createColor.getText();
         //temp variable for setting user's license plate
         String plate = createPlate.getText();
+        //temp variable for setting user's license plate
+        int balance = Integer.parseInt(createBalance.getText());
 
         //adds new user to the database based off entered information
-        database.createCustomerProfile(name, email, password, make, model, color, plate);
+        database.createCustomerProfile(name, email, password, make, model, color, plate, balance);
+        database.saveDatabase();
 
         //alert to show successful account creation
         alert.setAlertType(AlertType.CONFIRMATION);
         alert.setContentText("Account Creation Successful\n");
         alert.show();
-
-        //toString for testing
-        customerInfo.toString();
     }
 
     @FXML
@@ -425,5 +444,10 @@ public class Controller {
             alert.setContentText("ERROR: Username does not exist");
             alert.show();
         }
+    }
+
+    private CustomerInfo permanentCustomer;
+    public void initUser(CustomerInfo customer) {
+        permanentCustomer = customer;
     }
 }
