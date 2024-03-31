@@ -11,6 +11,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import javafx.scene.control.Alert.AlertType;
 
@@ -243,12 +246,6 @@ public class Controller {
     private Text userBalance;
     @FXML
     private Text userCitationNum;
-    @FXML
-    private TextField createReasonForFine;
-    @FXML
-    private TextField createFineAmount;
-    @FXML
-    private TextField createIssueDate;
 
     //method called when switching to the fine view of a searched user as an employee (does not yet load the fine database)
     public void switchToUserFineView(ActionEvent event) throws IOException {
@@ -269,6 +266,39 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private TextField createReasonForFine;
+    @FXML
+    private TextField createFineAmount;
+
+    public void onCitationSubmit(ActionEvent event) {
+        LocalDate localDate = LocalDate.now();
+        DateTimeFormatter date = DateTimeFormatter.ofPattern("M/d/yyyy");
+        String formattedDate = localDate.format(date);
+
+        LocalTime localTime = LocalTime.now();
+        DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
+        String formattedTime = localTime.format(time);
+
+        String citationNum = database.randomStringGenerator(10);
+        String permitNum = database.randomStringGenerator(6); //Placeholder until permit number is implemented
+
+        database.addFineInformation(citationNum, formattedDate, formattedTime, permitNum, permanentCustomer.getUsername(), Integer.parseInt(createFineAmount.getText()), createReasonForFine.getText());
+        alert.setAlertType(AlertType.CONFIRMATION);
+        alert.setContentText(
+                "Fine Issued Successfully\n" +
+                        "Citation Number: " + citationNum + "\n" +
+                        "Date: " + formattedDate + "\n" +
+                        "Time: " + formattedTime + "\n" +
+                        "Permit Number: " + permitNum + "\n" +
+                        "Name: " + permanentCustomer.getName() + "\n" +
+                        "Reason For Fine: " + createReasonForFine.getText() + "\n" +
+                        "Citation Amount: $" + createFineAmount.getText()
+        );
+        alert.show();
+        database.saveFines();
     }
 
     @FXML

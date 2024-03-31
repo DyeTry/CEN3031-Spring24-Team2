@@ -43,10 +43,11 @@ public class Database {
         return null;
     }
 
+    //Inaccurate count for fines
     public int getFineCount(String username) {
         int tempIndex = 0;
         for (Parking_Fine info : fines) {
-            System.out.println(info.getUsername() + " == " + username);
+            //System.out.println(info.getUsername() + " == " + username);
             if (info.getUsername().equals(username)) {
                 tempIndex++;
             }
@@ -174,7 +175,7 @@ public class Database {
     }
 
     public void saveFines() {
-        File newFile = new File("src\\main\\resources\\com\\team2\\cen3031spring2024team2\\Output.txt");
+        File newFile = new File("src\\main\\resources\\com\\team2\\cen3031spring2024team2\\FinesDatabase.csv");
         FileWriter saveToDatabase = null;
 
         try {
@@ -195,5 +196,25 @@ public class Database {
         } catch (IOException e) {
             System.out.println(e.toString());
         }
+    }
+
+    public String randomStringGenerator(int size) {
+
+        // choose a Character random from this String
+        String alphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789";
+
+        // create StringBuffer size of AlphaNumericString
+        StringBuilder sb = new StringBuilder(size);
+
+        for (int i = 0; i < size; i++) {
+
+            // generate a random number between
+            // 0 to AlphaNumericString variable length
+            int index = (int)(alphaNumericString.length() * Math.random());
+
+            // add Character one by one in end of sb
+            sb.append(alphaNumericString.charAt(index));
+        }
+        return sb.toString();
     }
 }
