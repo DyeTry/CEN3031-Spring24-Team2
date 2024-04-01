@@ -10,7 +10,7 @@ import java.util.List;
 public class Database {
     private List<CustomerInfo> employeeInfos = new ArrayList<>();
     private List<CustomerInfo> customerInfos = new ArrayList<>();
-
+    private List<String> Issues = new ArrayList<>();
     private List<Parking_Fine> fines = new ArrayList<>();
     private String file;
     public int userCount = 0;
@@ -216,5 +216,9 @@ public class Database {
             sb.append(alphaNumericString.charAt(index));
         }
         return sb.toString();
+    }
+
+    public void createCustomerIssue(String submittedIssue) {
+        Issues.add(submittedIssue);
     }
 }

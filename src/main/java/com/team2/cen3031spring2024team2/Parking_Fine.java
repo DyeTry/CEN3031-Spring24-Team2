@@ -12,6 +12,12 @@ public class Parking_Fine {
     private int Balance;
     public Parking_Fine() {}
 
+    public Parking_Fine(String citationNumber, String date, int fineAmount) {
+        CitationNumber = citationNumber;
+        Date = date;
+        FineAmount = fineAmount;
+    }
+
     public Parking_Fine(String CitationNumber, String Date, String Time, String PermitNumber, String Username, int FineAmount, String ReasonForFine) {
         this.CitationNumber = CitationNumber;
         this.Date = Date;

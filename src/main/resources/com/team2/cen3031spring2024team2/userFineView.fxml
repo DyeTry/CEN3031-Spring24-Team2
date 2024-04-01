@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team2.cen3031spring2024team2.Controller">
    <left>
       <AnchorPane prefHeight="400.0" prefWidth="99.0" style="-fx-background-color: #004C97;" BorderPane.alignment="CENTER">
          <children>
@@ -34,11 +34,11 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <TableView layoutY="100.0" prefHeight="298.0" prefWidth="261.0">
+            <TableView fx:id="citationTable" layoutY="100.0" prefHeight="298.0" prefWidth="261.0">
               <columns>
-                <TableColumn prefWidth="83.33331298828125" text="Citation #" />
-                <TableColumn prefWidth="85.0" text="Issue Date" />
-                  <TableColumn prefWidth="92.0" text="Fine Amount" />
+                <TableColumn fx:id="cittionNum" prefWidth="83.33331298828125" text="Citation #" />
+                <TableColumn fx:id="issueDate" prefWidth="85.0" text="Issue Date" />
+                  <TableColumn fx:id="citationAmount" prefWidth="92.0" text="Fine Amount" />
               </columns>
             </TableView>
             <Text layoutX="330.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Citation Details">

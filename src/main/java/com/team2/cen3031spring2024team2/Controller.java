@@ -1,5 +1,8 @@
 package com.team2.cen3031spring2024team2;
 
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -14,8 +18,12 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
 
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableColumn;
+
+import java.net.URL;
 
 public class Controller {
     @FXML
@@ -274,6 +282,7 @@ public class Controller {
     private TextField createFineAmount;
 
     public void onCitationSubmit(ActionEvent event) {
+
         LocalDate localDate = LocalDate.now();
         DateTimeFormatter date = DateTimeFormatter.ofPattern("M/d/yyyy");
         String formattedDate = localDate.format(date);
@@ -479,5 +488,21 @@ public class Controller {
     private CustomerInfo permanentCustomer;
     public void initUser(CustomerInfo customer) {
         permanentCustomer = customer;
+    }
+
+    @FXML
+    private TextField SubmitIssueText;
+
+    public void onSubmitIssueSubmit(ActionEvent event) {
+
+
+        String SubmittedIssue = SubmitIssueText.getText();
+        database.createCustomerIssue(SubmittedIssue);
+
+
+        alert.setAlertType(AlertType.CONFIRMATION);
+        alert.setContentText("Issue Submitted!\n");
+        alert.show();
+
     }
 }
