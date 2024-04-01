@@ -9,6 +9,7 @@ import java.util.List;
 public class Database {
     private List<CustomerInfo> employeeInfos = new ArrayList<>();
     private List<CustomerInfo> customerInfos = new ArrayList<>();
+    private List<String> Issues = new ArrayList<>();
     public int userCount = 0;
 
     public void loadDatabaseFromCSV(String filename) {
@@ -106,5 +107,9 @@ public class Database {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void createCustomerIssue(String submittedIssue) {
+        Issues.add(submittedIssue);
     }
 }
