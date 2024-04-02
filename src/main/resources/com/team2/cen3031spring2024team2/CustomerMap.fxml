@@ -43,7 +43,12 @@
                         <Image url="@BlankLegend.jpg" />
                     </image>
                 </ImageView>
-                <CheckBox layoutX="350.0" layoutY="25.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="11.0" text="All Passes" />
+                <ImageView fx:id="allPasses" fitHeight="430.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                    <image>
+                        <Image url="@Untitled_Artwork.png" />
+                    </image>
+                </ImageView>
+                <CheckBox layoutX="350.0" layoutY="25.0" mnemonicParsing="false" onAction="#showAllPasses" prefHeight="18.0" prefWidth="11.0" text="All Passes" />
                 <CheckBox layoutX="350.0" layoutY="57.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="11.0" text="Commuter" />
                 <CheckBox fx:id="one" layoutX="350.0" layoutY="91.0" mnemonicParsing="false" onAction="#showHandicap" prefHeight="18.0" prefWidth="11.0" text="Handicap" />
                 <CheckBox layoutX="350.0" layoutY="122.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="11.0" text="Resident" />

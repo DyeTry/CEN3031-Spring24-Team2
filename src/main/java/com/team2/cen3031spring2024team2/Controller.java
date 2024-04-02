@@ -45,6 +45,8 @@ public class Controller implements Initializable {
     @FXML
     private ImageView handicap;
     @FXML
+    private ImageView allPasses;
+    @FXML
     private Text userModel;
     @FXML
     private Text userMake;
@@ -186,6 +188,10 @@ public class Controller implements Initializable {
 
     public void showHandicap(ActionEvent event) throws IOException {
         handicap.setVisible(true);
+    }
+
+    public void showAllPasses(ActionEvent event) throws IOException {
+        allPasses.setVisible(true);
     }
 
     //currently not in use, an empty employee pane used to template all other employee panes
