@@ -15,7 +15,7 @@
             <children>
                 <Button fx:id="mapButton" layoutX="30.0" layoutY="110.0" mnemonicParsing="false" onAction="#switchToCustomerMapPane" style="-fx-background-color: #009CDE;" text="Map" textFill="WHITE" />
                 <Button fx:id="userButton" layoutX="28.0" layoutY="180.0" mnemonicParsing="false" onAction="#switchToCustomerParkingFines" style="-fx-background-color: #009CDE;" text="Fines" textFill="WHITE" />
-                <Button fx:id="passButton" layoutX="24.0" layoutY="250.0" mnemonicParsing="false" onAction="#switchToCustomerPasses" style="-fx-background-color: #009CDE;" text="Passes" textFill="WHITE" />
+                <Button fx:id="passButton" layoutX="24.0" layoutY="250.0" mnemonicParsing="false" onAction="#switchToCustomerPasses" style="-fx-background-color: #003865;" text="Passes" textFill="WHITE" />
                 <Button fx:id="issueButton" layoutX="27.0" layoutY="320.0" mnemonicParsing="false" onAction="#switchToCustomerIssuePane" style="-fx-background-color: #009CDE;" text="Issues" textFill="WHITE" />
                 <Text fill="WHITE" layoutX="31.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu" textAlignment="CENTER" underline="true">
                     <font>
@@ -37,14 +37,24 @@
                <children>
                   <SplitPane dividerPositions="0.288659793814433" layoutY="1.0" orientation="VERTICAL" prefHeight="234.0" prefWidth="458.0">
                     <items>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="25.0" prefWidth="457.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="78.0" prefWidth="457.0">
                            <children>
-                              <Text fill="#004c97" layoutX="88.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pass Type:" wrappingWidth="127.44134521484375">
+                              <Text fill="#004c97" layoutX="14.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pass Type:" wrappingWidth="127.44134521484375">
+                                 <font>
+                                    <Font name="System Bold" size="26.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="userPassType" fill="#004c97" layoutX="153.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Pass Type&gt;" wrappingWidth="150.10797119140625">
                                  <font>
                                     <Font size="26.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="userPassType" fill="#004c97" layoutX="215.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Pass Type&gt;" wrappingWidth="150.10797119140625">
+                              <Text fill="#004c97" layoutX="323.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Expiration" wrappingWidth="121.84136962890625">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="userPassExpiration" fill="#004c97" layoutX="318.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;00/00/00&gt;" wrappingWidth="131.44134521484375">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
@@ -53,42 +63,32 @@
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="153.0" prefWidth="457.0">
                            <children>
-                              <Text fill="#004c97" layoutX="5.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="License Plate:" wrappingWidth="144.2413330078125">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Text>
-                              <Text fill="#004c97" layoutX="5.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Model: " wrappingWidth="127.44134521484375">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Text>
-                              <Text fill="#004c97" layoutX="5.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Make: " wrappingWidth="127.44134521484375">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Text>
-                              <Text fill="#004c97" layoutX="313.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Expiration" wrappingWidth="121.84136962890625">
+                              <Text fill="#004c97" layoutX="93.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="License Plate:" wrappingWidth="155.4413604736328">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="userModel" fill="#004c97" layoutX="93.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;empty&gt;" wrappingWidth="144.2413330078125">
+                              <Text fill="#004c97" layoutX="96.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Model: " wrappingWidth="85.84130859375">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="#004c97" layoutX="96.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Make: " wrappingWidth="75.44129943847656">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="userModel" fill="#004c97" layoutX="191.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;empty&gt;" wrappingWidth="101.84136962890625">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="userMake" fill="#004c97" layoutX="77.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;empty&gt;" wrappingWidth="144.2413330078125">
+                              <Text fx:id="userMake" fill="#004c97" layoutX="179.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;empty&gt;" wrappingWidth="107.44134521484375">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="userLicensePlate" fill="#004c97" layoutX="158.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;empty&gt;" wrappingWidth="144.2413330078125">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Text>
-                              <Text fx:id="userPassExpiration" fill="#004c97" layoutX="313.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;00/00/00&gt;" wrappingWidth="144.2413330078125">
+                              <Text fx:id="userLicensePlate" fill="#004c97" layoutX="257.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;empty&gt;" wrappingWidth="103.4412841796875">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
