@@ -31,6 +31,10 @@ public class Database {
         return customerInfos;
     }
 
+    public List<Parking_Fine> getFines() {
+        return fines;
+    }
+
     public CustomerInfo getUser(String username) {
         for(CustomerInfo c : customerInfos) {
             if(c.getUsername().equals(username))
@@ -188,6 +192,30 @@ public class Database {
             //Writes the Fine Information
             for (int i = 0; i < fines.size(); i++) {
                 saveToDatabase.write(fines.get(i).toString());
+            }
+
+            saveToDatabase.close();
+
+            //Catches an IO exception
+        } catch (IOException e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    public void saveIssues() {
+        File newFile = new File("src\\main\\resources\\com\\team2\\cen3031spring2024team2\\programIssues.csv");
+        FileWriter saveToDatabase = null;
+
+        try {
+            //Initizes the file
+            saveToDatabase = new FileWriter(newFile);
+
+            //Writes the first line
+            saveToDatabase.write("Description,\n");
+
+            //Writes the Fine Information
+            for (int i = 0; i < Issues.size(); i++) {
+                saveToDatabase.write(Issues.get(i) + ",\n");
             }
 
             saveToDatabase.close();

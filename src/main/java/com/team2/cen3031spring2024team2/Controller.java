@@ -18,10 +18,22 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import java.net.URL;
 
@@ -495,7 +507,6 @@ public class Controller {
 
     public void onSubmitIssueSubmit(ActionEvent event) {
 
-
         String SubmittedIssue = SubmitIssueText.getText();
         database.createCustomerIssue(SubmittedIssue);
 
@@ -504,5 +515,55 @@ public class Controller {
         alert.setContentText("Issue Submitted!\n");
         alert.show();
 
+    }
+
+    public void switchToTableView(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("UserFineTableView.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private TableView<Parking_Fine> citationTable;
+    @FXML
+    private TableColumn<Parking_Fine, String> citationNum;
+    @FXML
+    private TableColumn<Parking_Fine, String> citationDate;
+    @FXML
+    private TableColumn<Parking_Fine, String> citationTime;
+    @FXML
+    private TableColumn<Parking_Fine, String> citationPermitNum;
+    @FXML
+    private TableColumn<Parking_Fine, Integer> citationFineAmount;
+    @FXML
+    private TableColumn<Parking_Fine, String> citationDescription;
+
+
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        citationNum.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("CitationNumber"));
+        citationDate.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("Date"));
+        citationTime.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("Time"));
+        citationPermitNum.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("PermitNumber"));
+        citationFineAmount.setCellValueFactory(new PropertyValueFactory<Parking_Fine, Integer>("FineAmount"));
+        citationDescription.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("ReasonForFine"));
+    }
+
+    @FXML
+    public void addCitationEntry(ActionEvent event) {
+        List<Parking_Fine> info = database.getFines();
+        ObservableList<Parking_Fine> list = FXCollections.observableArrayList();
+
+        for (Parking_Fine fine : info) {
+            list.add(fine);
+        }
+        citationTable.setItems(list);
+    }
+
+    @FXML
+    public void deleteCitationEntry(ActionEvent event) {
+        int selectedID = citationTable.getSelectionModel().getSelectedIndex();
+        citationTable.getItems().remove(selectedID);
     }
 }

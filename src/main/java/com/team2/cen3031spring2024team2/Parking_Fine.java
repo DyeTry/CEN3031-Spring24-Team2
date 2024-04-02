@@ -12,10 +12,13 @@ public class Parking_Fine {
     private int Balance;
     public Parking_Fine() {}
 
-    public Parking_Fine(String citationNumber, String date, int fineAmount) {
+    public Parking_Fine(String citationNumber, String date, String time, String permitNumber, int fineAmount, String reasonForFine) {
         CitationNumber = citationNumber;
         Date = date;
+        Time = time;
+        PermitNumber = permitNumber;
         FineAmount = fineAmount;
+        ReasonForFine = reasonForFine;
     }
 
     public Parking_Fine(String CitationNumber, String Date, String Time, String PermitNumber, String Username, int FineAmount, String ReasonForFine) {
