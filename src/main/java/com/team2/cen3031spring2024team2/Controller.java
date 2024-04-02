@@ -1,5 +1,8 @@
 package com.team2.cen3031spring2024team2;
 
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,14 +10,34 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.ResourceBundle;
 
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableColumn;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
-public class Controller {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import java.net.URL;
+
+public class Controller implements Initializable {
     @FXML
     private Text userPassType;
     @FXML
@@ -75,6 +98,8 @@ public class Controller {
     private TextField createColor;
     @FXML
     private TextField createPlate;
+    @FXML
+    private TextField createBalance;
     String userEmailVal;
 
     //used for showing alerts such as success/fail messages to users
@@ -84,16 +109,34 @@ public class Controller {
 
     //method called when switching to the parking fines page as a customer
     public void switchToCustomerParkingFines(ActionEvent event) throws IOException {
-        //loads the fxml file
-        root = FXMLLoader.load(getClass().getResource("Parking Fines.fxml"));
-        //creates the stage
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        //sets the scene using the loaded fxml file
-        scene = new Scene(root);
-        //loads the scene into the stage
-        stage.setScene(scene);
-        //makes the stage changes viewable to the user
-        stage.show();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Parking Fines.fxml"));
+            loader.setController(this);
+            Parent root = loader.load();
+
+            /*try {
+                customerCitationUsername.setText(permanentCustomer.getName());
+                customerCitationBalance.setText("$" + permanentCustomer.getBalance());
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }*/
+
+            List<Parking_Fine> info = database.getFines();
+            ObservableList<Parking_Fine> list = FXCollections.observableArrayList();
+
+            for (Parking_Fine fine : info) {
+                list.add(fine);
+            }
+            citationTable.setItems(list);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //method called when switching to the pass page as a customer
@@ -237,6 +280,11 @@ public class Controller {
         }
     }
 
+    @FXML
+    private Text userBalance;
+    @FXML
+    private Text userCitationNum;
+
     //method called when switching to the fine view of a searched user as an employee (does not yet load the fine database)
     public void switchToUserFineView(ActionEvent event) throws IOException {
         try {
@@ -244,8 +292,10 @@ public class Controller {
             loader.setController(this);
             Parent root = loader.load();
 
-            //sets the user's name as the header (does not currently work)
-            fineUserName.setText(searchEntry);
+            //Fills in selected user's information
+            fineUserName.setText(permanentCustomer.getName());
+            userBalance.setText("$" + Integer.toString(permanentCustomer.getBalance()));
+            userCitationNum.setText(Integer.toString(database.getFineCount(permanentCustomer.getUsername())));
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -256,29 +306,76 @@ public class Controller {
         }
     }
 
+    @FXML
+    private TextField createReasonForFine;
+    @FXML
+    private TextField createFineAmount;
+
+    public void onCitationSubmit(ActionEvent event) {
+
+        LocalDate localDate = LocalDate.now();
+        DateTimeFormatter date = DateTimeFormatter.ofPattern("M/d/yyyy");
+        String formattedDate = localDate.format(date);
+
+        LocalTime localTime = LocalTime.now();
+        DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
+        String formattedTime = localTime.format(time);
+
+        String citationNum = database.randomStringGenerator(10);
+        String permitNum = database.randomStringGenerator(6); //Placeholder until permit number is implemented
+
+        database.addFineInformation(citationNum, formattedDate, formattedTime, permitNum, permanentCustomer.getUsername(), Integer.parseInt(createFineAmount.getText()), createReasonForFine.getText());
+        alert.setAlertType(AlertType.CONFIRMATION);
+        alert.setContentText(
+                "Fine Issued Successfully\n" +
+                        "Citation Number: " + citationNum + "\n" +
+                        "Date: " + formattedDate + "\n" +
+                        "Time: " + formattedTime + "\n" +
+                        "Permit Number: " + permitNum + "\n" +
+                        "Name: " + permanentCustomer.getName() + "\n" +
+                        "Reason For Fine: " + createReasonForFine.getText() + "\n" +
+                        "Citation Amount: $" + createFineAmount.getText()
+        );
+        alert.show();
+        database.saveFines();
+    }
+
+    @FXML
+    private TextField usernameField;
+
     //method called when a user is assigned a pass
     public void onPassAssignment(ActionEvent event) throws IOException {
-        //if(username is found) {
-        //Set username's pass type to chosen pass type
-        customerInfo.setPassType(passTitle);
 
-        //Set pass expiration
-        alert.setAlertType(AlertType.CONFIRMATION);
-        alert.setContentText("Pass Assignment Successful\n"/*<username> has been assigned the <pass type> pass type*/);
-        alert.show();
+        String user = usernameField.getText();
+        CustomerInfo c = database.getUser(user);
 
-        /*}else {
+        if (c == database.getUser(user)) {
+            //Set username's pass type to chosen pass type
+            c.setPassType(passTitle);
+            database.saveDatabase();
+
+            //Set pass expiration
+            alert.setAlertType(AlertType.CONFIRMATION);
+            alert.setContentText("Pass Assignment Successful\n" + c.toString()/*<username> has been assigned the <pass type> pass type*/);
+            alert.show();
+        } else {
+            /**
+             * Troubleshoot invalid user
+             */
             alert.setAlertType(AlertType.ERROR);
             alert.setContentText("ERROR: Username does not exist");
             alert.show();
         }
-        */
     }
 
     //method called when searching for a user as an employee
     public void onUserSearch(ActionEvent event) throws IOException {
         //if(username found) {
         //Redirect to search results page
+        String username = userSearch.getText();
+        CustomerInfo c = database.getUser(username);
+        initUser(c);
+
         switchToUserSearchResultPane(event);
     }
 
@@ -319,6 +416,8 @@ public class Controller {
     public void onLogin(ActionEvent event) throws IOException {
         //temp variable to store entered username for validity checking
         String username = usernameEntry.getText();
+        CustomerInfo c = database.getUser(username);
+        initUser(c);
         //saving email value for later use
         userEmailVal = usernameEntry.getText();
         //temp variable to store password for validity checking
@@ -326,6 +425,7 @@ public class Controller {
 
         //searches database for entered username
         customerInfo = database.getUser(username);
+
         //throws error if the username is not found in the database or if the password is incorrect
         if(customerInfo == null || !customerInfo.getPassword().equals(pass)) {
             alert.setAlertType(AlertType.ERROR);
@@ -344,8 +444,13 @@ public class Controller {
     }
 
     //Placeholder method for forgot password functionality
-    public void onForgotPassword(ActionEvent event) {
+    public void onForgotPassword(ActionEvent event) throws IOException {
         //enter new password and possibly verify your identity
+        root = FXMLLoader.load(getClass().getResource("forgotPasswordPane.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     //Method called when creating an account to load the Create Account pane
@@ -375,17 +480,164 @@ public class Controller {
         String color = createColor.getText();
         //temp variable for setting user's license plate
         String plate = createPlate.getText();
+        //temp variable for setting user's license plate
+        int balance = Integer.parseInt(createBalance.getText());
 
         //adds new user to the database based off entered information
-        database.createCustomerProfile(name, email, password, make, model, color, plate);
+        database.createCustomerProfile(name, email, password, make, model, color, plate, balance);
+        database.saveDatabase();
 
         //alert to show successful account creation
         alert.setAlertType(AlertType.CONFIRMATION);
         alert.setContentText("Account Creation Successful\n");
         alert.show();
+    }
 
-        //toString for testing
-        customerInfo.toString();
+    @FXML
+    TextField forgotPasswordUsername;
+
+    @FXML
+    TextField forgotPasswordNewPassword;
+
+    public void onForgotPasswordSubmit(ActionEvent event) {
+        String user = forgotPasswordUsername.getText();
+        String password = forgotPasswordNewPassword.getText();
+        CustomerInfo c = database.getUser(user);
+
+        if (c == database.getUser(user)) {
+            //Set username's pass type to chosen pass type
+            c.setPassword(password);
+            database.saveDatabase();
+
+            //Set pass expiration
+            alert.setAlertType(AlertType.CONFIRMATION);
+            alert.setContentText("Password Changed Successfully\n" + c.toString()/*<username> has been assigned the <pass type> pass type*/);
+            alert.show();
+        } else {
+            /**
+             * Troubleshoot invalid user
+             */
+            alert.setAlertType(AlertType.ERROR);
+            alert.setContentText("ERROR: Username does not exist");
+            alert.show();
+        }
+    }
+
+    private CustomerInfo permanentCustomer;
+    public void initUser(CustomerInfo customer) {
+        permanentCustomer = customer;
+        System.out.println(customer.getName() + " found");
+    }
+
+    @FXML
+    private TextField SubmitIssueText;
+
+    public void onSubmitIssueSubmit(ActionEvent event) {
+
+        String SubmittedIssue = SubmitIssueText.getText();
+        database.createCustomerIssue(SubmittedIssue);
+
+
+        alert.setAlertType(AlertType.CONFIRMATION);
+        alert.setContentText("Issue Submitted!\n");
+        alert.show();
+
+    }
+
+    @FXML
+    private Label citationUsername;
+
+    public void switchToTableView(ActionEvent event) throws IOException {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("UserFineTableView.fxml"));
+            loader.setController(this);
+            Parent root = loader.load();
+
+            citationUsername.setText(permanentCustomer.getName());
+
+            List<Parking_Fine> info = database.getFines();
+            ObservableList<Parking_Fine> list = FXCollections.observableArrayList();
+
+            for (Parking_Fine fine : info) {
+                list.add(fine);
+            }
+            citationTable.setItems(list);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private TableView<Parking_Fine> citationTable;
+    @FXML
+    private TableColumn<Parking_Fine, String> citationNum = new TableColumn<>("Citation Number");
+    @FXML
+    private TableColumn<Parking_Fine, String> citationDate = new TableColumn<>("Date");
+    @FXML
+    private TableColumn<Parking_Fine, String> citationTime = new TableColumn<>("Time");
+    @FXML
+    private TableColumn<Parking_Fine, String> citationPermitNum = new TableColumn<>("Permit Number");
+    @FXML
+    private TableColumn<Parking_Fine, Integer> citationFineAmount = new TableColumn<>("Fine Amount");
+    @FXML
+    private TableColumn<Parking_Fine, String> citationDescription = new TableColumn<>("Description");
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        citationNum.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("citationNumber"));
+        citationDate.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("date"));
+        citationTime.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("time"));
+        citationPermitNum.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("permitNumber"));
+        citationFineAmount.setCellValueFactory(new PropertyValueFactory<Parking_Fine, Integer>("fineAmount"));
+        citationDescription.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("reasonForFine"));
+    }
+
+    @FXML
+    public void addCitationEntry(ActionEvent event) {
+        List<Parking_Fine> info = database.getFines();
+        ObservableList<Parking_Fine> list = FXCollections.observableArrayList();
+
+        for (Parking_Fine fine : info) {
+            list.add(fine);
+        }
+        citationTable.setItems(list);
+    }
+
+    @FXML
+    public void deleteCitationEntry(ActionEvent event) {
+        int selectedID = citationTable.getSelectionModel().getSelectedIndex();
+        citationTable.getItems().remove(selectedID);
+    }
+
+    @FXML
+    public void onCustomerCitationPay(ActionEvent event) {
+        int selectedID = citationTable.getSelectionModel().getSelectedIndex();
+        citationTable.getItems().remove(selectedID);
+
+        database.getFines().remove(selectedID);
+
+        alert.setAlertType(AlertType.CONFIRMATION);
+        alert.setContentText("Issue Paid!\n");
+        alert.show();
+
+        database.saveFines();
+    }
+
+    @FXML
+    public void onCustomerCitationReload(ActionEvent event) {
+        List<Parking_Fine> info = database.getFines();
+        ObservableList<Parking_Fine> list = FXCollections.observableArrayList();
+
+        for (Parking_Fine fine : info) {
+            list.add(fine);
+        }
+        citationTable.setItems(list);
     }
 
 }
