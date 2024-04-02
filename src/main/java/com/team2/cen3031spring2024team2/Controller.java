@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -40,6 +42,8 @@ import java.net.URL;
 public class Controller implements Initializable {
     @FXML
     private Text userPassType;
+    @FXML
+    private ImageView handicap;
     @FXML
     private Text userModel;
     @FXML
@@ -178,6 +182,10 @@ public class Controller implements Initializable {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void showHandicap(ActionEvent event) throws IOException {
+        handicap.setVisible(true);
     }
 
     //currently not in use, an empty employee pane used to template all other employee panes
