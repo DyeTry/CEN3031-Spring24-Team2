@@ -37,7 +37,7 @@ import java.util.ResourceBundle;
 
 import java.net.URL;
 
-public class Controller {
+public class Controller implements Initializable {
     @FXML
     private Text userPassType;
     @FXML
@@ -528,26 +528,27 @@ public class Controller {
     @FXML
     private TableView<Parking_Fine> citationTable;
     @FXML
-    private TableColumn<Parking_Fine, String> citationNum;
+    private TableColumn<Parking_Fine, String> citationNum = new TableColumn<>("Citation Number");
     @FXML
-    private TableColumn<Parking_Fine, String> citationDate;
+    private TableColumn<Parking_Fine, String> citationDate = new TableColumn<>("Date");
     @FXML
-    private TableColumn<Parking_Fine, String> citationTime;
+    private TableColumn<Parking_Fine, String> citationTime = new TableColumn<>("Time");
     @FXML
-    private TableColumn<Parking_Fine, String> citationPermitNum;
+    private TableColumn<Parking_Fine, String> citationPermitNum = new TableColumn<>("Permit Number");
     @FXML
-    private TableColumn<Parking_Fine, Integer> citationFineAmount;
+    private TableColumn<Parking_Fine, Integer> citationFineAmount = new TableColumn<>("Fine Amount");
     @FXML
-    private TableColumn<Parking_Fine, String> citationDescription;
+    private TableColumn<Parking_Fine, String> citationDescription = new TableColumn<>("Description");
 
 
+    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        citationNum.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("CitationNumber"));
-        citationDate.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("Date"));
-        citationTime.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("Time"));
-        citationPermitNum.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("PermitNumber"));
-        citationFineAmount.setCellValueFactory(new PropertyValueFactory<Parking_Fine, Integer>("FineAmount"));
-        citationDescription.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("ReasonForFine"));
+        citationNum.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("citationNumber"));
+        citationDate.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("date"));
+        citationTime.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("time"));
+        citationPermitNum.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("permitNumber"));
+        citationFineAmount.setCellValueFactory(new PropertyValueFactory<Parking_Fine, Integer>("fineAmount"));
+        citationDescription.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("reasonForFine"));
     }
 
     @FXML
