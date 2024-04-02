@@ -388,7 +388,10 @@ public class Controller implements Initializable {
     }
 
     //placeholder method for editing car details as an employee
-    public void onEditCar(ActionEvent actionEvent) {
+    public void onEditCar(ActionEvent actionEvent) throws IOException {
+        Stage primaryStage = new Stage();
+        UserCarDetailsEditor userCarDetailsEditor = new UserCarDetailsEditor();
+        userCarDetailsEditor.start(primaryStage);
     }
 
     //method called when selecting "Resident" as a choice in the pass assignment pane as an employee
