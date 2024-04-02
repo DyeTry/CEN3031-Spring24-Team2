@@ -109,16 +109,34 @@ public class Controller implements Initializable {
 
     //method called when switching to the parking fines page as a customer
     public void switchToCustomerParkingFines(ActionEvent event) throws IOException {
-        //loads the fxml file
-        root = FXMLLoader.load(getClass().getResource("Parking Fines.fxml"));
-        //creates the stage
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        //sets the scene using the loaded fxml file
-        scene = new Scene(root);
-        //loads the scene into the stage
-        stage.setScene(scene);
-        //makes the stage changes viewable to the user
-        stage.show();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Parking Fines.fxml"));
+            loader.setController(this);
+            Parent root = loader.load();
+
+            /*try {
+                customerCitationUsername.setText(permanentCustomer.getName());
+                customerCitationBalance.setText("$" + permanentCustomer.getBalance());
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }*/
+
+            List<Parking_Fine> info = database.getFines();
+            ObservableList<Parking_Fine> list = FXCollections.observableArrayList();
+
+            for (Parking_Fine fine : info) {
+                list.add(fine);
+            }
+            citationTable.setItems(list);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //method called when switching to the pass page as a customer
@@ -395,6 +413,8 @@ public class Controller implements Initializable {
     public void onLogin(ActionEvent event) throws IOException {
         //temp variable to store entered username for validity checking
         String username = usernameEntry.getText();
+        CustomerInfo c = database.getUser(username);
+        initUser(c);
         //saving email value for later use
         userEmailVal = usernameEntry.getText();
         //temp variable to store password for validity checking
@@ -402,6 +422,7 @@ public class Controller implements Initializable {
 
         //searches database for entered username
         customerInfo = database.getUser(username);
+
         //throws error if the username is not found in the database or if the password is incorrect
         if(customerInfo == null || !customerInfo.getPassword().equals(pass)) {
             alert.setAlertType(AlertType.ERROR);
@@ -500,6 +521,7 @@ public class Controller implements Initializable {
     private CustomerInfo permanentCustomer;
     public void initUser(CustomerInfo customer) {
         permanentCustomer = customer;
+        System.out.println(customer.getName() + " found");
     }
 
     @FXML
@@ -517,12 +539,33 @@ public class Controller implements Initializable {
 
     }
 
+    @FXML
+    private Label citationUsername;
+
     public void switchToTableView(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("UserFineTableView.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("UserFineTableView.fxml"));
+            loader.setController(this);
+            Parent root = loader.load();
+
+            citationUsername.setText(permanentCustomer.getName());
+
+            List<Parking_Fine> info = database.getFines();
+            ObservableList<Parking_Fine> list = FXCollections.observableArrayList();
+
+            for (Parking_Fine fine : info) {
+                list.add(fine);
+            }
+            citationTable.setItems(list);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -539,7 +582,6 @@ public class Controller implements Initializable {
     private TableColumn<Parking_Fine, Integer> citationFineAmount = new TableColumn<>("Fine Amount");
     @FXML
     private TableColumn<Parking_Fine, String> citationDescription = new TableColumn<>("Description");
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -566,5 +608,30 @@ public class Controller implements Initializable {
     public void deleteCitationEntry(ActionEvent event) {
         int selectedID = citationTable.getSelectionModel().getSelectedIndex();
         citationTable.getItems().remove(selectedID);
+    }
+
+    @FXML
+    public void onCustomerCitationPay(ActionEvent event) {
+        int selectedID = citationTable.getSelectionModel().getSelectedIndex();
+        citationTable.getItems().remove(selectedID);
+
+        database.getFines().remove(selectedID);
+
+        alert.setAlertType(AlertType.CONFIRMATION);
+        alert.setContentText("Issue Paid!\n");
+        alert.show();
+
+        database.saveFines();
+    }
+
+    @FXML
+    public void onCustomerCitationReload(ActionEvent event) {
+        List<Parking_Fine> info = database.getFines();
+        ObservableList<Parking_Fine> list = FXCollections.observableArrayList();
+
+        for (Parking_Fine fine : info) {
+            list.add(fine);
+        }
+        citationTable.setItems(list);
     }
 }
