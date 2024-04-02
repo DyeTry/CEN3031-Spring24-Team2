@@ -291,7 +291,10 @@ public class Controller {
     }
 
     //placeholder method for editing car details as an employee
-    public void onEditCar(ActionEvent actionEvent) {
+    public void onEditCar(ActionEvent actionEvent) throws IOException {
+        Stage primaryStage = new Stage();
+        UserCarDetailsEditor userCarDetailsEditor = new UserCarDetailsEditor();
+        userCarDetailsEditor.start(primaryStage);
     }
 
     //method called when selecting "Resident" as a choice in the pass assignment pane as an employee
@@ -354,6 +357,8 @@ public class Controller {
         stage.show();
     }
 
+
+
     //Method called when submitting a new account for creation
     public void onSubmitAccount(ActionEvent event) {
         //temp variable for setting user's name
@@ -382,4 +387,5 @@ public class Controller {
         //toString for testing
         customerInfo.toString();
     }
+
 }

@@ -11,7 +11,7 @@ public class UserCarDetailsEditor extends Application {
     private Database database;
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage)  {
         database = new Database();
         database.loadDatabaseFromCSV("src\\main\\resources\\com\\team2\\cen3031spring2024team2\\Admin_database.csv");
 
