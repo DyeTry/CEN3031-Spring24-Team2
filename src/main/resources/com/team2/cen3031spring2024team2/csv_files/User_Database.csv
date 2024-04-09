@@ -1,0 +1,4 @@
+ID,Name,Username,Password,Balance,Make,Model,Color,License Plate,Pass Type,Expiration Date,Permit Number,
+123456,John Smith,Jsmith@gmail.com,P@ssw0rd!,10000,Nissan,Altima,Red,F57GHE,Staff,2/26/2025,PJWN04,
+0,Pete Sailing,Psail@gmail.com,P@ssw0rd!,11000,Chevrolet,Camero,Yellow,LS364Q,Resident,3/30/2025,PDBH57,
+0,Dylan Tran,Dtran@gmail.com,P@ssw0rd,14000,Make,Model,Color,NYYN77,null,null,null,
