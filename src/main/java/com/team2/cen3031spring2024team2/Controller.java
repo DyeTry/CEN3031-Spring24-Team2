@@ -1,6 +1,5 @@
 package com.team2.cen3031spring2024team2;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,17 +22,9 @@ import java.util.ResourceBundle;
 
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import java.net.URL;
 
@@ -147,11 +138,11 @@ public class Controller implements Initializable {
             Parent root = loader.load();
 
             //test code hard coding the page to load a specific user's information. Database calls must be programmed
-            userPassType.setText(database.getUser("Psail@gmail.com").getPassType());
-            userLicensePlate.setText(database.getUser("Psail@gmail.com").getLicensePlate());
-            userMake.setText(database.getUser("Psail@gmail.com").getCarMake());
-            userModel.setText(database.getUser("Psail@gmail.com").getCarModel());
-            userPassExpiration.setText(database.getUser("Psail@gmail.com").getPassExpirationDate());
+            userPassType.setText(permanentCustomer.getPassType());
+            userLicensePlate.setText(permanentCustomer.getLicensePlate());
+            userMake.setText(permanentCustomer.getCarMake());
+            userModel.setText(permanentCustomer.getCarModel());
+            userPassExpiration.setText(permanentCustomer.getPassExpirationDate());
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -518,7 +509,7 @@ public class Controller implements Initializable {
         }
     }
 
-    private CustomerInfo permanentCustomer;
+    private static CustomerInfo permanentCustomer;
     public void initUser(CustomerInfo customer) {
         permanentCustomer = customer;
         System.out.println(customer.getName() + " found");
