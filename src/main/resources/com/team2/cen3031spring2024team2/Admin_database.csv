@@ -1,6 +1,0 @@
-EID,Name,Car make,Car model,Car color,License plate,Pass Type,Pass expiration date,Username,Password,Balance,
-123456,John Smith,Nissan,Altima,Red,F57GHE,Staff,2/26/2025,Jsmith@gmail.com,P@ssw0rd,10000,
-780123,Dylan Tran,Hyundai,Eletra,Black,N77NYY,Staff,2/26/2025,Dtran@gmail.com,P@ssw0rd,12000,
-0,Pete Sailing,Chevrolet,Camero,Yellow,LS364Q,Resident,3/30/2025,Psail@gmail.com,P@ssw0rd,11000,
-0,Bumbis Dude,Chevrolet,Malibu,Blue,LQ98FR,Resident,3/30/2025,Bdude@gmail.com,P@ssw0rd,9000,
-0,Mr. Tester,Ford,Maverick,Red,QWERTY,null,null,Mtest@gmail.com,P@ssw0rd,20000,

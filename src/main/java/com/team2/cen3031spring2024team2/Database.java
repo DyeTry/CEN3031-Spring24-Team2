@@ -1,46 +1,88 @@
 package com.team2.cen3031spring2024team2;
 
 import java.io.*;
-import java.text.spi.DateFormatProvider;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
-    private List<CustomerInfo> employeeInfos = new ArrayList<>();
-    private List<CustomerInfo> customerInfos = new ArrayList<>();
-    private List<String> Issues = new ArrayList<>();
-    private List<Parking_Fine> fines = new ArrayList<>();
-    private String file;
-    public int userCount = 0;
 
-    public String getFile() {
-        return file;
+    //A list of all Employees
+    private List<Customer> employeeList = new ArrayList<>();
+
+    //A list of all Customers
+    private List<Customer> customerList = new ArrayList<>();
+
+    //A list of all Fines
+    private List<Parking_Fine> fineList = new ArrayList<>();
+
+    //A list of all Issues
+    private List<SubmittedIssues> issuesList = new ArrayList<>();
+
+    //A default constructor for the Database class
+    public Database() {}
+
+    //Returns the Employee List
+    public List<Customer> getEmployeeList() {
+        return employeeList;
     }
 
-    public void setFile(String file) {
-        this.file = file;
+    //Initializes the Employee List
+    public void setEmployeeList(List<Customer> employeeList) {
+        this.employeeList = employeeList;
     }
 
-    public List<CustomerInfo> getEmployeeInfos() {
-        return employeeInfos;
+    //Returns the Customer List
+    public List<Customer> getCustomerList() {
+        return customerList;
     }
 
-    public List<CustomerInfo> getCustomerInfos() {
-        return customerInfos;
+    //Initializes the Customer List
+    public void setCustomerList(List<Customer> customerList) {
+        this.customerList = customerList;
     }
 
-    public List<Parking_Fine> getFines() {
-        return fines;
+    //Returns the Fine List
+    public List<Parking_Fine> getFineList() {
+        return fineList;
     }
 
-    public CustomerInfo getUser(String username) {
-        for(CustomerInfo c : customerInfos) {
+    //Initializes the Fine List
+    public void setFineList(List<Parking_Fine> fineList) {
+        this.fineList = fineList;
+    }
+
+    //Returns the Issue List
+    public List<SubmittedIssues> getIssuesList() {
+        return issuesList;
+    }
+
+    //Initializes the Issues List
+    public void setIssuesList(List<SubmittedIssues> issuesList) {
+        this.issuesList = issuesList;
+    }
+
+    //A method to add a Customer to the arraylist
+    public void addCustomerProfile(String name, String username, String password, String make, String model, String color, String licensePlate, int balance) {
+        customerList.add(new Customer(name, username, password, 0, balance, new Vehicle(make, model, color, licensePlate)));
+    }
+
+    //A method to add a Fine to the arraylist
+    public void addFineInformation(String citationNumber, String date, String time, String permitNumber, String username, int fineAmount, String reasonForFine) {
+        //fines.add(new Parking_Fine(citationNumber, date, time, permitNumber, username, fineAmount, reasonForFine));
+    }
+
+    //A method to add an Issue Ticket to the arraylist
+    public void addCustomerIssue(String username, String submittedIssue) {
+        issuesList.add(new SubmittedIssues(username, submittedIssue));
+    }
+
+    //A method to find the Customer given a username
+    public Customer getUser(String username) {
+        for(Customer c : customerList) {
             if(c.getUsername().equals(username))
                 return c;
         }
-        for(CustomerInfo c : employeeInfos) {
+        for(Customer c : employeeList) {
             if(c.getUsername().equals(username))
                 return c;
         }
@@ -50,7 +92,7 @@ public class Database {
     //Inaccurate count for fines
     public int getFineCount(String username) {
         int tempIndex = 0;
-        for (Parking_Fine info : fines) {
+        for (Parking_Fine info : fineList) {
             //System.out.println(info.getUsername() + " == " + username);
             if (info.getUsername().equals(username)) {
                 tempIndex++;
@@ -59,42 +101,34 @@ public class Database {
         return tempIndex;
     }
 
-    public void createCustomerProfile(String name, String username, String password, String make, String model, String color, String licensePlate, int balance) {
-        customerInfos.add(new CustomerInfo(name, username, password, make, model, color, licensePlate, balance));
-    }
-
-    public void addFineInformation(String citationNumber, String date, String time, String permitNumber, String username, int fineAmount, String reasonForFine) {
-        fines.add(new Parking_Fine(citationNumber, date, time, permitNumber, username, fineAmount, reasonForFine));
-    }
-
-    public void loadDatabaseFromCSV(String filename) {
-        setFile(filename);
+    //A method to read Customer/Employee information
+    public void loadUserDatabase(String filename) {
 
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             boolean firstLine = true;  // Flag to skip the first line
+
             while ((line = br.readLine()) != null) {
-                if (firstLine) {
-                    firstLine = false;
-                    continue;  // Skip the first line
-                }
+
+                if (firstLine && !(firstLine = false)) continue; // Skip the first line
+
                 String[] data = line.split(",");
-                if (data.length == 11) {
-                    CustomerInfo customerInfo = new CustomerInfo();
-                    customerInfo.setName(data[1].trim());
-                    customerInfo.setCarMake(data[2].trim());
-                    customerInfo.setCarModel(data[3].trim());
-                    customerInfo.setCarColor(data[4].trim());
-                    if (!data[5].trim().isEmpty()) {
-                        customerInfo.setLicensePlate(data[5].trim());
-                    }
-                    customerInfo.setPassType(data[6].trim());
-                    customerInfo.setPassExpirationDate(data[7].trim());
-                    customerInfo.setUsername(data[8].trim());
-                    customerInfo.setPassword(data[9].trim());
-                    customerInfo.setBalance(Integer.parseInt(data[10].trim()));
+                if (data.length == 12) {
+                    Customer info = new Customer();
+
+                    info.setName(data[1].trim());
+                    info.setUsername(data[2].trim());
+                    info.setPassword(data[3].trim());
+                    info.setBalance((Integer.parseInt(data[4].trim())));
+
+                    info.setVehicle(new Vehicle(data[5].trim(), data[6].trim(), data[7].trim(), data[8].trim()));
+
+                    info.setParkingPass(new Parking_Pass(data[9].trim(), data[10].trim()));
+
+                    info.setPermitNumber(data[11].trim());
 
                     int employeeID = 0;
+
                     try {
                         employeeID = Integer.parseInt(data[0].trim());
                     } catch (NumberFormatException e) {
@@ -102,42 +136,43 @@ public class Database {
                     }
 
                     if (employeeID != 0) {
-                        customerInfo.setEmployeeID(employeeID);
-                        employeeInfos.add(customerInfo);
+                        info.setId(employeeID);
+                        employeeList.add(info);
+                        System.out.println("Added Employee"); //TESTING METHOD
                     } else {
-                        customerInfos.add(customerInfo);
+                        customerList.add(info);
+                        System.out.println("Added Customer"); //TESTING METHOD
                     }
                 }
-                userCount++;
-                System.out.println("Added User");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void loadFinesFromCSV(String filename) {
+    //A method to read Fine information
+    public void loadFineDatabase(String filename) {
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             boolean firstLine = true;  // Flag to skip the first line
-            while ((line = br.readLine()) != null) {
-                if (firstLine) {
-                    firstLine = false;
-                    continue;  // Skip the first line
-                }
-                String[] data = line.split(",");
-                if (data.length == 7) {
-                    Parking_Fine parking_fine = new Parking_Fine();
-                    parking_fine.setCitationNumber(data[0].trim());
-                    parking_fine.setDate(data[1].trim());
-                    parking_fine.setTime(data[2].trim());
-                    parking_fine.setPermitNumber(data[3].trim());
-                    parking_fine.setUsername(data[4].trim());
-                    parking_fine.setFineAmount(Integer.parseInt(data[5].trim()));
-                    parking_fine.setReasonForFine(data[6].trim());
 
-                    fines.add(parking_fine);
-                    System.out.println("Added Fine");
+            while ((line = br.readLine()) != null) {
+
+                if (firstLine && !(firstLine = false)) continue; // Skip the first line
+
+                String[] data = line.split(",");
+                if (data.length == 6) {
+                    Parking_Fine parking_fine = new Parking_Fine();
+
+                    parking_fine.setUsername(data[0].trim());
+                    parking_fine.setFineNumber(data[1].trim());
+                    parking_fine.setFineDate(data[2].trim());
+                    parking_fine.setFineTime(data[3].trim());
+                    parking_fine.setFineAmount(Integer.parseInt(data[4].trim()));
+                    parking_fine.setFineDescription(data[5].trim());
+
+                    fineList.add(parking_fine);
+                    System.out.println("Added Fine"); //TESTING METHOD
                 }
             }
         } catch (IOException e) {
@@ -145,12 +180,35 @@ public class Database {
         }
     }
 
-    /**
-     * A method to save to the database
-     */
+    public void loadIssueDatabase(String filename) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String line;
+            boolean firstLine = true;  // Flag to skip the first line
+
+            while ((line = br.readLine()) != null) {
+
+                if (firstLine && !(firstLine = false)) continue; // Skip the first line
+
+                String[] data = line.split(",");
+                if (data.length == 2) {
+                    SubmittedIssues info = new SubmittedIssues();
+
+                    info.setUsername(data[0].trim());
+                    info.setIssueDescription(data[1].trim());
+
+                    issuesList.add(info);
+                    System.out.println("Support Ticket Added."); //TESTING METHOD
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //A method to save Customer/Employee information
     public void saveDatabase() {
 
-        File newFile = new File("src\\main\\resources\\com\\team2\\cen3031spring2024team2\\Admin_database.csv");
+        File newFile = new File("src\\main\\resources\\com\\team2\\cen3031spring2024team2\\csv_files\\User_Database.csv");
         FileWriter saveToDatabase = null;
 
         try {
@@ -158,16 +216,16 @@ public class Database {
             saveToDatabase = new FileWriter(newFile);
 
             //Writes the first line
-            saveToDatabase.write("EID,Name,Car make,Car model,Car color,License plate,Pass Type,Pass expiration date,Username,Password,Balance,\n");
+            saveToDatabase.write("ID,Name,Username,Password,Balance,Make,Model,Color,License Plate,Pass Type,Expiration Date,Permit Number,\n");
 
             //Writes the Employee Information
-            for (int i = 0; i < employeeInfos.size(); i++) {
-                saveToDatabase.write(employeeInfos.get(i).saveToFile());
+            for (int i = 0; i < employeeList.size(); i++) {
+                saveToDatabase.write(employeeList.get(i).toString());
             }
 
             //Writes the Customer Information
-            for (int i = 0; i < customerInfos.size(); i++) {
-                saveToDatabase.write(customerInfos.get(i).saveToFile());
+            for (int i = 0; i < customerList.size(); i++) {
+                saveToDatabase.write(customerList.get(i).toString());
             }
 
             saveToDatabase.close();
@@ -176,10 +234,13 @@ public class Database {
         } catch (IOException e) {
             System.out.println(e.toString());
         }
+
+        System.out.println("Saved to Database");
     }
 
+    //A method to save Fine information
     public void saveFines() {
-        File newFile = new File("src\\main\\resources\\com\\team2\\cen3031spring2024team2\\FinesDatabase.csv");
+        File newFile = new File("src\\main\\resources\\com\\team2\\cen3031spring2024team2\\csv_files\\Fines_Database.csv");
         FileWriter saveToDatabase = null;
 
         try {
@@ -187,11 +248,11 @@ public class Database {
             saveToDatabase = new FileWriter(newFile);
 
             //Writes the first line
-            saveToDatabase.write("Citation number,Date,Time,Permit number,Username,Fine amount,Reason for fine,\n");
+            saveToDatabase.write("Username,Citation number,Date,Time,Fine amount,Reason for fine,\n");
 
             //Writes the Fine Information
-            for (int i = 0; i < fines.size(); i++) {
-                saveToDatabase.write(fines.get(i).toString());
+            for (int i = 0; i < fineList.size(); i++) {
+                saveToDatabase.write(fineList.get(i).toString());
             }
 
             saveToDatabase.close();
@@ -202,8 +263,9 @@ public class Database {
         }
     }
 
+    //A method to save Issue Ticket information
     public void saveIssues() {
-        File newFile = new File("src\\main\\resources\\com\\team2\\cen3031spring2024team2\\programIssues.csv");
+        File newFile = new File("src\\main\\resources\\com\\team2\\cen3031spring2024team2\\csv_files\\Issues_Database.csv");
         FileWriter saveToDatabase = null;
 
         try {
@@ -211,11 +273,11 @@ public class Database {
             saveToDatabase = new FileWriter(newFile);
 
             //Writes the first line
-            saveToDatabase.write("Description,\n");
+            saveToDatabase.write("Username,Description,\n");
 
             //Writes the Fine Information
-            for (int i = 0; i < Issues.size(); i++) {
-                saveToDatabase.write(Issues.get(i) + ",\n");
+            for (int i = 0; i < issuesList.size(); i++) {
+                saveToDatabase.write(issuesList.get(i).toString() + ",\n");
             }
 
             saveToDatabase.close();
@@ -226,6 +288,7 @@ public class Database {
         }
     }
 
+    //A method to generate a random string of n size
     public String randomStringGenerator(int size) {
 
         // choose a Character random from this String
@@ -244,9 +307,5 @@ public class Database {
             sb.append(alphaNumericString.charAt(index));
         }
         return sb.toString();
-    }
-
-    public void createCustomerIssue(String submittedIssue) {
-        Issues.add(submittedIssue);
     }
 }

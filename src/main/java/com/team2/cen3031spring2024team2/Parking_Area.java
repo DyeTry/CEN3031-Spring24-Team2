@@ -1,9 +1,11 @@
 package com.team2.cen3031spring2024team2;
 
-import java.time.LocalDate;
-public class Parking_Area {
+/**
+ * Work with Rikki on this
+ */
 
-    private String map;
+/*
+public class Parking_Area {
 
     private String area;
 
@@ -36,11 +38,8 @@ public class Parking_Area {
         return areaCode;
     }
 
-    public void setPass(String pass, double price, String description, LocalDate expirationDate) {
-        passType = new Parking_Pass(pass, price, description, expirationDate);
-    }
-
     public Parking_Pass getPass() {
         return passType;
     }
 }
+*/

@@ -2,110 +2,104 @@ package com.team2.cen3031spring2024team2;
 
 public class Parking_Fine {
 
-    private String CitationNumber;
-    private String Date;
-    private String Time;
-    private String PermitNumber;
-    private String Username;
-    private int FineAmount;
-    private String ReasonForFine;
-    private int Balance;
+    //The Customer's username
+    private String username;
+
+    //The Parking Fine's number
+    private String fineNumber;
+
+    //The Parking Fine's date
+    private String fineDate;
+
+    //The Parking Fine's time
+    private String fineTime;
+
+    //The Parking Fine's amount
+    private int fineAmount;
+
+    //The Parking Fine's description
+    private String fineDescription;
+
+    //A default constructor for the Parking Fine class
     public Parking_Fine() {}
 
-    public Parking_Fine(String citationNumber, String date, String time, String permitNumber, int fineAmount, String reasonForFine) {
-        CitationNumber = citationNumber;
-        Date = date;
-        Time = time;
-        PermitNumber = permitNumber;
-        FineAmount = fineAmount;
-        ReasonForFine = reasonForFine;
+    //A constructor for the Parking Fine class
+    public Parking_Fine(String fineNumber, String fineDate, String fineTime, int fineAmount, String fineDescription) {
+        this.fineNumber = fineNumber;
+        this.fineDate = fineDate;
+        this.fineTime = fineTime;
+        this.fineAmount = fineAmount;
+        this.fineDescription = fineDescription;
     }
 
-    public Parking_Fine(String CitationNumber, String Date, String Time, String PermitNumber, String Username, int FineAmount, String ReasonForFine) {
-        this.CitationNumber = CitationNumber;
-        this.Date = Date;
-        this.Time = Time;
-        this.PermitNumber = PermitNumber;
-        this.Username = Username;
-        this.FineAmount = FineAmount;
-        this.ReasonForFine = ReasonForFine;
-    }
-
-    public String getCitationNumber() {
-        return CitationNumber;
-    }
-
-    public void setCitationNumber(String citationNumber) {
-        CitationNumber = citationNumber;
-    }
-
-    public String getDate() {
-        return Date;
-    }
-
-    public void setDate(String date) {
-        Date = date;
-    }
-
-    public String getTime() {
-        return Time;
-    }
-
-    public void setTime(String time) {
-        Time = time;
-    }
-
-    public String getPermitNumber() {
-        return PermitNumber;
-    }
-
-    public void setPermitNumber(String permitNumber) {
-        PermitNumber = permitNumber;
-    }
-
+    //Returns the Customer's username
     public String getUsername() {
-        return Username;
+        return username;
     }
 
+    //Initializes the Customer's username
     public void setUsername(String username) {
-        Username = username;
+        this.username = username;
     }
 
+    //Returns the Parking Fines number
+    public String getFineNumber() {
+        return fineNumber;
+    }
+
+    //Initializes the Parking Pass's number
+    public void setFineNumber(String fineNumber) {
+        this.fineNumber = fineNumber;
+    }
+
+    //Returns the Parking Fines date
+    public String getFineDate() {
+        return fineDate;
+    }
+
+    //Initializes the Parking Pass's date
+    public void setFineDate(String fineDate) {
+        this.fineDate = fineDate;
+    }
+
+    //Returns the Parking Fines time
+    public String getFineTime() {
+        return fineTime;
+    }
+
+    //Initializes the Parking Pass's time
+    public void setFineTime(String fineTime) {
+        this.fineTime = fineTime;
+    }
+
+    //Returns the Parking Fines amount
     public int getFineAmount() {
-        return FineAmount;
+        return fineAmount;
     }
 
+    //Initializes the Parking Pass's amount
     public void setFineAmount(int fineAmount) {
-        FineAmount = fineAmount;
+        this.fineAmount = fineAmount;
     }
 
-    public String getReasonForFine() {
-        return ReasonForFine;
+    //Returns the Parking Fines description
+    public String getFineDescription() {
+        return fineDescription;
     }
 
-    public void setReasonForFine(String reasonForFine) {
-        ReasonForFine = reasonForFine;
+    //Initializes the Parking Pass's description
+    public void setFineDescription(String fineDescription) {
+        this.fineDescription = fineDescription;
     }
 
-    public int getBalance() {
-        return Balance;
-    }
-
-    public void setBalance(int balance) {
-        Balance = balance;
-    }
-
-    public int calculateBalance(int fineAmount) {
-        if (getBalance() - fineAmount >= 0) {
-            setBalance(Balance - fineAmount);
-            return getBalance();
-        } else {
-            return -1;
-        }
-    }
-
+    //Returns a formatted String
     @Override
     public String toString() {
-        return CitationNumber + ',' +Date + ',' +Time + ',' + PermitNumber + ',' + Username + ',' + FineAmount + ',' + ReasonForFine + ",\n";
+        return username + "," +
+                fineNumber + "," +
+                fineDate + "," +
+                fineTime + "," +
+                fineAmount + "," +
+                fineDescription + ",\n";
     }
 }
