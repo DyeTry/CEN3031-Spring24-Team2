@@ -537,7 +537,7 @@ public class Controller implements Initializable {
         }
     }
 
-    private CustomerInfo permanentCustomer;
+    private static CustomerInfo permanentCustomer;
     public void initUser(CustomerInfo customer) {
         permanentCustomer = customer;
         System.out.println(customer.getName() + " found");
@@ -634,13 +634,21 @@ public class Controller implements Initializable {
         int selectedID = citationTable.getSelectionModel().getSelectedIndex();
         citationTable.getItems().remove(selectedID);
 
-        database.getFines().remove(selectedID);
 
-        alert.setAlertType(AlertType.CONFIRMATION);
-        alert.setContentText("Issue Paid!\n");
-        alert.show();
 
-        database.saveFines();
+        if((permanentCustomer.getBalance() - database.getFines().get(selectedID).getBalance()) > 0  ) {
+
+
+            database.getFines().remove(selectedID);
+
+            alert.setAlertType(AlertType.CONFIRMATION);
+            alert.setContentText("Issue Paid!\n");
+            alert.show();
+
+            database.saveFines();
+
+            permanentCustomer.setBalance(permanentCustomer.getBalance() - database.getFines().get(selectedID).getBalance());
+        }
     }
 
     @FXML
