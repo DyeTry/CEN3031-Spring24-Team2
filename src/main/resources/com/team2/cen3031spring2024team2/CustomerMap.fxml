@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -48,11 +47,13 @@
                         <Image url="@Untitled_Artwork.png" />
                     </image>
                 </ImageView>
-                <CheckBox layoutX="350.0" layoutY="25.0" mnemonicParsing="false" onAction="#showAllPasses" prefHeight="18.0" prefWidth="11.0" text="All Passes" />
-                <CheckBox layoutX="350.0" layoutY="57.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="11.0" text="Commuter" />
-                <CheckBox fx:id="one" layoutX="350.0" layoutY="91.0" mnemonicParsing="false" onAction="#showHandicap" prefHeight="18.0" prefWidth="11.0" text="Handicap" />
-                <CheckBox layoutX="350.0" layoutY="122.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="11.0" text="Resident" />
-                <CheckBox layoutX="350.0" layoutY="154.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="11.0" text="Staff" />
+                <Button fx:id="commuter" layoutX="422.0" layoutY="22.0" mnemonicParsing="false" onAction="#showAllPasses" onMouseClicked="#showAllPasses" onMouseReleased="#closeAllPasses" text="All Passes" />
+                <Button layoutX="421.0" layoutY="217.0" mnemonicParsing="false" text="Buildings" />
+                <Button fx:id="carMake" layoutX="422.0" layoutY="87.0" mnemonicParsing="false" onAction="#showHandicap" text="Handicap" />
+                <Button layoutX="422.0" layoutY="118.0" mnemonicParsing="false" onAction="#showResident" onMouseClicked="#sh" text="Resident" />
+                <Button layoutX="419.0" layoutY="185.0" mnemonicParsing="false" text="Fields" />
+                <Button layoutX="422.0" layoutY="150.0" mnemonicParsing="false" text="Staff" />
+                <Button layoutX="422.0" layoutY="55.0" mnemonicParsing="false" onAction="#showCommuter" text="Commuter" />
             </children></AnchorPane>
     </center>
 </BorderPane>

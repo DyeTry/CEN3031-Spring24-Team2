@@ -47,6 +47,10 @@ public class Controller implements Initializable {
     @FXML
     private ImageView allPasses;
     @FXML
+    private ImageView commuter;
+    @FXML
+    private ImageView resident;
+    @FXML
     private Text userModel;
     @FXML
     private Text userMake;
@@ -192,6 +196,19 @@ public class Controller implements Initializable {
 
     public void showAllPasses(ActionEvent event) throws IOException {
         allPasses.setVisible(true);
+    }
+
+    public void closeAllPasses(ActionEvent event) throws IOException {
+        allPasses.setVisible(false);
+    }
+
+    public void showCommuter(ActionEvent event) throws IOException {
+        commuter.setVisible(true);
+    }
+
+
+    public void showResident(ActionEvent event) throws IOException {
+        resident.setVisible(true);
     }
 
     //currently not in use, an empty employee pane used to template all other employee panes
