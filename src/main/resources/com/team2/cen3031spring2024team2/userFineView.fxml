@@ -27,23 +27,23 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #e6e6e6;" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="fineUserName" layoutX="188.0" layoutY="28.0" text="User Name">
+            <Label fx:id="fineUserName" layoutX="51.0" layoutY="14.0" text="User Name">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Text layoutX="190.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Citation Details">
+            <Text layoutX="333.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Citation Details">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <Text layoutX="190.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Balance:" />
-            <Text fx:id="userBalance" layoutX="261.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Balance&gt;" />
-            <Text layoutX="188.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Citation count:" />
-            <Text fx:id="userCitationNum" layoutX="275.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;num&gt;" />
+            <Text layoutX="333.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Balance:" />
+            <Text fx:id="userBalance" layoutX="396.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Balance&gt;" />
+            <Text layoutX="333.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Citation count:" />
+            <Text fx:id="userCitationNum" layoutX="413.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;num&gt;" />
             <Button layoutX="306.0" layoutY="349.0" mnemonicParsing="false" onAction="#onCitationSubmit" text="Add" />
             <Button layoutX="131.0" layoutY="349.0" mnemonicParsing="false" onAction="#switchToTableView" text="Table" />
-            <Text layoutX="193.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add a Citation">
+            <Text layoutX="187.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add a Citation">
                <font>
                   <Font size="18.0" />
                </font>

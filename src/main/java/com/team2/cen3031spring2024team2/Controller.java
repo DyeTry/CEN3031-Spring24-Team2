@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -38,6 +39,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import java.net.URL;
+
+import javafx.geometry.Insets;
 
 public class Controller implements Initializable {
     @FXML
@@ -338,7 +341,7 @@ public class Controller implements Initializable {
         String citationNum = database.randomStringGenerator(10);
         String permitNum = database.randomStringGenerator(6); //Placeholder until permit number is implemented
 
-        database.addFineInformation(citationNum, formattedDate, formattedTime, permitNum, permanentCustomer.getUsername(), Integer.parseInt(createFineAmount.getText()), createReasonForFine.getText());
+        database.addFineInformation(citationNum, formattedDate, formattedTime, permitNum, permanentCustomer.getUsername(), Integer.parseInt(createFineAmount.getText()), createReasonForFine.getText(), "New");
         alert.setAlertType(AlertType.CONFIRMATION);
         alert.setContentText(
                 "Fine Issued Successfully\n" +
@@ -394,7 +397,7 @@ public class Controller implements Initializable {
     }
 
     public void onViewFine(ActionEvent actionEvent) throws IOException {
-        switchToUserFineView(actionEvent);
+        switchToTableView(actionEvent);
     }
 
     //placeholder method for resetting password
@@ -537,7 +540,7 @@ public class Controller implements Initializable {
         }
     }
 
-    private CustomerInfo permanentCustomer;
+    private static CustomerInfo permanentCustomer;
     public void initUser(CustomerInfo customer) {
         permanentCustomer = customer;
         System.out.println(customer.getName() + " found");
@@ -601,6 +604,8 @@ public class Controller implements Initializable {
     private TableColumn<Parking_Fine, Integer> citationFineAmount = new TableColumn<>("Fine Amount");
     @FXML
     private TableColumn<Parking_Fine, String> citationDescription = new TableColumn<>("Description");
+    @FXML
+    private TableColumn<Parking_Fine, String> citationPaymentStatus = new TableColumn<>("Payment Status");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -610,10 +615,16 @@ public class Controller implements Initializable {
         citationPermitNum.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("permitNumber"));
         citationFineAmount.setCellValueFactory(new PropertyValueFactory<Parking_Fine, Integer>("fineAmount"));
         citationDescription.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("reasonForFine"));
+        citationPaymentStatus.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("paymentStatus"));
     }
 
     @FXML
     public void addCitationEntry(ActionEvent event) {
+        
+    }
+
+    @FXML
+    public void reloadCitationEntry(ActionEvent event) {
         List<Parking_Fine> info = database.getFines();
         ObservableList<Parking_Fine> list = FXCollections.observableArrayList();
 
