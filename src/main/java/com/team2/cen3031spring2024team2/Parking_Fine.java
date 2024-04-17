@@ -5,7 +5,6 @@ public class Parking_Fine {
     private String CitationNumber;
     private String Date;
     private String Time;
-    private String PermitNumber;
     private String Username;
     private int FineAmount;
     private String ReasonForFine;
@@ -13,20 +12,18 @@ public class Parking_Fine {
     private int Balance;
     public Parking_Fine() {}
 
-    public Parking_Fine(String citationNumber, String date, String time, String permitNumber, int fineAmount, String reasonForFine) {
+    public Parking_Fine(String citationNumber, String date, String time, int fineAmount, String reasonForFine) {
         CitationNumber = citationNumber;
         Date = date;
         Time = time;
-        PermitNumber = permitNumber;
         FineAmount = fineAmount;
         ReasonForFine = reasonForFine;
     }
 
-    public Parking_Fine(String CitationNumber, String Date, String Time, String PermitNumber, String Username, int FineAmount, String ReasonForFine, String PaymentStatus) {
+    public Parking_Fine(String CitationNumber, String Date, String Time, String Username, int FineAmount, String ReasonForFine, String PaymentStatus) {
         this.CitationNumber = CitationNumber;
         this.Date = Date;
         this.Time = Time;
-        this.PermitNumber = PermitNumber;
         this.Username = Username;
         this.FineAmount = FineAmount;
         this.ReasonForFine = ReasonForFine;
@@ -55,14 +52,6 @@ public class Parking_Fine {
 
     public void setTime(String time) {
         Time = time;
-    }
-
-    public String getPermitNumber() {
-        return PermitNumber;
-    }
-
-    public void setPermitNumber(String permitNumber) {
-        PermitNumber = permitNumber;
     }
 
     public String getUsername() {
@@ -116,6 +105,6 @@ public class Parking_Fine {
 
     @Override
     public String toString() {
-        return CitationNumber + ',' +Date + ',' +Time + ',' + PermitNumber + ',' + Username + ',' + FineAmount + ',' + ReasonForFine + ",\n";
+        return CitationNumber + ',' +Date + ',' +Time + ',' + Username + ',' + FineAmount + ',' + ReasonForFine + ",\n";
     }
 }

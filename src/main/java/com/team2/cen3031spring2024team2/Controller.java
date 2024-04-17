@@ -339,16 +339,14 @@ public class Controller implements Initializable {
         String formattedTime = localTime.format(time);
 
         String citationNum = database.randomStringGenerator(10);
-        String permitNum = database.randomStringGenerator(6); //Placeholder until permit number is implemented
 
-        database.addFineInformation(citationNum, formattedDate, formattedTime, permitNum, permanentCustomer.getUsername(), Integer.parseInt(createFineAmount.getText()), createReasonForFine.getText(), "New");
+        database.addFineInformation(citationNum, formattedDate, formattedTime, permanentCustomer.getUsername(), Integer.parseInt(createFineAmount.getText()), createReasonForFine.getText(), "New");
         alert.setAlertType(AlertType.CONFIRMATION);
         alert.setContentText(
                 "Fine Issued Successfully\n" +
                         "Citation Number: " + citationNum + "\n" +
                         "Date: " + formattedDate + "\n" +
                         "Time: " + formattedTime + "\n" +
-                        "Permit Number: " + permitNum + "\n" +
                         "Name: " + permanentCustomer.getName() + "\n" +
                         "Reason For Fine: " + createReasonForFine.getText() + "\n" +
                         "Citation Amount: $" + createFineAmount.getText()
@@ -599,8 +597,6 @@ public class Controller implements Initializable {
     @FXML
     private TableColumn<Parking_Fine, String> citationTime = new TableColumn<>("Time");
     @FXML
-    private TableColumn<Parking_Fine, String> citationPermitNum = new TableColumn<>("Permit Number");
-    @FXML
     private TableColumn<Parking_Fine, Integer> citationFineAmount = new TableColumn<>("Fine Amount");
     @FXML
     private TableColumn<Parking_Fine, String> citationDescription = new TableColumn<>("Description");
@@ -612,15 +608,14 @@ public class Controller implements Initializable {
         citationNum.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("citationNumber"));
         citationDate.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("date"));
         citationTime.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("time"));
-        citationPermitNum.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("permitNumber"));
         citationFineAmount.setCellValueFactory(new PropertyValueFactory<Parking_Fine, Integer>("fineAmount"));
         citationDescription.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("reasonForFine"));
         citationPaymentStatus.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("paymentStatus"));
     }
 
     @FXML
-    public void addCitationEntry(ActionEvent event) {
-        
+    public void addCitationEntry(ActionEvent event) throws IOException {
+        switchToUserFineView(event);
     }
 
     @FXML
@@ -645,7 +640,9 @@ public class Controller implements Initializable {
         int selectedID = citationTable.getSelectionModel().getSelectedIndex();
         citationTable.getItems().remove(selectedID);
 
-        database.getFines().remove(selectedID);
+        //database.getFines().get(selectedID).getBalance();
+
+        //database.getFines().remove(selectedID);
 
         alert.setAlertType(AlertType.CONFIRMATION);
         alert.setContentText("Issue Paid!\n");
@@ -664,5 +661,4 @@ public class Controller implements Initializable {
         }
         citationTable.setItems(list);
     }
-
 }

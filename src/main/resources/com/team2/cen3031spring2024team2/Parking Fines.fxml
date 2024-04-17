@@ -36,7 +36,6 @@
                         <TableColumn fx:id="citationNum" prefWidth="86.0" text="Citation #" />
                         <TableColumn fx:id="citationDate" minWidth="0.0" prefWidth="50.0" text="Date" />
                         <TableColumn fx:id="citationTime" prefWidth="47.0" text="Time" />
-                        <TableColumn fx:id="citationPermitNum" prefWidth="74.0" text="Permit #" />
                         <TableColumn fx:id="citationFineAmount" text="Fine Amount" />
                         <TableColumn fx:id="citationDescription" prefWidth="99.0" text="Description" />
                      </columns>
