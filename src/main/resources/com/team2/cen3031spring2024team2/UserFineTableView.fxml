@@ -37,6 +37,7 @@
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
+            <Label fx:id="citationBalance" layoutX="528.0" layoutY="89.0" text="&lt;balance&gt;" />
             <Text layoutX="457.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Citation Details" textAlignment="CENTER" wrappingWidth="193.95556640625">
                <font>
                   <Font name="System Bold" size="24.0" />
@@ -52,9 +53,10 @@
                   <TableColumn fx:id="citationPaymentStatus" prefWidth="111.0" text="Payment Status" />
               </columns>
             </TableView>
-            <Button layoutX="98.0" layoutY="537.0" mnemonicParsing="false" onAction="#addCitationEntry" text="Add Citation" />
+            <Button layoutX="362.0" layoutY="537.0" mnemonicParsing="false" onAction="#approveCitationEntry" text="Approve Citation" />
+            <Button layoutX="234.0" layoutY="537.0" mnemonicParsing="false" onAction="#addCitationEntry" text="Add Citation" />
             <Button layoutX="513.0" layoutY="537.0" mnemonicParsing="false" onAction="#deleteCitationEntry" text="Delete Citation" />
-            <Button layoutX="306.0" layoutY="537.0" mnemonicParsing="false" onAction="#reloadCitationEntry" prefHeight="25.0" prefWidth="88.0" text="Reload Table" />
+            <Button layoutX="105.0" layoutY="537.0" mnemonicParsing="false" onAction="#reloadCitationEntry" prefHeight="25.0" prefWidth="88.0" text="Reload Table" />
          </children></AnchorPane>
    </center>
 </BorderPane>

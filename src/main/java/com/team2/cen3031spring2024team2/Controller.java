@@ -120,7 +120,7 @@ public class Controller implements Initializable {
     public void switchToCustomerParkingFines(ActionEvent event) throws IOException {
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Parking Fines.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CustomerParkingFinesTable.fxml"));
             loader.setController(this);
             Parent root = loader.load();
 
@@ -562,6 +562,9 @@ public class Controller implements Initializable {
     @FXML
     private Label citationUsername;
 
+    @FXML
+    private Label citationBalance;
+
     public void switchToTableView(ActionEvent event) throws IOException {
 
         try {
@@ -570,6 +573,7 @@ public class Controller implements Initializable {
             Parent root = loader.load();
 
             citationUsername.setText(permanentCustomer.getName());
+            citationBalance.setText("$" + permanentCustomer.getBalance());
 
             List<Parking_Fine> info = database.getFines();
             ObservableList<Parking_Fine> list = FXCollections.observableArrayList();
@@ -630,6 +634,20 @@ public class Controller implements Initializable {
     }
 
     @FXML
+    public void approveCitationEntry(ActionEvent event) {
+        int selectedID = citationTable.getSelectionModel().getSelectedIndex();
+
+        database.getFines().get(selectedID).setPaymentStatus("Approved");
+
+        alert.setAlertType(AlertType.CONFIRMATION);
+        alert.setContentText("Issue Approved!\n");
+        alert.show();
+
+        database.saveFines();
+        reloadCitationEntry(event);
+    }
+
+    @FXML
     public void deleteCitationEntry(ActionEvent event) {
         int selectedID = citationTable.getSelectionModel().getSelectedIndex();
         citationTable.getItems().remove(selectedID);
@@ -638,11 +656,8 @@ public class Controller implements Initializable {
     @FXML
     public void onCustomerCitationPay(ActionEvent event) {
         int selectedID = citationTable.getSelectionModel().getSelectedIndex();
-        citationTable.getItems().remove(selectedID);
 
-        //database.getFines().get(selectedID).getBalance();
-
-        //database.getFines().remove(selectedID);
+        database.getFines().get(selectedID).setPaymentStatus("Pending");
 
         alert.setAlertType(AlertType.CONFIRMATION);
         alert.setContentText("Issue Paid!\n");

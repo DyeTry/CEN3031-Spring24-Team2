@@ -187,7 +187,7 @@ public class Database {
             saveToDatabase = new FileWriter(newFile);
 
             //Writes the first line
-            saveToDatabase.write("Citation number,Date,Time,Permit number,Username,Fine amount,Reason for fine,Payment Status,\n");
+            saveToDatabase.write("Username,Citation number,Date,Time,Fine amount,Reason for fine,Payment Status,\n");
 
             //Writes the Fine Information
             for (int i = 0; i < fines.size(); i++) {

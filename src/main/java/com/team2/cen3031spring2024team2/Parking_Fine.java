@@ -105,6 +105,6 @@ public class Parking_Fine {
 
     @Override
     public String toString() {
-        return CitationNumber + ',' +Date + ',' +Time + ',' + Username + ',' + FineAmount + ',' + ReasonForFine + ",\n";
+        return Username + ',' + CitationNumber + ',' +Date + ',' +Time + ',' + FineAmount + ',' + ReasonForFine + "," + PaymentStatus + ",\n";
     }
 }
