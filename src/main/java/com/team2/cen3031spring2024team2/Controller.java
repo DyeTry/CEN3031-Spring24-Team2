@@ -116,6 +116,11 @@ public class Controller implements Initializable {
     CustomerInfo customerInfo = new CustomerInfo();
     private final Database database = Main.database;
 
+    @FXML
+    private Label customerCitationUsername;
+    @FXML
+    private Label customerCitationBalance;
+
     //method called when switching to the parking fines page as a customer
     public void switchToCustomerParkingFines(ActionEvent event) throws IOException {
 
@@ -124,18 +129,18 @@ public class Controller implements Initializable {
             loader.setController(this);
             Parent root = loader.load();
 
-            /*try {
-                customerCitationUsername.setText(permanentCustomer.getName());
-                customerCitationBalance.setText("$" + permanentCustomer.getBalance());
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-            }*/
+            customerCitationUsername.setText(permanentCustomer.getName());
+            customerCitationBalance.setText("$" + permanentCustomer.getBalance());
 
             List<Parking_Fine> info = database.getFines();
             ObservableList<Parking_Fine> list = FXCollections.observableArrayList();
 
             for (Parking_Fine fine : info) {
-                list.add(fine);
+
+                if (fine.getUsername().equalsIgnoreCase(permanentCustomer.getUsername()))
+                {
+                    list.add(fine);
+                }
             }
             citationTable.setItems(list);
 
@@ -579,7 +584,10 @@ public class Controller implements Initializable {
             ObservableList<Parking_Fine> list = FXCollections.observableArrayList();
 
             for (Parking_Fine fine : info) {
-                list.add(fine);
+                if (fine.getUsername().equalsIgnoreCase(permanentCustomer.getUsername()))
+                {
+                    list.add(fine);
+                }
             }
             citationTable.setItems(list);
 
@@ -623,19 +631,36 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void reloadCitationEntry(ActionEvent event) {
+    public void reloadCitationEntry(ActionEvent event) throws IOException {
+        /*
         List<Parking_Fine> info = database.getFines();
         ObservableList<Parking_Fine> list = FXCollections.observableArrayList();
 
         for (Parking_Fine fine : info) {
-            list.add(fine);
+            if (fine.getUsername().equalsIgnoreCase(permanentCustomer.getUsername()))
+            {
+                list.add(fine);
+            }
         }
         citationTable.setItems(list);
+
+         */
+        switchToTableView(event);
     }
 
     @FXML
-    public void approveCitationEntry(ActionEvent event) {
-        int selectedID = citationTable.getSelectionModel().getSelectedIndex();
+    public void approveCitationEntry(ActionEvent event) throws IOException {
+        List<Parking_Fine> info = database.getFines();
+        String citationNum = citationTable.getSelectionModel().getSelectedItem().getCitationNumber();
+        int selectedID = 0;
+        int i = 0;
+
+        for (Parking_Fine fine : info) {
+            if (fine.getCitationNumber().equals(citationNum)) {
+                selectedID = i;
+            }
+            i++;
+        }
 
         database.getFines().get(selectedID).setPaymentStatus("Approved");
 
@@ -654,26 +679,73 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void onCustomerCitationPay(ActionEvent event) {
-        int selectedID = citationTable.getSelectionModel().getSelectedIndex();
+    private TextField customerAddBalanceNum;
 
-        database.getFines().get(selectedID).setPaymentStatus("Pending");
+    @FXML
+    public void onCustomerAddBalance(ActionEvent event) {
+        int addBalance = Integer.parseInt(customerAddBalanceNum.getText());
+
+        System.out.println(addBalance);
 
         alert.setAlertType(AlertType.CONFIRMATION);
-        alert.setContentText("Issue Paid!\n");
+        alert.setContentText("Funds Added!\n");
         alert.show();
 
-        database.saveFines();
+        permanentCustomer.setBalance(permanentCustomer.getBalance() + addBalance);
+
+        database.saveDatabase();
     }
 
     @FXML
-    public void onCustomerCitationReload(ActionEvent event) {
+    public void onCustomerCitationPay(ActionEvent event) {
+        List<Parking_Fine> info = database.getFines();
+        String citationNum = citationTable.getSelectionModel().getSelectedItem().getCitationNumber();
+        int selectedID = 0;
+        int i = 0;
+
+        for (Parking_Fine fine : info) {
+            if (fine.getCitationNumber().equals(citationNum)) {
+                selectedID = i;
+            }
+            i++;
+        }
+
+        if((permanentCustomer.getBalance() - database.getFines().get(selectedID).getFineAmount() > 0 )) {
+
+            database.getFines().get(selectedID).setPaymentStatus("Pending");
+
+            alert.setAlertType(AlertType.CONFIRMATION);
+            alert.setContentText("Issue Paid!\n");
+            alert.show();
+
+            int newBalance = permanentCustomer.getBalance() - database.getFines().get(selectedID).getFineAmount();
+
+            permanentCustomer.setBalance(newBalance);
+
+            database.saveDatabase();
+            database.saveFines();
+        } else {
+            alert.setAlertType(AlertType.CONFIRMATION);
+            alert.setContentText("Not Enough Funds.\nPlease Add More Funds.");
+            alert.show();
+        }
+    }
+
+    @FXML
+    public void onCustomerCitationReload(ActionEvent event) throws IOException {
+        /*
         List<Parking_Fine> info = database.getFines();
         ObservableList<Parking_Fine> list = FXCollections.observableArrayList();
 
         for (Parking_Fine fine : info) {
-            list.add(fine);
+            if (fine.getUsername().equalsIgnoreCase(permanentCustomer.getUsername()))
+            {
+                list.add(fine);
+            }
         }
         citationTable.setItems(list);
+
+         */
+        switchToCustomerParkingFines(event);
     }
 }
