@@ -106,7 +106,7 @@ public class Controller implements Initializable {
     private TextField createPlate;
     @FXML
     private TextField createBalance;
-    String userEmailVal;
+    public static String userEmailVal;
 
     //used for showing alerts such as success/fail messages to users
     private Alert alert = new Alert(AlertType.NONE);

@@ -47,7 +47,7 @@ public class SupportTicketManager extends Application {
         Button submitButton = new Button("Submit");
         submitButton.setOnAction(event -> {
             String issueDescription = issueField.getText();
-            String Username; //requires getter for current user (username functionality)
+            String Username = Controller.userEmailVal;//requires getter for current user (username functionality)
             if (!issueDescription.isEmpty()) {
                 LocalDateTime timestamp = LocalDateTime.now();
                 SupportTicket newTicket = new SupportTicket(timestamp, issueDescription, TicketStatus.OPEN, Username);
