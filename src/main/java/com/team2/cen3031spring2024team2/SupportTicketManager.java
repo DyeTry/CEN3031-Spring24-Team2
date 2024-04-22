@@ -32,7 +32,7 @@ public class SupportTicketManager extends Application {
         TableView<SupportTicket> ticketTable = createTicketDashboard();
         borderPane.setCenter(ticketTable);
 
-        Scene scene = new Scene(borderPane, 800, 600);
+        Scene scene = new Scene(borderPane, 600, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -76,7 +76,7 @@ public class SupportTicketManager extends Application {
         });
 
         TableColumn<SupportTicket, String> UsernameColumn = new TableColumn<>("Username");
-        UsernameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatus().toString()));
+        UsernameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUsername()));
 
         TableColumn<SupportTicket, String> issueColumn = new TableColumn<>("Issue Description");
         issueColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIssueDescription()));
@@ -85,7 +85,7 @@ public class SupportTicketManager extends Application {
         statusColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatus().toString()));
 
 
-        ticketTable.getColumns().addAll(timestampColumn, issueColumn, statusColumn);
+        ticketTable.getColumns().addAll(timestampColumn, issueColumn, statusColumn, UsernameColumn);
         return ticketTable;
     }
 
