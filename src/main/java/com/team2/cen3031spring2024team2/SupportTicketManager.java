@@ -32,7 +32,7 @@ public class SupportTicketManager extends Application {
         TableView<SupportTicket> ticketTable = createTicketDashboard();
         borderPane.setCenter(ticketTable);
 
-        Scene scene = new Scene(borderPane, 800, 600);
+        Scene scene = new Scene(borderPane, 600, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

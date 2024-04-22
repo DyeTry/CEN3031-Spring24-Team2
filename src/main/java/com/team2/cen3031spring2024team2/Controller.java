@@ -170,11 +170,9 @@ public class Controller implements Initializable {
 
     //method called when switching to the issues pane as a customer. this is currently a place-holder pane until we create issue submission functionality
     public void switchToCustomerIssuePane(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("CustomerIssues.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        Stage primaryStage = new Stage();
+        SupportTicketManager supportTicketManager = new SupportTicketManager();
+        supportTicketManager.start(primaryStage);
     }
 
     //method called when switching to the map pane as a customer
@@ -551,6 +549,9 @@ public class Controller implements Initializable {
         String SubmittedIssue = SubmitIssueText.getText();
         database.createCustomerIssue(SubmittedIssue);
 
+        Stage primaryStage = new Stage();
+        SupportTicketManager supportTicketManager = new SupportTicketManager();
+        supportTicketManager.start(primaryStage);
 
         alert.setAlertType(AlertType.CONFIRMATION);
         alert.setContentText("Issue Submitted!\n");
