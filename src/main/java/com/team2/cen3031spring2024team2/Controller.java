@@ -538,7 +538,7 @@ public class Controller implements Initializable {
     }
 
     private CustomerInfo permanentCustomer;
-    public void initUser(CustomerInfo customer) {
+    public void initUser(CustomerInfo customer) { //jeremiah is lovely
         permanentCustomer = customer;
         System.out.println(customer.getName() + " found");
     }
