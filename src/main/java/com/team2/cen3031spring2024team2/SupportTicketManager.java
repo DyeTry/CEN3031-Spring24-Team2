@@ -47,9 +47,10 @@ public class SupportTicketManager extends Application {
         Button submitButton = new Button("Submit");
         submitButton.setOnAction(event -> {
             String issueDescription = issueField.getText();
+            String Username; //requires getter for current user (username functionality)
             if (!issueDescription.isEmpty()) {
                 LocalDateTime timestamp = LocalDateTime.now();
-                SupportTicket newTicket = new SupportTicket(timestamp, issueDescription, TicketStatus.OPEN);
+                SupportTicket newTicket = new SupportTicket(timestamp, issueDescription, TicketStatus.OPEN, Username);
                 supportTickets.add(newTicket);
                 issueField.clear();
             } else {
@@ -74,11 +75,15 @@ public class SupportTicketManager extends Application {
             return new SimpleStringProperty(timestamp.format(formatter));
         });
 
+        TableColumn<SupportTicket, String> UsernameColumn = new TableColumn<>("Username");
+        UsernameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatus().toString()));
+
         TableColumn<SupportTicket, String> issueColumn = new TableColumn<>("Issue Description");
         issueColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIssueDescription()));
 
         TableColumn<SupportTicket, String> statusColumn = new TableColumn<>("Status");
         statusColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatus().toString()));
+
 
         ticketTable.getColumns().addAll(timestampColumn, issueColumn, statusColumn);
         return ticketTable;
@@ -91,13 +96,16 @@ public class SupportTicketManager extends Application {
 
 class SupportTicket {
     private LocalDateTime timestamp;
+
+    private String Username;
     private String issueDescription;
     private TicketStatus status;
 
-    public SupportTicket(LocalDateTime timestamp, String issueDescription, TicketStatus status) {
+    public SupportTicket(LocalDateTime timestamp, String issueDescription, TicketStatus status, String Username) {
         this.timestamp = timestamp;
         this.issueDescription = issueDescription;
         this.status = status;
+        this.Username = Username;
     }
 
     public LocalDateTime getTimestamp() {
@@ -111,6 +119,8 @@ class SupportTicket {
     public TicketStatus getStatus() {
         return status;
     }
+
+    public String getUsername() {return Username;}
 }
 
 enum TicketStatus {
