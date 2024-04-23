@@ -51,6 +51,13 @@ public class SupportTicketManager extends Application {
                 LocalDateTime timestamp = LocalDateTime.now();
                 SupportTicket newTicket = new SupportTicket(timestamp, issueDescription, TicketStatus.OPEN);
                 supportTickets.add(newTicket);
+                String username = Controller.userEmailVal;//requires getter for current user (username functionality)
+                Database database = new Database();
+                database.addIssue(timestamp.toString(), issueDescription, TicketStatus.OPEN, username);
+                for (Issues issue : database.getIssuesList()) {
+                    System.out.println(issue.toString());
+                }
+                database.saveIssues();
                 issueField.clear();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);

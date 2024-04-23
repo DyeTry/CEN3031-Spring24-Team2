@@ -106,7 +106,7 @@ public class Controller implements Initializable {
     private TextField createPlate;
     @FXML
     private TextField createBalance;
-    String userEmailVal;
+    static String userEmailVal;
 
     //used for showing alerts such as success/fail messages to users
     private Alert alert = new Alert(AlertType.NONE);
@@ -546,8 +546,8 @@ public class Controller implements Initializable {
 
     public void onSubmitIssueSubmit(ActionEvent event) {
 
-        String SubmittedIssue = SubmitIssueText.getText();
-        database.createCustomerIssue(SubmittedIssue);
+        //String SubmittedIssue = SubmitIssueText.getText();
+        //database.createCustomerIssue(SubmittedIssue);
 
         Stage primaryStage = new Stage();
         SupportTicketManager supportTicketManager = new SupportTicketManager();
