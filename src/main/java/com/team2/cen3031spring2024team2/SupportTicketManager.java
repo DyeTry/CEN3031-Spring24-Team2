@@ -49,13 +49,12 @@ public class SupportTicketManager extends Application {
             String issueDescription = issueField.getText();
             if (!issueDescription.isEmpty()) {
                 LocalDateTime timestamp = LocalDateTime.now();
-                SupportTicket newTicket = new SupportTicket(timestamp, issueDescription, TicketStatus.OPEN);
-                supportTickets.add(newTicket);
                 String username = Controller.userEmailVal;//requires getter for current user (username functionality)
                 Database database = new Database();
                 database.addIssue(timestamp.toString(), issueDescription, TicketStatus.OPEN, username);
                 for (Issues issue : database.getIssuesList()) {
-                    System.out.println(issue.toString());
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+                    supportTickets.add(new SupportTicket(LocalDateTime.parse(issue.getTimestamp().substring(0, 19), formatter), issue.getDescription(), issue.getStatus()));
                 }
                 database.saveIssues();
                 issueField.clear();
@@ -72,6 +71,12 @@ public class SupportTicketManager extends Application {
 
     private TableView<SupportTicket> createTicketDashboard() {
         TableView<SupportTicket> ticketTable = new TableView<>();
+        Database database = new Database();
+        database.loadIssuesFromDatabase("src\\main\\resources\\com\\team2\\cen3031spring2024team2\\submitIssues.csv");
+        for (Issues issue : database.getIssuesList()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+            supportTickets.add(new SupportTicket(LocalDateTime.parse(issue.getTimestamp().substring(0, 19), formatter), issue.getDescription(), issue.getStatus()));
+        }
         ticketTable.setItems(supportTickets);
 
         TableColumn<SupportTicket, String> timestampColumn = new TableColumn<>("Timestamp");
