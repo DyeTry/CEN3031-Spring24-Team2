@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -106,6 +107,8 @@ public class Controller implements Initializable {
     private TextField createPlate;
     @FXML
     private TextField createBalance;
+
+
     public static String userEmailVal;
 
     //used for showing alerts such as success/fail messages to users
@@ -229,14 +232,34 @@ public class Controller implements Initializable {
     }
 
     //placeholder until later. method called when switching to the Issues pane as an employee
-    public void switchToIssuePane(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("employeeIssuesPane.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
 
+    public void switchToIssuePane(ActionEvent event) throws IOException {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("employeeIssuesPane.fxml"));
+            loader.setController(this);
+            Parent root = loader.load();
+
+
+            List<Issues> info = database.getIssuesList();
+            ObservableList<Issues> list = FXCollections.observableArrayList();
+
+            for (Issues temp : info) {
+                list.add(temp);
+            }
+
+            issuesTable.setItems(list);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+@FXML
+    private TableView<Issues> issuesTable;
     //method called after searching for a user in the User Search pane
     public void switchToUserSearchResultPane(ActionEvent event) throws IOException {
         //variable to capture the username that was entered
@@ -546,8 +569,8 @@ public class Controller implements Initializable {
 
     public void onSubmitIssueSubmit(ActionEvent event) {
 
+
         String SubmittedIssue = SubmitIssueText.getText();
-        database.createCustomerIssue(SubmittedIssue);
 
 
         alert.setAlertType(AlertType.CONFIRMATION);
@@ -599,6 +622,15 @@ public class Controller implements Initializable {
     private TableColumn<Parking_Fine, Integer> citationFineAmount = new TableColumn<>("Fine Amount");
     @FXML
     private TableColumn<Parking_Fine, String> citationDescription = new TableColumn<>("Description");
+    @FXML
+    private TableColumn<Issues, String> timeColumn = new TableColumn<>("Time");
+    @FXML
+    private TableColumn<Issues, String> descriptionColumn = new TableColumn<>("Description");
+    @FXML
+    private TableColumn<Issues, String> userColumn = new TableColumn<>("User");
+    @FXML
+    private TableColumn<Issues, String> statusColumn = new TableColumn<>("Status");
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -608,6 +640,10 @@ public class Controller implements Initializable {
         citationPermitNum.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("permitNumber"));
         citationFineAmount.setCellValueFactory(new PropertyValueFactory<Parking_Fine, Integer>("fineAmount"));
         citationDescription.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("reasonForFine"));
+        timeColumn.setCellValueFactory(new PropertyValueFactory<Issues, String>("timeStamp"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<Issues, String>("description"));
+        userColumn.setCellValueFactory(new PropertyValueFactory<Issues, String>("username"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<Issues, String>("status"));
     }
 
     @FXML

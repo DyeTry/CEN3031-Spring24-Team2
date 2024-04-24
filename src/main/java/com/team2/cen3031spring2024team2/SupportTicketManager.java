@@ -47,11 +47,16 @@ public class SupportTicketManager extends Application {
         Button submitButton = new Button("Submit");
         submitButton.setOnAction(event -> {
             String issueDescription = issueField.getText();
-            String Username = Controller.userEmailVal;//requires getter for current user (username functionality)
             if (!issueDescription.isEmpty()) {
                 LocalDateTime timestamp = LocalDateTime.now();
-                SupportTicket newTicket = new SupportTicket(timestamp, issueDescription, TicketStatus.OPEN, Username);
-                supportTickets.add(newTicket);
+                String username = Controller.userEmailVal;//requires getter for current user (username functionality)
+                Database database = new Database();
+                database.addIssue(timestamp.toString(), issueDescription, TicketStatus.OPEN, username);
+                for (Issues issue : database.getIssuesList()) {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+                    supportTickets.add(new SupportTicket(LocalDateTime.parse(issue.getTimestamp().substring(0, 19), formatter), issue.getDescription(), issue.getStatus()));
+                }
+                database.saveIssues();
                 issueField.clear();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -66,6 +71,12 @@ public class SupportTicketManager extends Application {
 
     private TableView<SupportTicket> createTicketDashboard() {
         TableView<SupportTicket> ticketTable = new TableView<>();
+        Database database = new Database();
+        database.loadIssuesFromDatabase("src\\main\\resources\\com\\team2\\cen3031spring2024team2\\submitIssues.csv");
+        for (Issues issue : database.getIssuesList()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+            supportTickets.add(new SupportTicket(LocalDateTime.parse(issue.getTimestamp().substring(0, 19), formatter), issue.getDescription(), issue.getStatus()));
+        }
         ticketTable.setItems(supportTickets);
 
         TableColumn<SupportTicket, String> timestampColumn = new TableColumn<>("Timestamp");
@@ -75,17 +86,13 @@ public class SupportTicketManager extends Application {
             return new SimpleStringProperty(timestamp.format(formatter));
         });
 
-        TableColumn<SupportTicket, String> UsernameColumn = new TableColumn<>("Username");
-        UsernameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUsername()));
-
         TableColumn<SupportTicket, String> issueColumn = new TableColumn<>("Issue Description");
         issueColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIssueDescription()));
 
         TableColumn<SupportTicket, String> statusColumn = new TableColumn<>("Status");
         statusColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatus().toString()));
 
-
-        ticketTable.getColumns().addAll(timestampColumn, issueColumn, statusColumn, UsernameColumn);
+        ticketTable.getColumns().addAll(timestampColumn, issueColumn, statusColumn);
         return ticketTable;
     }
 
@@ -96,16 +103,13 @@ public class SupportTicketManager extends Application {
 
 class SupportTicket {
     private LocalDateTime timestamp;
-
-    private String Username;
     private String issueDescription;
     private TicketStatus status;
 
-    public SupportTicket(LocalDateTime timestamp, String issueDescription, TicketStatus status, String Username) {
+    public SupportTicket(LocalDateTime timestamp, String issueDescription, TicketStatus status) {
         this.timestamp = timestamp;
         this.issueDescription = issueDescription;
         this.status = status;
-        this.Username = Username;
     }
 
     public LocalDateTime getTimestamp() {
@@ -119,8 +123,6 @@ class SupportTicket {
     public TicketStatus getStatus() {
         return status;
     }
-
-    public String getUsername() {return Username;}
 }
 
 enum TicketStatus {

@@ -10,7 +10,7 @@ import java.util.List;
 public class Database {
     private List<CustomerInfo> employeeInfos = new ArrayList<>();
     private List<CustomerInfo> customerInfos = new ArrayList<>();
-    private List<String> Issues = new ArrayList<>();
+    private List<Issues> issuesList = new ArrayList<>();
     private List<Parking_Fine> fines = new ArrayList<>();
     private String file;
     public int userCount = 0;
@@ -34,6 +34,8 @@ public class Database {
     public List<Parking_Fine> getFines() {
         return fines;
     }
+
+    public List<Issues>  getIssuesList() {return issuesList;}
 
     public CustomerInfo getUser(String username) {
         for(CustomerInfo c : customerInfos) {
@@ -145,6 +147,32 @@ public class Database {
         }
     }
 
+    public void loadIssuesFromDatabase(String filename) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String line;
+            boolean firstLine = true;  // Flag to skip the first line
+            while ((line = br.readLine()) != null) {
+                if (firstLine) {
+                    firstLine = false;
+                    continue;  // Skip the first line
+                }
+                String[] data = line.split(",");
+                if (data.length == 4) {
+                    Issues issues = new Issues();
+                    issues.setTimestamp(data[0].trim());
+                    issues.setDescription(data[1].trim());
+                    issues.setStatus(TicketStatus.valueOf(data[2].trim()));
+                    issues.setUsername(data[3].trim());
+
+                    issuesList.add(issues);
+                    System.out.println("Added Fine");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * A method to save to the database
      */
@@ -203,19 +231,22 @@ public class Database {
     }
 
     public void saveIssues() {
-        File newFile = new File("src\\main\\resources\\com\\team2\\cen3031spring2024team2\\programIssues.csv");
+        File newFile = new File("src\\main\\resources\\com\\team2\\cen3031spring2024team2\\submitIssues.csv");
+        boolean append = newFile.exists();  // Check if the file exists
         FileWriter saveToDatabase = null;
 
         try {
             //Initizes the file
-            saveToDatabase = new FileWriter(newFile);
+            saveToDatabase = new FileWriter(newFile, append);
 
-            //Writes the first line
-            saveToDatabase.write("Description,\n");
+            // Write the header line only if it's a new file
+            if (!append) {
+                saveToDatabase.write("Timestamp,Issue Description,Status,Username,\n");
+            }
 
-            //Writes the Fine Information
-            for (int i = 0; i < Issues.size(); i++) {
-                saveToDatabase.write(Issues.get(i) + ",\n");
+            //Writes the issues Information
+            for (int i = 0; i < issuesList.size(); i++) {
+                saveToDatabase.write(issuesList.get(i).toString() + "\n");  // Add a new line at the end
             }
 
             saveToDatabase.close();
@@ -224,6 +255,9 @@ public class Database {
         } catch (IOException e) {
             System.out.println(e.toString());
         }
+    }
+    public void addIssue(String timeStamp, String description, TicketStatus status, String username) {
+        issuesList.add(new Issues(timeStamp, description, status, username));
     }
 
     public String randomStringGenerator(int size) {
@@ -244,9 +278,5 @@ public class Database {
             sb.append(alphaNumericString.charAt(index));
         }
         return sb.toString();
-    }
-
-    public void createCustomerIssue(String submittedIssue) {
-        Issues.add(submittedIssue);
     }
 }
