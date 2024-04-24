@@ -29,7 +29,7 @@
             <children>
                 <ImageView fx:id="handicap" fitHeight="430.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true" visible="false">
                     <image>
-                        <Image url="@img_2.png" />
+                        <Image url="@Handicap.png" />
                     </image>
                 </ImageView>
                 <ImageView fitHeight="272.0" fitWidth="94.0" layoutX="380.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
@@ -39,12 +39,12 @@
                 </ImageView>
                 <ImageView fx:id="allPasses" fitHeight="430.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true" visible="false">
                     <image>
-                        <Image url="@Untitled_Artwork.png" />
+                        <Image url="@allpasses.jpeg" />
                     </image>
                 </ImageView>
-            <ImageView fx:id="allPasses" fitHeight="400.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="416.0" fitWidth="513.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@AllPasses.png" />
+                  <Image url="@allpasses.jpeg" />
                </image>
             </ImageView>
             </children></AnchorPane>
