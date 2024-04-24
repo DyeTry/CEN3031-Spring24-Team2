@@ -231,15 +231,16 @@ public class Controller implements Initializable {
         stage.show();
     }
 
-    //placeholder until later. method called when switching to the Issues pane as an employee
+    @FXML
+    private TableView<Issues> issuesTable;
 
+    //placeholder until later. method called when switching to the Issues pane as an employee
     public void switchToIssuePane(ActionEvent event) throws IOException {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("employeeIssuesPane.fxml"));
             loader.setController(this);
             Parent root = loader.load();
-
 
             List<Issues> info = database.getIssuesList();
             ObservableList<Issues> list = FXCollections.observableArrayList();
@@ -258,8 +259,7 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
-@FXML
-    private TableView<Issues> issuesTable;
+
     //method called after searching for a user in the User Search pane
     public void switchToUserSearchResultPane(ActionEvent event) throws IOException {
         //variable to capture the username that was entered
@@ -569,9 +569,7 @@ public class Controller implements Initializable {
 
     public void onSubmitIssueSubmit(ActionEvent event) {
 
-
         String SubmittedIssue = SubmitIssueText.getText();
-
 
         alert.setAlertType(AlertType.CONFIRMATION);
         alert.setContentText("Issue Submitted!\n");
@@ -629,7 +627,7 @@ public class Controller implements Initializable {
     @FXML
     private TableColumn<Issues, String> userColumn = new TableColumn<>("User");
     @FXML
-    private TableColumn<Issues, String> statusColumn = new TableColumn<>("Status");
+    private TableColumn<Issues, TicketStatus> statusColumn = new TableColumn<>("Status");
 
 
     @Override
@@ -640,10 +638,11 @@ public class Controller implements Initializable {
         citationPermitNum.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("permitNumber"));
         citationFineAmount.setCellValueFactory(new PropertyValueFactory<Parking_Fine, Integer>("fineAmount"));
         citationDescription.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("reasonForFine"));
-        timeColumn.setCellValueFactory(new PropertyValueFactory<Issues, String>("timeStamp"));
+
+        timeColumn.setCellValueFactory(new PropertyValueFactory<Issues, String>("timestamp"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<Issues, String>("description"));
         userColumn.setCellValueFactory(new PropertyValueFactory<Issues, String>("username"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<Issues, String>("status"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<Issues, TicketStatus>("status"));
     }
 
     @FXML
