@@ -261,6 +261,7 @@ public class Controller implements Initializable {
                 list.add(temp);
             }
 
+
             issuesTable.setItems(list);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
