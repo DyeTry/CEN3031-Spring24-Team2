@@ -194,24 +194,44 @@ public class Controller implements Initializable {
     }
 
     public void showHandicap(ActionEvent event) throws IOException {
+        allPasses.setVisible(false);
         handicap.setVisible(true);
+        staff.setVisible(false);
+        commuter.setVisible(false);
+        resident.setVisible(false);
     }
 
     public void showAllPasses(ActionEvent event) throws IOException {
         allPasses.setVisible(true);
+        handicap.setVisible(false);
+        staff.setVisible(false);
+        commuter.setVisible(false);
+        resident.setVisible(false);
     }
 
     public void showStaff(ActionEvent event) throws IOException {
+        allPasses.setVisible(false);
+        handicap.setVisible(false);
         staff.setVisible(true);
+        commuter.setVisible(false);
+        resident.setVisible(false);
     }
 
 
     public void showCommuter(ActionEvent event) throws IOException {
+        allPasses.setVisible(false);
+        handicap.setVisible(false);
+        staff.setVisible(false);
         commuter.setVisible(true);
+        resident.setVisible(false);
     }
 
 
     public void showResident(ActionEvent event) throws IOException {
+        allPasses.setVisible(false);
+        handicap.setVisible(false);
+        staff.setVisible(false);
+        commuter.setVisible(false);
         resident.setVisible(true);
     }
 
