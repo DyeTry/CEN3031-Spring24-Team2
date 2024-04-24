@@ -230,7 +230,19 @@ public class Controller implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    @FXML
+    public void CloseTicketButton(ActionEvent event) throws IOException {
+        List<Issues> info = database.getIssuesList();
+        int selectedID = issuesTable.getSelectionModel().getSelectedIndex();
 
+        database.getIssuesList().get(selectedID).setStatus(TicketStatus.RESOLVED);
+        alert.setAlertType(AlertType.CONFIRMATION);
+        alert.setContentText("Issue Closed!\n");
+        alert.show();
+
+        database.saveIssues();
+        switchToIssuePane(event);
+    }
     @FXML
     private TableView<Issues> issuesTable;
 

@@ -41,6 +41,7 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
+            <Button fx:id="CloseButton" layoutX="506.0" layoutY="27.0" mnemonicParsing="false" onAction="#CloseTicketButton" prefHeight="30.0" prefWidth="81.0" text="Close Ticket" />
          </children></AnchorPane>
    </center>
 </BorderPane>
