@@ -27,11 +27,6 @@
     <center>
         <AnchorPane prefHeight="413.0" prefWidth="506.0" style="-fx-background-color: #007A33;" BorderPane.alignment="CENTER">
             <children>
-                <ImageView fitHeight="430.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@img.png" />
-                    </image>
-                </ImageView>
                 <ImageView fx:id="handicap" fitHeight="430.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true" visible="false">
                     <image>
                         <Image url="@img_2.png" />
@@ -47,13 +42,11 @@
                         <Image url="@Untitled_Artwork.png" />
                     </image>
                 </ImageView>
-                <Button fx:id="commuter" layoutX="422.0" layoutY="22.0" mnemonicParsing="false" onAction="#showAllPasses" onMouseClicked="#showAllPasses" onMouseReleased="#closeAllPasses" text="All Passes" />
-                <Button layoutX="421.0" layoutY="217.0" mnemonicParsing="false" text="Buildings" />
-                <Button fx:id="carMake" layoutX="422.0" layoutY="87.0" mnemonicParsing="false" onAction="#showHandicap" text="Handicap" />
-                <Button layoutX="422.0" layoutY="118.0" mnemonicParsing="false" onAction="#showResident" onMouseClicked="#sh" text="Resident" />
-                <Button layoutX="419.0" layoutY="185.0" mnemonicParsing="false" text="Fields" />
-                <Button layoutX="422.0" layoutY="150.0" mnemonicParsing="false" text="Staff" />
-                <Button layoutX="422.0" layoutY="55.0" mnemonicParsing="false" onAction="#showCommuter" text="Commuter" />
+            <ImageView fx:id="allPasses" fitHeight="400.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@AllPasses.png" />
+               </image>
+            </ImageView>
             </children></AnchorPane>
     </center>
 </BorderPane>

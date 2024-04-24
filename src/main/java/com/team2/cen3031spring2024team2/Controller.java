@@ -34,6 +34,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -46,6 +47,8 @@ public class Controller implements Initializable {
     private ImageView handicap;
     @FXML
     private ImageView allPasses;
+    @FXML
+    private ImageView staff;
     @FXML
     private ImageView commuter;
     @FXML
@@ -198,9 +201,10 @@ public class Controller implements Initializable {
         allPasses.setVisible(true);
     }
 
-    public void closeAllPasses(ActionEvent event) throws IOException {
-        allPasses.setVisible(false);
+    public void showStaff(ActionEvent event) throws IOException {
+        staff.setVisible(true);
     }
+
 
     public void showCommuter(ActionEvent event) throws IOException {
         commuter.setVisible(true);
