@@ -159,7 +159,7 @@ public class Database {
                 String[] data = line.split(",");
                 if (data.length == 4) {
                     Issues issues = new Issues();
-                     issues.setTimestamp(data[0].trim());
+                    issues.setTimestamp(data[0].trim());
                     issues.setDescription(data[1].trim());
                     issues.setStatus(TicketStatus.valueOf(data[2].trim()));
                     issues.setUsername(data[3].trim());

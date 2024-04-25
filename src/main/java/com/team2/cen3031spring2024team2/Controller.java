@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -117,6 +118,9 @@ public class Controller implements Initializable {
     @FXML
     private TextField createBalance;
     static String userEmailVal;
+
+
+    public static String userEmailVal;
 
     //used for showing alerts such as success/fail messages to users
     private Alert alert = new Alert(AlertType.NONE);
@@ -276,14 +280,47 @@ public class Controller implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    @FXML
+    public void CloseTicketButton(ActionEvent event) throws IOException {
+        List<Issues> info = database.getIssuesList();
+        int selectedID = issuesTable.getSelectionModel().getSelectedIndex();
+
+        database.getIssuesList().get(selectedID).setStatus(TicketStatus.RESOLVED);
+        alert.setAlertType(AlertType.CONFIRMATION);
+        alert.setContentText("Issue Closed!\n");
+        alert.show();
+
+        database.saveIssues();
+        switchToIssuePane(event);
+    }
+    @FXML
+    private TableView<Issues> issuesTable;
 
     //placeholder until later. method called when switching to the Issues pane as an employee
     public void switchToIssuePane(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("employeeIssuesPane.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("employeeIssuesPane.fxml"));
+            loader.setController(this);
+            Parent root = loader.load();
+
+            List<Issues> info = database.getIssuesList();
+            ObservableList<Issues> list = FXCollections.observableArrayList();
+
+            for (Issues temp : info) {
+                list.add(temp);
+            }
+
+
+            issuesTable.setItems(list);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //method called after searching for a user in the User Search pane
@@ -593,12 +630,7 @@ public class Controller implements Initializable {
 
     public void onSubmitIssueSubmit(ActionEvent event) {
 
-        //String SubmittedIssue = SubmitIssueText.getText();
-        //database.createCustomerIssue(SubmittedIssue);
-
-        Stage primaryStage = new Stage();
-        SupportTicketManager supportTicketManager = new SupportTicketManager();
-        supportTicketManager.start(primaryStage);
+        String SubmittedIssue = SubmitIssueText.getText();
 
         alert.setAlertType(AlertType.CONFIRMATION);
         alert.setContentText("Issue Submitted!\n");
@@ -655,7 +687,14 @@ public class Controller implements Initializable {
     @FXML
     private TableColumn<Parking_Fine, String> citationDescription = new TableColumn<>("Description");
     @FXML
-    private TableColumn<Parking_Fine, String> citationPaymentStatus = new TableColumn<>("Payment Status");
+    private TableColumn<Issues, String> timeColumn = new TableColumn<>("Time");
+    @FXML
+    private TableColumn<Issues, String> descriptionColumn = new TableColumn<>("Description");
+    @FXML
+    private TableColumn<Issues, String> userColumn = new TableColumn<>("User");
+    @FXML
+    private TableColumn<Issues, TicketStatus> statusColumn = new TableColumn<>("Status");
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -664,7 +703,11 @@ public class Controller implements Initializable {
         citationTime.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("time"));
         citationFineAmount.setCellValueFactory(new PropertyValueFactory<Parking_Fine, Integer>("fineAmount"));
         citationDescription.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("reasonForFine"));
-        citationPaymentStatus.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("paymentStatus"));
+
+        timeColumn.setCellValueFactory(new PropertyValueFactory<Issues, String>("timestamp"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<Issues, String>("description"));
+        userColumn.setCellValueFactory(new PropertyValueFactory<Issues, String>("username"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<Issues, TicketStatus>("status"));
     }
 
     @FXML
