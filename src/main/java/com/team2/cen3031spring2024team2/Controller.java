@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -38,6 +39,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import java.net.URL;
+
+import javafx.geometry.Insets;
 
 public class Controller implements Initializable {
     @FXML
@@ -113,26 +116,31 @@ public class Controller implements Initializable {
     CustomerInfo customerInfo = new CustomerInfo();
     private final Database database = Main.database;
 
+    @FXML
+    private Label customerCitationUsername;
+    @FXML
+    private Label customerCitationBalance;
+
     //method called when switching to the parking fines page as a customer
     public void switchToCustomerParkingFines(ActionEvent event) throws IOException {
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Parking Fines.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CustomerParkingFinesTable.fxml"));
             loader.setController(this);
             Parent root = loader.load();
 
-            /*try {
-                customerCitationUsername.setText(permanentCustomer.getName());
-                customerCitationBalance.setText("$" + permanentCustomer.getBalance());
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-            }*/
+            customerCitationUsername.setText(permanentCustomer.getName());
+            customerCitationBalance.setText("$" + permanentCustomer.getBalance());
 
             List<Parking_Fine> info = database.getFines();
             ObservableList<Parking_Fine> list = FXCollections.observableArrayList();
 
             for (Parking_Fine fine : info) {
-                list.add(fine);
+
+                if (fine.getUsername().equalsIgnoreCase(permanentCustomer.getUsername()))
+                {
+                    list.add(fine);
+                }
             }
             citationTable.setItems(list);
 
@@ -336,16 +344,14 @@ public class Controller implements Initializable {
         String formattedTime = localTime.format(time);
 
         String citationNum = database.randomStringGenerator(10);
-        String permitNum = database.randomStringGenerator(6); //Placeholder until permit number is implemented
 
-        database.addFineInformation(citationNum, formattedDate, formattedTime, permitNum, permanentCustomer.getUsername(), Integer.parseInt(createFineAmount.getText()), createReasonForFine.getText());
+        database.addFineInformation(citationNum, formattedDate, formattedTime, permanentCustomer.getUsername(), Integer.parseInt(createFineAmount.getText()), createReasonForFine.getText(), "New");
         alert.setAlertType(AlertType.CONFIRMATION);
         alert.setContentText(
                 "Fine Issued Successfully\n" +
                         "Citation Number: " + citationNum + "\n" +
                         "Date: " + formattedDate + "\n" +
                         "Time: " + formattedTime + "\n" +
-                        "Permit Number: " + permitNum + "\n" +
                         "Name: " + permanentCustomer.getName() + "\n" +
                         "Reason For Fine: " + createReasonForFine.getText() + "\n" +
                         "Citation Amount: $" + createFineAmount.getText()
@@ -394,7 +400,7 @@ public class Controller implements Initializable {
     }
 
     public void onViewFine(ActionEvent actionEvent) throws IOException {
-        switchToUserFineView(actionEvent);
+        switchToTableView(actionEvent);
     }
 
     //placeholder method for resetting password
@@ -561,6 +567,9 @@ public class Controller implements Initializable {
     @FXML
     private Label citationUsername;
 
+    @FXML
+    private Label citationBalance;
+
     public void switchToTableView(ActionEvent event) throws IOException {
 
         try {
@@ -569,12 +578,16 @@ public class Controller implements Initializable {
             Parent root = loader.load();
 
             citationUsername.setText(permanentCustomer.getName());
+            citationBalance.setText("$" + permanentCustomer.getBalance());
 
             List<Parking_Fine> info = database.getFines();
             ObservableList<Parking_Fine> list = FXCollections.observableArrayList();
 
             for (Parking_Fine fine : info) {
-                list.add(fine);
+                if (fine.getUsername().equalsIgnoreCase(permanentCustomer.getUsername()))
+                {
+                    list.add(fine);
+                }
             }
             citationTable.setItems(list);
 
@@ -596,31 +609,67 @@ public class Controller implements Initializable {
     @FXML
     private TableColumn<Parking_Fine, String> citationTime = new TableColumn<>("Time");
     @FXML
-    private TableColumn<Parking_Fine, String> citationPermitNum = new TableColumn<>("Permit Number");
-    @FXML
     private TableColumn<Parking_Fine, Integer> citationFineAmount = new TableColumn<>("Fine Amount");
     @FXML
     private TableColumn<Parking_Fine, String> citationDescription = new TableColumn<>("Description");
+    @FXML
+    private TableColumn<Parking_Fine, String> citationPaymentStatus = new TableColumn<>("Payment Status");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         citationNum.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("citationNumber"));
         citationDate.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("date"));
         citationTime.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("time"));
-        citationPermitNum.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("permitNumber"));
         citationFineAmount.setCellValueFactory(new PropertyValueFactory<Parking_Fine, Integer>("fineAmount"));
         citationDescription.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("reasonForFine"));
+        citationPaymentStatus.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("paymentStatus"));
     }
 
     @FXML
-    public void addCitationEntry(ActionEvent event) {
+    public void addCitationEntry(ActionEvent event) throws IOException {
+        switchToUserFineView(event);
+    }
+
+    @FXML
+    public void reloadCitationEntry(ActionEvent event) throws IOException {
+        /*
         List<Parking_Fine> info = database.getFines();
         ObservableList<Parking_Fine> list = FXCollections.observableArrayList();
 
         for (Parking_Fine fine : info) {
-            list.add(fine);
+            if (fine.getUsername().equalsIgnoreCase(permanentCustomer.getUsername()))
+            {
+                list.add(fine);
+            }
         }
         citationTable.setItems(list);
+
+         */
+        switchToTableView(event);
+    }
+
+    @FXML
+    public void approveCitationEntry(ActionEvent event) throws IOException {
+        List<Parking_Fine> info = database.getFines();
+        String citationNum = citationTable.getSelectionModel().getSelectedItem().getCitationNumber();
+        int selectedID = 0;
+        int i = 0;
+
+        for (Parking_Fine fine : info) {
+            if (fine.getCitationNumber().equals(citationNum)) {
+                selectedID = i;
+            }
+            i++;
+        }
+
+        database.getFines().get(selectedID).setPaymentStatus("Approved");
+
+        alert.setAlertType(AlertType.CONFIRMATION);
+        alert.setContentText("Issue Approved!\n");
+        alert.show();
+
+        database.saveFines();
+        reloadCitationEntry(event);
     }
 
     @FXML
@@ -630,36 +679,73 @@ public class Controller implements Initializable {
     }
 
     @FXML
+    private TextField customerAddBalanceNum;
+
+    @FXML
+    public void onCustomerAddBalance(ActionEvent event) {
+        int addBalance = Integer.parseInt(customerAddBalanceNum.getText());
+
+        System.out.println(addBalance);
+
+        alert.setAlertType(AlertType.CONFIRMATION);
+        alert.setContentText("Funds Added!\n");
+        alert.show();
+
+        permanentCustomer.setBalance(permanentCustomer.getBalance() + addBalance);
+
+        database.saveDatabase();
+    }
+
+    @FXML
     public void onCustomerCitationPay(ActionEvent event) {
-        int selectedID = citationTable.getSelectionModel().getSelectedIndex();
-        citationTable.getItems().remove(selectedID);
+        List<Parking_Fine> info = database.getFines();
+        String citationNum = citationTable.getSelectionModel().getSelectedItem().getCitationNumber();
+        int selectedID = 0;
+        int i = 0;
 
+        for (Parking_Fine fine : info) {
+            if (fine.getCitationNumber().equals(citationNum)) {
+                selectedID = i;
+            }
+            i++;
+        }
 
+        if((permanentCustomer.getBalance() - database.getFines().get(selectedID).getFineAmount() > 0 )) {
 
-        if((permanentCustomer.getBalance() - database.getFines().get(selectedID).getBalance()) > 0  ) {
-
-
-            database.getFines().remove(selectedID);
+            database.getFines().get(selectedID).setPaymentStatus("Pending");
 
             alert.setAlertType(AlertType.CONFIRMATION);
             alert.setContentText("Issue Paid!\n");
             alert.show();
 
-            database.saveFines();
+            int newBalance = permanentCustomer.getBalance() - database.getFines().get(selectedID).getFineAmount();
 
-            permanentCustomer.setBalance(permanentCustomer.getBalance() - database.getFines().get(selectedID).getBalance());
+            permanentCustomer.setBalance(newBalance);
+
+            database.saveDatabase();
+            database.saveFines();
+        } else {
+            alert.setAlertType(AlertType.CONFIRMATION);
+            alert.setContentText("Not Enough Funds.\nPlease Add More Funds.");
+            alert.show();
         }
     }
 
     @FXML
-    public void onCustomerCitationReload(ActionEvent event) {
+    public void onCustomerCitationReload(ActionEvent event) throws IOException {
+        /*
         List<Parking_Fine> info = database.getFines();
         ObservableList<Parking_Fine> list = FXCollections.observableArrayList();
 
         for (Parking_Fine fine : info) {
-            list.add(fine);
+            if (fine.getUsername().equalsIgnoreCase(permanentCustomer.getUsername()))
+            {
+                list.add(fine);
+            }
         }
         citationTable.setItems(list);
-    }
 
+         */
+        switchToCustomerParkingFines(event);
+    }
 }

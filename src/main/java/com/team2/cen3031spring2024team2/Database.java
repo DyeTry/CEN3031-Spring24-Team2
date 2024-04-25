@@ -63,8 +63,8 @@ public class Database {
         customerInfos.add(new CustomerInfo(name, username, password, make, model, color, licensePlate, balance));
     }
 
-    public void addFineInformation(String citationNumber, String date, String time, String permitNumber, String username, int fineAmount, String reasonForFine) {
-        fines.add(new Parking_Fine(citationNumber, date, time, permitNumber, username, fineAmount, reasonForFine));
+    public void addFineInformation(String citationNumber, String date, String time, String username, int fineAmount, String reasonForFine, String paymentStatus) {
+        fines.add(new Parking_Fine(citationNumber, date, time, username, fineAmount, reasonForFine, paymentStatus));
     }
 
     public void loadDatabaseFromCSV(String filename) {
@@ -128,13 +128,13 @@ public class Database {
                 String[] data = line.split(",");
                 if (data.length == 7) {
                     Parking_Fine parking_fine = new Parking_Fine();
-                    parking_fine.setCitationNumber(data[0].trim());
-                    parking_fine.setDate(data[1].trim());
-                    parking_fine.setTime(data[2].trim());
-                    parking_fine.setPermitNumber(data[3].trim());
-                    parking_fine.setUsername(data[4].trim());
-                    parking_fine.setFineAmount(Integer.parseInt(data[5].trim()));
-                    parking_fine.setReasonForFine(data[6].trim());
+                    parking_fine.setUsername(data[0].trim());
+                    parking_fine.setCitationNumber(data[1].trim());
+                    parking_fine.setDate(data[2].trim());
+                    parking_fine.setTime(data[3].trim());
+                    parking_fine.setFineAmount(Integer.parseInt(data[4].trim()));
+                    parking_fine.setReasonForFine(data[5].trim());
+                    parking_fine.setPaymentStatus(data[6].trim());
 
                     fines.add(parking_fine);
                     System.out.println("Added Fine");
@@ -187,7 +187,7 @@ public class Database {
             saveToDatabase = new FileWriter(newFile);
 
             //Writes the first line
-            saveToDatabase.write("Citation number,Date,Time,Permit number,Username,Fine amount,Reason for fine,\n");
+            saveToDatabase.write("Username,Citation number,Date,Time,Fine amount,Reason for fine,Payment Status,\n");
 
             //Writes the Fine Information
             for (int i = 0; i < fines.size(); i++) {
