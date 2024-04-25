@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -28,31 +27,51 @@
     <center>
         <AnchorPane prefHeight="413.0" prefWidth="506.0" style="-fx-background-color: #007A33;" BorderPane.alignment="CENTER">
             <children>
-                <ImageView fitHeight="430.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@img.png" />
-                    </image>
-                </ImageView>
-                <ImageView fx:id="handicap" fitHeight="430.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                    <image>
-                        <Image url="@img_2.png" />
-                    </image>
-                </ImageView>
                 <ImageView fitHeight="272.0" fitWidth="94.0" layoutX="380.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@BlankLegend.jpg" />
                     </image>
                 </ImageView>
-                <ImageView fx:id="allPasses" fitHeight="430.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                    <image>
-                        <Image url="@Untitled_Artwork.png" />
-                    </image>
-                </ImageView>
-                <CheckBox layoutX="350.0" layoutY="25.0" mnemonicParsing="false" onAction="#showAllPasses" prefHeight="18.0" prefWidth="11.0" text="All Passes" />
-                <CheckBox layoutX="350.0" layoutY="57.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="11.0" text="Commuter" />
-                <CheckBox fx:id="one" layoutX="350.0" layoutY="91.0" mnemonicParsing="false" onAction="#showHandicap" prefHeight="18.0" prefWidth="11.0" text="Handicap" />
-                <CheckBox layoutX="350.0" layoutY="122.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="11.0" text="Resident" />
-                <CheckBox layoutX="350.0" layoutY="154.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="11.0" text="Staff" />
+            <ImageView fx:id="handicap" fitHeight="425.0" fitWidth="525.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@handCap.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="staff" fitHeight="425.0" fitWidth="525.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@staffed.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="commuter" fitHeight="425.0" fitWidth="525.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@commute.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="resident" fitHeight="425.0" fitWidth="525.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Res.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="allPasses" fitHeight="425.0" fitWidth="525.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@allp.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="266.0" fitWidth="118.0" layoutX="374.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@BlankLegend.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="75.0" fitWidth="118.0" layoutX="375.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Screenshot%202024-04-24%20135250.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="420.0" layoutY="27.0" mnemonicParsing="false" onAction="#showAllPasses" text="All Passes" />
+            <Button layoutX="420.0" layoutY="62.0" mnemonicParsing="false" onAction="#showCommuter" text="Commuter" />
+            <Button layoutX="420.0" layoutY="99.0" mnemonicParsing="false" onAction="#showHandicap" text="Handicap" />
+            <Button layoutX="420.0" layoutY="137.0" mnemonicParsing="false" onAction="#showResident" text="Resident" />
+            <Button layoutX="420.0" layoutY="173.0" mnemonicParsing="false" onAction="#showStaff" text="Staff" />
             </children></AnchorPane>
     </center>
 </BorderPane>

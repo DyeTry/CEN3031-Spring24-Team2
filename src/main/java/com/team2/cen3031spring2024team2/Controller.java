@@ -35,6 +35,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -49,6 +50,12 @@ public class Controller implements Initializable {
     private ImageView handicap;
     @FXML
     private ImageView allPasses;
+    @FXML
+    private ImageView staff;
+    @FXML
+    private ImageView commuter;
+    @FXML
+    private ImageView resident;
     @FXML
     private Text userModel;
     @FXML
@@ -193,11 +200,45 @@ public class Controller implements Initializable {
     }
 
     public void showHandicap(ActionEvent event) throws IOException {
+        allPasses.setVisible(false);
         handicap.setVisible(true);
+        staff.setVisible(false);
+        commuter.setVisible(false);
+        resident.setVisible(false);
     }
 
     public void showAllPasses(ActionEvent event) throws IOException {
         allPasses.setVisible(true);
+        handicap.setVisible(false);
+        staff.setVisible(false);
+        commuter.setVisible(false);
+        resident.setVisible(false);
+    }
+
+    public void showStaff(ActionEvent event) throws IOException {
+        allPasses.setVisible(false);
+        handicap.setVisible(false);
+        staff.setVisible(true);
+        commuter.setVisible(false);
+        resident.setVisible(false);
+    }
+
+
+    public void showCommuter(ActionEvent event) throws IOException {
+        allPasses.setVisible(false);
+        handicap.setVisible(false);
+        staff.setVisible(false);
+        commuter.setVisible(true);
+        resident.setVisible(false);
+    }
+
+
+    public void showResident(ActionEvent event) throws IOException {
+        allPasses.setVisible(false);
+        handicap.setVisible(false);
+        staff.setVisible(false);
+        commuter.setVisible(false);
+        resident.setVisible(true);
     }
 
     //currently not in use, an empty employee pane used to template all other employee panes
