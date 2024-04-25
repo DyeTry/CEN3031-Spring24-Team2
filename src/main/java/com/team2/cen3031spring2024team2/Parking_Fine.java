@@ -12,15 +12,7 @@ public class Parking_Fine {
     private int Balance;
     public Parking_Fine() {}
 
-    public Parking_Fine(String citationNumber, String date, String time, int fineAmount, String reasonForFine) {
-        CitationNumber = citationNumber;
-        Date = date;
-        Time = time;
-        FineAmount = fineAmount;
-        ReasonForFine = reasonForFine;
-    }
-
-    public Parking_Fine(String CitationNumber, String Date, String Time, String Username, int FineAmount, String ReasonForFine, String PaymentStatus) {
+    public Parking_Fine(String CitationNumber, String Date, String Time, String PermitNumber, String Username, int FineAmount, String ReasonForFine) {
         this.CitationNumber = CitationNumber;
         this.Date = Date;
         this.Time = Time;
@@ -84,23 +76,6 @@ public class Parking_Fine {
 
     public void setBalance(int balance) {
         Balance = balance;
-    }
-
-    public String getPaymentStatus() {
-        return PaymentStatus;
-    }
-
-    public void setPaymentStatus(String paymentStatus) {
-        PaymentStatus = paymentStatus;
-    }
-
-    public int calculateBalance(int fineAmount) {
-        if (getBalance() - fineAmount >= 0) {
-            setBalance(Balance - fineAmount);
-            return getBalance();
-        } else {
-            return -1;
-        }
     }
 
     @Override
