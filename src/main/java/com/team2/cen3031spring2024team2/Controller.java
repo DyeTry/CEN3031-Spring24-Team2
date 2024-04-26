@@ -642,6 +642,7 @@ public class Controller implements Initializable {
 
     private static CustomerInfo permanentCustomer;
     public void initUser(CustomerInfo customer) {
+        //Included try catches to allow error popup
         try {
             permanentCustomer = customer;
             System.out.println(customer.getName() + " found");

@@ -38,6 +38,7 @@ public class Database {
     public List<Issues>  getIssuesList() {return issuesList;}
 
     public CustomerInfo getUser(String username) {
+        //Included try catches to allow error popup
         for(CustomerInfo c : customerInfos) {
             try {
                 if(c.getUsername().equals(username))
