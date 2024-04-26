@@ -39,12 +39,20 @@ public class Database {
 
     public CustomerInfo getUser(String username) {
         for(CustomerInfo c : customerInfos) {
-            if(c.getUsername().equals(username))
-                return c;
+            try {
+                if(c.getUsername().equals(username))
+                    return c;
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
         }
         for(CustomerInfo c : employeeInfos) {
-            if(c.getUsername().equals(username))
-                return c;
+            try {
+                if(c.getUsername().equals(username))
+                    return c;
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }

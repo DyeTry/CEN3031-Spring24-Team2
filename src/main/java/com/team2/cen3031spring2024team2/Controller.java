@@ -532,6 +532,9 @@ public class Controller implements Initializable {
         String username = usernameEntry.getText();
         CustomerInfo c = database.getUser(username);
         initUser(c);
+
+        System.out.println(c);
+
         //saving email value for later use
         userEmailVal = usernameEntry.getText();
         //temp variable to store password for validity checking
@@ -639,8 +642,12 @@ public class Controller implements Initializable {
 
     private static CustomerInfo permanentCustomer;
     public void initUser(CustomerInfo customer) {
-        permanentCustomer = customer;
-        System.out.println(customer.getName() + " found");
+        try {
+            permanentCustomer = customer;
+            System.out.println(customer.getName() + " found");
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
