@@ -162,6 +162,8 @@ public class Controller implements Initializable {
         }
     }
 
+
+
     //method called when switching to the pass page as a customer
     public void switchToCustomerPasses(ActionEvent event) throws IOException {
         try {
@@ -401,6 +403,8 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
+
+
 
     @FXML
     private TextField createReasonForFine;

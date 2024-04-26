@@ -1,6 +1,12 @@
 package com.team2.cen3031spring2024team2;
 
+import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
 public class Parking_Fine {
+
 
     private String CitationNumber;
     private String Date;
@@ -21,6 +27,10 @@ public class Parking_Fine {
         this.ReasonForFine = ReasonForFine;
         this.PaymentStatus = PaymentStatus;
     }
+
+
+
+
 
     public String getCitationNumber() {
         return CitationNumber;
@@ -90,4 +100,6 @@ public class Parking_Fine {
     public String toString() {
         return Username + ',' + CitationNumber + ',' +Date + ',' +Time + ',' + FineAmount + ',' + ReasonForFine + "," + PaymentStatus + ",\n";
     }
+
 }
+

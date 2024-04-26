@@ -13,7 +13,7 @@ public class UserCarDetailsEditor extends Application {
     @Override
     public void start(Stage primaryStage)  {
         database = new Database();
-        database.loadDatabaseFromCSV("src\\main\\resources\\com\\team2\\cen3031spring2024team2\\Admin_database.csv");
+        database.loadDatabaseFromCSV("C:\\Users\\rikki\\IdeaProjects\\CEN3031-Spring24-Team2\\src\\main\\resources\\com\\team2\\cen3031spring2024team2\\Admin_database.csv");
 
         primaryStage.setTitle("Car Details Editor");
 
