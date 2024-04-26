@@ -405,6 +405,22 @@ public class Controller implements Initializable {
     }
 
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        citationNum.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("citationNumber"));
+        citationDate.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("date"));
+        citationTime.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("time"));
+        citationFineAmount.setCellValueFactory(new PropertyValueFactory<Parking_Fine, Integer>("fineAmount"));
+        citationDescription.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("reasonForFine"));
+        citationPaymentStatus.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("paymentStatus"));
+
+        timeColumn.setCellValueFactory(new PropertyValueFactory<Issues, String>("timestamp"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<Issues, String>("description"));
+        userColumn.setCellValueFactory(new PropertyValueFactory<Issues, String>("username"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<Issues, TicketStatus>("status"));
+    }
+
+
 
     @FXML
     private TextField createReasonForFine;
@@ -696,21 +712,10 @@ public class Controller implements Initializable {
     private TableColumn<Issues, String> userColumn = new TableColumn<>("User");
     @FXML
     private TableColumn<Issues, TicketStatus> statusColumn = new TableColumn<>("Status");
+    @FXML
+    private TableColumn<Parking_Fine, String> citationPaymentStatus = new TableColumn<>("Citation Status");
 
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        citationNum.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("citationNumber"));
-        citationDate.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("date"));
-        citationTime.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("time"));
-        citationFineAmount.setCellValueFactory(new PropertyValueFactory<Parking_Fine, Integer>("fineAmount"));
-        citationDescription.setCellValueFactory(new PropertyValueFactory<Parking_Fine, String>("reasonForFine"));
-
-        timeColumn.setCellValueFactory(new PropertyValueFactory<Issues, String>("timestamp"));
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<Issues, String>("description"));
-        userColumn.setCellValueFactory(new PropertyValueFactory<Issues, String>("username"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<Issues, TicketStatus>("status"));
-    }
 
     @FXML
     public void addCitationEntry(ActionEvent event) throws IOException {
