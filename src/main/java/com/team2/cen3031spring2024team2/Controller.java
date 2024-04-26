@@ -120,8 +120,6 @@ public class Controller implements Initializable {
     static String userEmailVal;
 
 
-    public static String userEmailVal;
-
     //used for showing alerts such as success/fail messages to users
     private Alert alert = new Alert(AlertType.NONE);
     CustomerInfo customerInfo = new CustomerInfo();
@@ -136,7 +134,7 @@ public class Controller implements Initializable {
     public void switchToCustomerParkingFines(ActionEvent event) throws IOException {
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("CustomerParkingFinesTable.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("customerParkingFinesTable.fxml"));
             loader.setController(this);
             Parent root = loader.load();
 

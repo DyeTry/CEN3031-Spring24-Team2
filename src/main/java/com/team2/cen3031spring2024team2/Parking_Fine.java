@@ -12,7 +12,7 @@ public class Parking_Fine {
     private int Balance;
     public Parking_Fine() {}
 
-    public Parking_Fine(String CitationNumber, String Date, String Time, String PermitNumber, String Username, int FineAmount, String ReasonForFine) {
+    public Parking_Fine(String CitationNumber, String Date, String Time, String Username, int FineAmount, String ReasonForFine, String PaymentStatus) {
         this.CitationNumber = CitationNumber;
         this.Date = Date;
         this.Time = Time;
@@ -76,6 +76,14 @@ public class Parking_Fine {
 
     public void setBalance(int balance) {
         Balance = balance;
+    }
+
+    public String getPaymentStatus() {
+        return PaymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        PaymentStatus = paymentStatus;
     }
 
     @Override
